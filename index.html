@@ -1,0 +1,3005 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OpenClaw 가이드 — 그로밋팀</title>
+  <style>
+    :root {
+      --bg: #0f1117;
+      --bg2: #1a1d27;
+      --bg3: #22263a;
+      --border: #2e3248;
+      --accent: #6c7ff7;
+      --accent2: #a78bfa;
+      --green: #34d399;
+      --yellow: #fbbf24;
+      --red: #f87171;
+      --text: #e2e8f0;
+      --text2: #94a3b8;
+      --text3: #64748b;
+      --code-bg: #1e2235;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      font-size: 15px;
+    }
+
+    /* Header */
+    .site-header {
+      background: linear-gradient(135deg, #1a1d27 0%, #12152a 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 32px 24px 28px;
+      text-align: center;
+    }
+    .site-header .badge {
+      display: inline-block;
+      background: rgba(108,127,247,0.15);
+      color: var(--accent);
+      border: 1px solid rgba(108,127,247,0.3);
+      border-radius: 20px;
+      padding: 4px 14px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      margin-bottom: 14px;
+    }
+    .site-header h1 {
+      font-size: 28px;
+      font-weight: 800;
+      background: linear-gradient(135deg, #e2e8f0, #a78bfa);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 8px;
+    }
+    .site-header p {
+      color: var(--text2);
+      font-size: 14px;
+      max-width: 540px;
+      margin: 0 auto;
+    }
+
+    /* Nav */
+    .toc {
+      background: var(--bg2);
+      border-bottom: 1px solid var(--border);
+      padding: 12px 24px;
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+    .toc a {
+      color: var(--text2);
+      text-decoration: none;
+      font-size: 13px;
+      padding: 5px 12px;
+      border-radius: 6px;
+      border: 1px solid transparent;
+      transition: all 0.15s;
+    }
+    .toc a:hover {
+      color: var(--text);
+      background: var(--bg3);
+      border-color: var(--border);
+    }
+
+    /* Layout */
+    .container {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 40px 24px 80px;
+    }
+
+    /* Section */
+    .section {
+      margin-bottom: 52px;
+    }
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 24px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--border);
+    }
+    .section-num {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 16px;
+      flex-shrink: 0;
+      color: white;
+    }
+    .section-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .section-sub {
+      font-size: 13px;
+      color: var(--text2);
+      margin-top: 2px;
+    }
+
+    /* Steps */
+    .steps {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .step {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    .step-head {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 18px;
+      background: var(--bg3);
+    }
+    .step-dot {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 800;
+      flex-shrink: 0;
+      color: white;
+    }
+    .step-label {
+      font-weight: 600;
+      font-size: 14px;
+    }
+    .step-body {
+      padding: 16px 18px;
+    }
+    .step-body p {
+      color: var(--text2);
+      font-size: 14px;
+      margin-bottom: 12px;
+    }
+    .step-body p:last-child { margin-bottom: 0; }
+
+    /* Code block */
+    .code-block {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      margin: 12px 0;
+    }
+    .code-label {
+      padding: 6px 14px;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text3);
+      background: rgba(255,255,255,0.03);
+      border-bottom: 1px solid var(--border);
+      letter-spacing: 0.05em;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .copy-btn {
+      background: rgba(108,127,247,0.15);
+      color: var(--accent);
+      border: none;
+      padding: 2px 10px;
+      border-radius: 4px;
+      font-size: 11px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background 0.15s;
+    }
+    .copy-btn:hover { background: rgba(108,127,247,0.3); }
+    .copy-btn.copied { color: var(--green); }
+    pre {
+      padding: 14px 16px;
+      font-size: 13px;
+      overflow-x: auto;
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      line-height: 1.6;
+      color: #c9d1d9;
+    }
+    code {
+      background: rgba(108,127,247,0.12);
+      color: var(--accent);
+      padding: 1px 5px;
+      border-radius: 4px;
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      font-size: 12.5px;
+    }
+
+    /* Alert */
+    .alert {
+      border-radius: 8px;
+      padding: 12px 16px;
+      font-size: 13.5px;
+      display: flex;
+      gap: 10px;
+      margin: 14px 0;
+    }
+    .alert.info { background: rgba(108,127,247,0.08); border: 1px solid rgba(108,127,247,0.2); color: #a5b4fc; }
+    .alert.warn { background: rgba(251,191,36,0.08); border: 1px solid rgba(251,191,36,0.2); color: #fde68a; }
+    .alert.good { background: rgba(52,211,153,0.08); border: 1px solid rgba(52,211,153,0.2); color: #6ee7b7; }
+    .alert-icon { flex-shrink: 0; font-size: 16px; }
+
+    /* Info card */
+    .info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin: 16px 0;
+    }
+    @media (max-width: 600px) { .info-grid { grid-template-columns: 1fr; } }
+    .info-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 16px;
+    }
+    .info-card-title {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 6px;
+    }
+    .info-card-text {
+      font-size: 13px;
+      color: var(--text2);
+      line-height: 1.5;
+    }
+
+    /* Divider */
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin: 32px 0;
+    }
+
+    /* Compare table */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+      font-size: 13.5px;
+    }
+    th {
+      text-align: left;
+      padding: 10px 14px;
+      background: var(--bg3);
+      color: var(--text2);
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    td {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border);
+      color: var(--text);
+    }
+    tr:last-child td { border-bottom: none; }
+    .tag {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 700;
+    }
+    .tag.rec { background: rgba(52,211,153,0.15); color: var(--green); }
+    .tag.warn { background: rgba(251,191,36,0.15); color: var(--yellow); }
+    .tag.no { background: rgba(248,113,113,0.15); color: var(--red); }
+
+    /* Transplant section */
+    .transplant-grid {
+      display: grid;
+      gap: 12px;
+    }
+    .file-item {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px 16px;
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+    .file-badge {
+      background: rgba(108,127,247,0.12);
+      color: var(--accent);
+      border-radius: 6px;
+      padding: 2px 8px;
+      font-size: 11.5px;
+      font-weight: 700;
+      font-family: monospace;
+      white-space: nowrap;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .file-desc {
+      font-size: 13.5px;
+      color: var(--text2);
+    }
+    .file-desc strong { color: var(--text); }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      padding: 32px 24px;
+      border-top: 1px solid var(--border);
+      color: var(--text3);
+      font-size: 13px;
+    }
+
+    /* Version badge */
+    .version-row {
+      display: flex;
+      gap: 8px;
+      margin: 10px 0;
+      flex-wrap: wrap;
+    }
+    .vbadge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .vbadge.latest { background: rgba(52,211,153,0.1); border: 1px solid rgba(52,211,153,0.25); color: var(--green); }
+    .vbadge.current { background: rgba(108,127,247,0.1); border: 1px solid rgba(108,127,247,0.25); color: var(--accent); }
+    .vbadge-dot { width: 6px; height: 6px; border-radius: 50%; }
+    .vbadge.latest .vbadge-dot { background: var(--green); }
+    .vbadge.current .vbadge-dot { background: var(--accent); }
+
+    /* Concept cards */
+    .concept-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    @media (max-width: 600px) { .concept-grid { grid-template-columns: 1fr; } }
+    .concept-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px 18px;
+      transition: border-color 0.15s, transform 0.15s;
+    }
+    .concept-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-1px);
+    }
+    .concept-card-head {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 6px;
+    }
+    .concept-card-emoji { font-size: 22px; }
+    .concept-card-name {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .concept-card-summary {
+      font-size: 12px;
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+    .concept-card-detail {
+      font-size: 13px;
+      color: var(--text2);
+      line-height: 1.6;
+    }
+
+    /* Glossary FAB */
+    .glossary-fab {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: white;
+      border: none;
+      font-size: 22px;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(108,127,247,0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .glossary-fab:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 24px rgba(108,127,247,0.5);
+    }
+
+    /* Glossary overlay */
+    .glossary-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 1001;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+    .glossary-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    /* Glossary panel */
+    .glossary-panel {
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: 380px;
+      background: var(--bg2);
+      border-left: 1px solid var(--border);
+      z-index: 1002;
+      transform: translateX(100%);
+      transition: transform 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .glossary-panel.active {
+      transform: translateX(0);
+    }
+    .glossary-panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+    .glossary-panel-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .glossary-close {
+      background: none;
+      border: none;
+      color: var(--text2);
+      font-size: 20px;
+      cursor: pointer;
+      padding: 4px;
+      line-height: 1;
+      transition: color 0.15s;
+    }
+    .glossary-close:hover { color: var(--text); }
+    .glossary-search {
+      margin: 12px 20px;
+      flex-shrink: 0;
+    }
+    .glossary-search input {
+      width: 100%;
+      padding: 8px 12px;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      font-size: 13px;
+      outline: none;
+      font-family: inherit;
+      transition: border-color 0.15s;
+    }
+    .glossary-search input::placeholder { color: var(--text3); }
+    .glossary-search input:focus { border-color: var(--accent); }
+    .glossary-list {
+      flex: 1;
+      overflow-y: auto;
+      padding: 0 20px 20px;
+    }
+    .glossary-item {
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .glossary-item:last-child { border-bottom: none; }
+    .glossary-term {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 2px;
+    }
+    .glossary-def {
+      font-size: 12.5px;
+      color: var(--text2);
+      line-height: 1.5;
+    }
+    .glossary-empty {
+      text-align: center;
+      color: var(--text3);
+      font-size: 13px;
+      padding: 24px 0;
+    }
+    .glossary-cats {
+      display: flex;
+      gap: 6px;
+      padding: 0 20px 10px;
+      flex-wrap: wrap;
+      flex-shrink: 0;
+    }
+    .gcat-btn {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      color: var(--text2);
+      border-radius: 20px;
+      padding: 3px 10px;
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: inherit;
+      transition: all 0.15s;
+      white-space: nowrap;
+    }
+    .gcat-btn:hover { color: var(--text); border-color: var(--accent); }
+    .gcat-btn.active { background: var(--accent); border-color: var(--accent); color: white; }
+    @media (max-width: 600px) {
+      .glossary-panel {
+        width: 100%;
+      }
+    }
+
+    /* Flow diagram */
+    .flow-diagram {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      overflow-x: auto;
+      padding: 20px 0;
+      margin: 16px 0;
+    }
+    .flow-node {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 10px 14px;
+      text-align: center;
+      flex-shrink: 0;
+      min-width: 90px;
+    }
+    .flow-node-emoji { font-size: 20px; margin-bottom: 4px; }
+    .flow-node-label { font-size: 11px; font-weight: 600; color: var(--text); line-height: 1.3; }
+    .flow-node-sub { font-size: 10px; color: var(--text3); margin-top: 2px; }
+    .flow-node.highlight {
+      border-color: var(--accent);
+      box-shadow: 0 0 12px rgba(108,127,247,0.2);
+    }
+    .flow-arrow {
+      flex-shrink: 0;
+      width: 28px;
+      height: 2px;
+      background: var(--border);
+      position: relative;
+    }
+    .flow-arrow::after {
+      content: '';
+      position: absolute;
+      right: 0;
+      top: -4px;
+      border: 5px solid transparent;
+      border-left-color: var(--border);
+    }
+    @media (max-width: 600px) {
+      .flow-diagram {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .flow-node { min-width: auto; }
+      .flow-arrow {
+        width: 2px;
+        height: 20px;
+        margin: 0 auto;
+      }
+      .flow-arrow::after {
+        right: auto;
+        left: -4px;
+        top: auto;
+        bottom: 0;
+        border: 5px solid transparent;
+        border-top-color: var(--border);
+      }
+    }
+
+    /* Subsection */
+    .subsection-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text);
+      margin: 28px 0 12px;
+      padding-left: 12px;
+      border-left: 3px solid var(--accent);
+    }
+    .subsection-title:first-of-type { margin-top: 0; }
+    .desc-text {
+      font-size: 14px;
+      color: var(--text2);
+      line-height: 1.7;
+      margin-bottom: 14px;
+    }
+    .desc-text strong { color: var(--text); }
+
+    /* Model compare */
+    .model-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin: 12px 0;
+    }
+    @media (max-width: 600px) { .model-grid { grid-template-columns: 1fr; } }
+    .model-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px;
+    }
+    .model-card-name {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+    .model-card-sub {
+      font-size: 12px;
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    .model-card-detail {
+      font-size: 13px;
+      color: var(--text2);
+      line-height: 1.6;
+    }
+
+    /* File guide cards */
+    .file-guide-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+      margin: 16px 0;
+    }
+    .file-guide-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px 18px;
+      transition: border-color 0.15s;
+    }
+    .file-guide-card:hover { border-color: var(--accent); }
+    .file-guide-head {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 8px;
+      flex-wrap: wrap;
+    }
+    .file-guide-name {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text);
+      font-family: 'SF Mono', 'Fira Code', monospace;
+    }
+    .file-guide-badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 700;
+    }
+    .file-guide-badge.auto { background: rgba(52,211,153,0.15); color: var(--green); }
+    .file-guide-badge.manual { background: rgba(251,191,36,0.15); color: var(--yellow); }
+    .file-guide-summary {
+      font-size: 13px;
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+    .file-guide-detail {
+      font-size: 13px;
+      color: var(--text2);
+      line-height: 1.6;
+      margin-bottom: 8px;
+    }
+    .file-guide-impact {
+      font-size: 12px;
+      color: var(--red);
+      background: rgba(248,113,113,0.08);
+      border: 1px solid rgba(248,113,113,0.15);
+      border-radius: 6px;
+      padding: 6px 10px;
+    }
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="badge">🔷 내부용 가이드 — 그로밋팀</div>
+  <h1>OpenClaw 가이드</h1>
+  <p>설치부터 운영까지 — 그로밋팀 AI 비서 완전 가이드</p>
+</header>
+
+<nav class="toc">
+  <a href="#s0">📋 개요</a>
+  <a href="#s1">1. WSL2 설치</a>
+  <a href="#s2">2. OpenClaw 설치</a>
+  <a href="#s3">3. 인증(셋업토큰)</a>
+  <a href="#s4">4. 슬랙 연동</a>
+  <a href="#s5">5. 워크스페이스 설정</a>
+  <a href="#s6">6. 게이트웨이 서비스</a>
+  <a href="#s7">현비스 이식</a>
+  <a href="#s8">💬 슬랙 운영</a>
+  <a href="#s10">⏰ 크론잡 (자동화)</a>
+  <a href="#s11">☁️ Google Drive 연동</a>
+  <a href="#s12">💰 비용 관리</a>
+  <a href="#s13">🚨 트러블슈팅</a>
+  <a href="#s14">🧠 핵심 개념</a>
+  <a href="#s15">⚙️ 작동 원리</a>
+  <a href="#s16">📂 문서 가이드</a>
+</nav>
+
+<div class="container">
+
+  <!-- 개요 -->
+  <div id="s0" class="section">
+    <div class="section-header">
+      <div class="section-num" style="background: linear-gradient(135deg, #334155, #475569);">📋</div>
+      <div>
+        <div class="section-title">설치 전 알아야 할 것들</div>
+        <div class="section-sub">큰 그림 먼저</div>
+      </div>
+    </div>
+
+    <div class="version-row">
+      <span class="vbadge latest"><span class="vbadge-dot"></span> 최신 버전 2026.3.2</span>
+      <span class="vbadge current"><span class="vbadge-dot"></span> 현비스 기준 버전 2026.2.23</span>
+    </div>
+
+    <div class="info-grid">
+      <div class="info-card">
+        <div class="info-card-title">WSL2란?</div>
+        <div class="info-card-text">Windows 안에 리눅스를 돌릴 수 있게 해주는 <strong>윈도우 기능</strong>. 쉽게 말해 "가상 리눅스 컴퓨터"를 내 PC 안에 하나 더 만드는 것.</div>
+      </div>
+      <div class="info-card">
+        <div class="info-card-title">Ubuntu란?</div>
+        <div class="info-card-text">WSL2 위에서 실제로 실행되는 <strong>운영체제</strong>(리눅스 종류 중 하나). OpenClaw는 이 Ubuntu 안에 설치됨.</div>
+      </div>
+      <div class="info-card">
+        <div class="info-card-title">OpenClaw란?</div>
+        <div class="info-card-text">AI 어시스턴트(Claude)를 슬랙·텔레그램 등 채널에 연결하고, 크론잡·자동화를 돌릴 수 있게 해주는 <strong>런타임 프레임워크</strong>.</div>
+      </div>
+      <div class="info-card">
+        <div class="info-card-title">셋업토큰이란?</div>
+        <div class="info-card-text">Claude 구독(Max/Pro)을 이미 가지고 있을 때 사용하는 <strong>인증 방식</strong>. API 키 구매 없이 구독을 그대로 활용.</div>
+      </div>
+    </div>
+
+    <div class="alert info">
+      <span class="alert-icon">💡</span>
+      <span>전체 소요 시간: 약 30~60분. 처음 한 번만 설치하면 이후 업데이트는 명령어 한 줄이에요.</span>
+    </div>
+  </div>
+
+  <!-- Step 1 -->
+  <div id="s1" class="section">
+    <div class="section-header">
+      <div class="section-num">1</div>
+      <div>
+        <div class="section-title">WSL2 + Ubuntu 설치</div>
+        <div class="section-sub">윈도우에서 시작</div>
+      </div>
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-head">
+          <div class="step-dot">A</div>
+          <div class="step-label">PowerShell을 관리자 권한으로 열기</div>
+        </div>
+        <div class="step-body">
+          <p>윈도우 검색창에 <code>PowerShell</code> 입력 → 우클릭 → <strong>"관리자 권한으로 실행"</strong> 클릭</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-head">
+          <div class="step-dot">B</div>
+          <div class="step-label">WSL2 + Ubuntu 한 번에 설치</div>
+        </div>
+        <div class="step-body">
+          <p>아래 명령어를 복사해서 PowerShell에 붙여넣고 Enter</p>
+          <div class="code-block">
+            <div class="code-label">
+              <span>PowerShell (관리자)</span>
+              <button class="copy-btn" onclick="copyCode(this)">복사</button>
+            </div>
+            <pre>wsl --install -d Ubuntu-24.04</pre>
+          </div>
+          <div class="alert warn">
+            <span class="alert-icon">⚠️</span>
+            <span>설치 후 <strong>컴퓨터 재부팅</strong> 요청이 나오면 재부팅하세요. 재부팅 후 Ubuntu가 자동으로 설치 완료 창을 띄웁니다.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-head">
+          <div class="step-dot">C</div>
+          <div class="step-label">Ubuntu 계정 설정</div>
+        </div>
+        <div class="step-body">
+          <p>재부팅 후 Ubuntu 터미널이 열리면 <strong>사용자명</strong>과 <strong>비밀번호</strong>를 설정하라고 나옵니다.</p>
+          <p>✅ 사용자명: 영문 소문자로 (예: <code>gromit</code>)<br>
+          ✅ 비밀번호: 입력해도 화면에 아무것도 안 표시됩니다 — 정상이에요</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-head">
+          <div class="step-dot">D</div>
+          <div class="step-label">systemd 활성화 (필수)</div>
+        </div>
+        <div class="step-body">
+          <p>Ubuntu 터미널에서 아래 명령어를 차례대로 실행하세요</p>
+          <div class="code-block">
+            <div class="code-label">
+              <span>Ubuntu 터미널</span>
+              <button class="copy-btn" onclick="copyCode(this)">복사</button>
+            </div>
+            <pre>sudo tee /etc/wsl.conf >/dev/null &lt;&lt;'EOF'
+[boot]
+systemd=true
+EOF</pre>
+          </div>
+          <p>그 다음 PowerShell에서 WSL 재시작:</p>
+          <div class="code-block">
+            <div class="code-label">
+              <span>PowerShell</span>
+              <button class="copy-btn" onclick="copyCode(this)">복사</button>
+            </div>
+            <pre>wsl --shutdown</pre>
+          </div>
+          <p>Ubuntu를 다시 열고 아래로 확인:</p>
+          <div class="code-block">
+            <div class="code-label">
+              <span>Ubuntu 터미널</span>
+              <button class="copy-btn" onclick="copyCode(this)">복사</button>
+            </div>
+            <pre>systemctl --user status</pre>
+          </div>
+          <div class="alert good">
+            <span class="alert-icon">✅</span>
+            <span>에러 없이 뭔가 출력되면 성공입니다.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Step 2 -->
+  <div id="s2" class="section">
+    <div class="section-header">
+      <div class="section-num">2</div>
+      <div>
+        <div class="section-title">OpenClaw 설치</div>
+        <div class="section-sub">Ubuntu 터미널에서</div>
+      </div>
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-head">
+          <div class="step-dot">A</div>
+          <div class="step-label">설치 스크립트 실행</div>
+        </div>
+        <div class="step-body">
+          <p>Ubuntu 터미널에서 한 줄 실행하면 Node.js, OpenClaw 전부 자동 설치됩니다.</p>
+          <div class="code-block">
+            <div class="code-label">
+              <span>Ubuntu 터미널</span>
+              <button class="copy-btn" onclick="copyCode(this)">복사</button>
+            </div>
+            <pre>curl -fsSL https://openclaw.ai/install.sh | bash</pre>
+          </div>
+          <div class="alert info">
+            <span class="alert-icon">💡</span>
+            <span>설치 시간: 2~5분. 끝나면 <code>OpenClaw installed successfully</code> 메시지가 나옵니다.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-head">
+          <div class="step-dot">B</div>
+          <div class="step-label">설치 확인</div>
+        </div>
+        <div class="step-body">
+          <div class="code-block">
+            <div class="code-label">
+              <span>Ubuntu 터미널</span>
+              <button class="copy-btn" onclick="copyCode(this)">복사</button>
+            </div>
+            <pre>openclaw --version</pre>
+          </div>
+          <p>버전 숫자(예: <code>2026.3.2</code>)가 출력되면 설치 완료.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Step 3 -->
+  <div id="s3" class="section">
+    <div class="section-header">
+      <div class="section-num">3</div>
+      <div>
+        <div class="section-title">인증 설정 — 셋업토큰 방식</div>
+        <div class="section-sub">Claude 구독(Max/Pro)을 가지고 있다면 이 방식</div>
+      </div>
+    </div>
+
+    <div class="alert warn">
+      <span class="alert-icon">⚠️</span>
+      <span><strong>API 키 방식과 다릅니다.</strong> API 키는 별도 결제(사용량 기반)이고, 셋업토큰은 기존 Claude 구독을 그대로 사용하는 방식이에요. 현비스는 셋업토큰 방식으로 운영 중.</span>
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-head">
+          <div class="step-dot">A</div>
+          <div class="step-label">Claude Code CLI 설치 (셋업토큰 발급용)</div>
+        </div>
+        <div class="step-body">
+          <p>셋업토큰은 Claude Code CLI가 발급해줍니다. 먼저 설치:</p>
+          <div class="code-block">
+            <div class="code-label">
+              <span>Ubuntu 터미널</span>
+              <button class="copy-btn" onclick="copyCode(this)">복사</button>
+            </div>
+            <pre>npm install -g @anthropic-ai/claude-code</pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-head">
+          <div class="step-dot">B</div>
+          <div class="step-label">Claude 로그인 + 셋업토큰 발급</div>
+        </div>
+        <div class="step-body">
+          <p>아래 명령어 실행 → 브라우저가 열리면 Claude 계정으로 로그인:</p>
+          <div class="code-block">
+            <div class="code-label">
+              <span>Ubuntu 터미널</span>
+              <button class="copy-btn" onclick="copyCode(this)">복사</button>
+            </div>
+            <pre>claude login</pre>
+          </div>
+          <p>로그인 완료 후, 셋업토큰 발급:</p>
+          <div class="code-block">
+            <div class="code-label">
+              <span>Ubuntu 터미널</span>
+              <button class="copy-btn" onclick="copyCode(this)">복사</button>
+            </div>
+            <pre>claude setup-token</pre>
+          </div>
+          <div class="alert info">
+            <span class="alert-icon">💡</span>
+            <span>터미널에 긴 토큰 문자열이 출력됩니다. 이걸 OpenClaw 설정에 붙여넣습니다. <strong>다른 곳에 공유하지 마세요.</strong></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-head">
+          <div class="step-dot">C</div>
+          <div class="step-label">OpenClaw 온보딩 마법사 실행</div>
+        </div>
+        <div class="step-body">
+          <p>이제 OpenClaw 설정을 시작합니다. 아래 명령어로 마법사(설정 안내)를 실행:</p>
+          <div class="code-block">
+            <div class="code-label">
+              <span>Ubuntu 터미널</span>
+              <button class="copy-btn" onclick="copyCode(this)">복사</button>
+            </div>
+            <pre>openclaw onboard --install-daemon</pre>
+          </div>
+          <p>마법사에서 물어보는 항목 답변 가이드:</p>
+          <table>
+            <tr><th>항목</th><th>선택/입력</th><th>비고</th></tr>
+            <tr><td>Setup mode</td><td><code>QuickStart</code></td><td>기본값 선택</td></tr>
+            <tr><td>Auth method</td><td><code>Anthropic token (paste setup-token)</code></td><td>⚠️ API key 아님</td></tr>
+            <tr><td>Setup token</td><td>B단계에서 발급한 토큰 붙여넣기</td><td></td></tr>
+            <tr><td>Default model</td><td><code>anthropic/claude-sonnet-4-6</code></td><td>현비스 기준</td></tr>
+            <tr><td>Gateway port</td><td><code>18789</code></td><td>기본값 유지</td></tr>
+            <tr><td>Install daemon</td><td><code>Yes</code></td><td>자동 시작 설정</td></tr>
+            <tr><td>Channel 연결</td><td>이 단계는 Skip</td><td>다음 섹션에서 따로</td></tr>
+          </table>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-head">
+          <div class="step-dot">D</div>
+          <div class="step-label">설치 확인</div>
+        </div>
+        <div class="step-body">
+          <div class="code-block">
+            <div class="code-label">
+              <span>Ubuntu 터미널</span>
+              <button class="copy-btn" onclick="copyCode(this)">복사</button>
+            </div>
+            <pre>openclaw status</pre>
+          </div>
+          <div class="alert good">
+            <span class="alert-icon">✅</span>
+            <span>Gateway 상태가 <code>running</code>으로 나오면 성공.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Step 4 -->
+  <div id="s4" class="section">
+    <div class="section-header">
+      <div class="section-num">4</div>
+      <div>
+        <div class="section-title">슬랙 연동</div>
+        <div class="section-sub">Slack 앱 생성 → OpenClaw 연결</div>
+      </div>
+    </div>
+
+    <div class="alert info">
+      <span class="alert-icon">💡</span>
+      <span>슬랙 연동은 <strong>슬랙 워크스페이스 관리자</strong>가 해야 합니다. 팀원이 개인용으로 설치하는 경우, 그로밋에게 별도 슬랙 앱 생성을 요청하거나 다른 채널(텔레그램 등)을 사용하세요.</span>
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-head">
+          <div class="step-dot">A</div>
+          <div class="step-label">슬랙 앱 생성</div>
+        </div>
+        <div class="step-body">
+          <p><a href="https://api.slack.com/apps" style="color: var(--accent);">api.slack.com/apps</a>에서 <strong>"Create New App"</strong> → <strong>"From scratch"</strong></p>
+          <p>앱 이름 입력 (예: <code>현비스2</code>) → 워크스페이스 선택 → Create</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-head">
+          <div class="step-dot">B</div>
+          <div class="step-label">Socket Mode 활성화 + App-Level Token 발급</div>
+        </div>
+        <div class="step-body">
+          <p>앱 설정 페이지 → 왼쪽 메뉴 <strong>"Socket Mode"</strong> → Toggle ON</p>
+          <p>→ <strong>"Generate an app-level token"</strong> 클릭<br>
+          → 토큰 이름 입력 (예: <code>main</code>)<br>
+          → <code>connections:write</code> 스코프 추가<br>
+          → Generate</p>
+          <p>발급된 <strong><code>xapp-1-...</code></strong> 토큰을 복사해두기</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-head">
+          <div class="step-dot">C</div>
+          <div class="step-label">봇 권한(Scopes) 설정 + Bot Token 발급</div>
+        </div>
+        <div class="step-body">
+          <p>왼쪽 메뉴 <strong>"OAuth & Permissions"</strong> → <strong>Bot Token Scopes</strong>에 아래 추가:</p>
+          <div class="code-block">
+            <div class="code-label"><span>필수 Scopes</span></div>
+            <pre>app_mentions:read
+channels:history
+channels:read
+chat:write
+groups:history
+groups:read
+im:history
+im:read
+im:write
+reactions:write
+users:read</pre>
+          </div>
+          <p>→ 페이지 위로 스크롤 → <strong>"Install to Workspace"</strong> 클릭<br>
+          → 발급된 <strong><code>xoxb-...</code></strong> Bot Token 복사</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-head">
+          <div class="step-dot">D</div>
+          <div class="step-label">OpenClaw에 슬랙 토큰 입력</div>
+        </div>
+        <div class="step-body">
+          <div class="code-block">
+            <div class="code-label">
+              <span>Ubuntu 터미널</span>
+              <button class="copy-btn" onclick="copyCode(this)">복사</button>
+            </div>
+            <pre>openclaw configure --section channels.slack</pre>
+          </div>
+          <p>또는 <code>~/.openclaw/openclaw.json</code>에 직접 추가:</p>
+          <div class="code-block">
+            <div class="code-label">
+              <span>openclaw.json — channels 섹션</span>
+              <button class="copy-btn" onclick="copyCode(this)">복사</button>
+            </div>
+            <pre>{
+  "channels": {
+    "slack": {
+      "mode": "socket",
+      "enabled": true,
+      "botToken": "xoxb-여기에-Bot-Token-붙여넣기",
+      "appToken": "xapp-1-여기에-App-Token-붙여넣기",
+      "groupPolicy": "open"
+    }
+  }
+}</pre>
+          </div>
+          <p>저장 후 재시작:</p>
+          <div class="code-block">
+            <div class="code-label">
+              <span>Ubuntu 터미널</span>
+              <button class="copy-btn" onclick="copyCode(this)">복사</button>
+            </div>
+            <pre>openclaw gateway restart</pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Step 5 -->
+  <div id="s5" class="section">
+    <div class="section-header">
+      <div class="section-num">5</div>
+      <div>
+        <div class="section-title">워크스페이스 설정</div>
+        <div class="section-sub">AI 성격·규칙·메모리 파일 구성</div>
+      </div>
+    </div>
+
+    <p style="color: var(--text2); margin-bottom: 16px; font-size: 14px;">
+      워크스페이스는 AI 어시스턴트의 "두뇌"입니다. 이 파일들이 어시스턴트의 성격, 행동 규칙, 사용자 정보를 정의합니다.
+      기본 위치: <code>~/.openclaw/workspace/</code>
+    </p>
+
+    <div class="transplant-grid">
+      <div class="file-item">
+        <span class="file-badge">SOUL.md</span>
+        <div class="file-desc"><strong>성격/톤 정의</strong> — 어시스턴트가 어떻게 말하고 행동하는지. 캐릭터 설정 파일.</div>
+      </div>
+      <div class="file-item">
+        <span class="file-badge">RULES.md</span>
+        <div class="file-desc"><strong>절대 규칙</strong> — 어떤 상황에서도 지켜야 할 행동 원칙. (예: 외부 공유 금지, 삭제 전 확인 등)</div>
+      </div>
+      <div class="file-item">
+        <span class="file-badge">USER.md</span>
+        <div class="file-desc"><strong>사용자 정보</strong> — 이름, 직책, 업무 맥락, 선호 등. "내 비서에게 나를 소개하는 파일".</div>
+      </div>
+      <div class="file-item">
+        <span class="file-badge">MEMORY.md</span>
+        <div class="file-desc"><strong>장기 메모리</strong> — 중요한 결정사항, 프로젝트 히스토리, 반복되는 맥락 저장.</div>
+      </div>
+      <div class="file-item">
+        <span class="file-badge">IDENTITY.md</span>
+        <div class="file-desc"><strong>어시스턴트 정체성</strong> — 이름, 이모지, 캐릭터 설정. (예: HYUNVIS, 🔷)</div>
+      </div>
+      <div class="file-item">
+        <span class="file-badge">AGENTS.md</span>
+        <div class="file-desc"><strong>운영 매뉴얼</strong> — 세션 부팅 순서, 메모리 정책, 에이전트팀 운영 규칙 등.</div>
+      </div>
+      <div class="file-item">
+        <span class="file-badge">HEARTBEAT.md</span>
+        <div class="file-desc"><strong>헬스체크 체크리스트</strong> — 30분마다 AI가 확인하는 항목들. 이상 있을 때만 DM 발송.</div>
+      </div>
+    </div>
+
+    <div class="alert info" style="margin-top: 20px;">
+      <span class="alert-icon">💡</span>
+      <span>OnBoarding 마법사가 기본 파일들을 자동 생성해줍니다. 그 이후 본인 맥락에 맞게 내용을 채우면 됩니다.</span>
+    </div>
+  </div>
+
+  <!-- Step 6 -->
+  <div id="s6" class="section">
+    <div class="section-header">
+      <div class="section-num">6</div>
+      <div>
+        <div class="section-title">게이트웨이 서비스 (자동시작)</div>
+        <div class="section-sub">PC 켤 때마다 자동으로 실행되도록</div>
+      </div>
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-head">
+          <div class="step-dot">A</div>
+          <div class="step-label">서비스 설치 (온보딩에서 이미 했다면 생략)</div>
+        </div>
+        <div class="step-body">
+          <div class="code-block">
+            <div class="code-label">
+              <span>Ubuntu 터미널</span>
+              <button class="copy-btn" onclick="copyCode(this)">복사</button>
+            </div>
+            <pre>openclaw gateway install</pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-head">
+          <div class="step-dot">B</div>
+          <div class="step-label">상태 확인 / 재시작</div>
+        </div>
+        <div class="step-body">
+          <div class="code-block">
+            <div class="code-label">
+              <span>자주 쓰는 명령어</span>
+              <button class="copy-btn" onclick="copyCode(this)">복사</button>
+            </div>
+            <pre># 상태 확인
+openclaw gateway status
+
+# 재시작
+openclaw gateway restart
+
+# 전체 상태 (상세)
+openclaw status</pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 현비스 이식 -->
+  <div id="s7" class="section">
+    <div class="section-header">
+      <div class="section-num" style="background: linear-gradient(135deg, #7c3aed, #a78bfa);">🔷</div>
+      <div>
+        <div class="section-title">현비스 이식하기</div>
+        <div class="section-sub">기존 현비스 설정을 새 컴퓨터에 그대로 복사</div>
+      </div>
+    </div>
+
+    <div class="alert good">
+      <span class="alert-icon">✅</span>
+      <span>결론: <strong>이식 가능합니다.</strong> 워크스페이스 파일들 + OpenClaw 채널 설정을 복사하면 됩니다. 단, 슬랙 토큰은 새로 발급하거나 별도 봇을 써야 합니다.</span>
+    </div>
+
+    <div style="margin: 20px 0;">
+      <h3 style="font-size: 15px; color: var(--text); margin-bottom: 14px;">복사할 파일 목록 (현비스 서버 → 새 컴퓨터)</h3>
+      <div class="transplant-grid">
+        <div class="file-item">
+          <span class="file-badge">워크스페이스 전체</span>
+          <div class="file-desc"><code>~/.openclaw/workspace/</code> 폴더 전체 복사. SOUL.md, RULES.md, USER.md, MEMORY.md, IDENTITY.md, AGENTS.md, HEARTBEAT.md 등 포함.</div>
+        </div>
+        <div class="file-item">
+          <span class="file-badge">스킬 폴더</span>
+          <div class="file-desc"><code>gdrive-sync/.skills/</code> 폴더. input-organizer, sprint-manager 등 커스텀 스킬 포함.</div>
+        </div>
+        <div class="file-item">
+          <span class="file-badge">스크립트 폴더</span>
+          <div class="file-desc"><code>~/workspace/scripts/</code> 폴더. 자동화 파이썬 스크립트들.</div>
+        </div>
+      </div>
+    </div>
+
+    <h3 style="font-size: 15px; color: var(--text); margin-bottom: 12px;">이식 후 달라지는 것들</h3>
+    <table>
+      <tr><th>항목</th><th>이식 가능?</th><th>처리 방법</th></tr>
+      <tr><td>성격/규칙 (SOUL, RULES)</td><td><span class="tag rec">완전 이식</span></td><td>파일 그대로 복사</td></tr>
+      <tr><td>메모리 (MEMORY.md)</td><td><span class="tag rec">선택 이식</span></td><td>공유할 범위만 복사</td></tr>
+      <tr><td>슬랙 연동</td><td><span class="tag warn">별도 봇 필요</span></td><td>새 슬랙 앱 생성 or 같은 앱 공유 가능</td></tr>
+      <tr><td>Claude 인증</td><td><span class="tag warn">재발급 필요</span></td><td>새 컴퓨터에서 <code>claude login</code> + <code>claude setup-token</code></td></tr>
+      <tr><td>Google Drive 연동</td><td><span class="tag warn">재인증 필요</span></td><td>새 컴퓨터에서 rclone 설치 후 OAuth 재인증</td></tr>
+      <tr><td>크론잡</td><td><span class="tag no">재등록 필요</span></td><td>새 컴퓨터의 crontab에 재등록</td></tr>
+      <tr><td>Notion 연동</td><td><span class="tag rec">토큰 복사</span></td><td>같은 토큰 그대로 사용 가능</td></tr>
+    </table>
+
+    <div class="alert warn" style="margin-top: 16px;">
+      <span class="alert-icon">⚠️</span>
+      <span>현비스(bbory 서버)와 <strong>같은 슬랙 채널</strong>에 새 어시스턴트를 연결하면 봇이 2개가 되어 혼란이 생길 수 있습니다. 별도 채널을 사용하거나, 용도를 명확히 분리하세요.</span>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 업데이트 -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num" style="background: linear-gradient(135deg, #0f766e, #14b8a6);">🔄</div>
+      <div>
+        <div class="section-title">업데이트 방법</div>
+        <div class="section-sub">설치 후 업데이트는 한 줄</div>
+      </div>
+    </div>
+    <div class="code-block">
+      <div class="code-label">
+        <span>Ubuntu 터미널</span>
+        <button class="copy-btn" onclick="copyCode(this)">복사</button>
+      </div>
+      <pre>npm update -g openclaw</pre>
+    </div>
+    <p style="color: var(--text2); font-size: 13.5px; margin-top: 10px;">
+      업데이트 후에는 <code>openclaw gateway restart</code>로 재시작하세요.
+    </p>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 슬랙 운영 가이드 -->
+  <div id="s8" class="section">
+    <div class="section-header">
+      <div class="section-num" style="background: linear-gradient(135deg, #1d4ed8, #3b82f6);">💬</div>
+      <div>
+        <div class="section-title">슬랙 운영 가이드</div>
+        <div class="section-sub">현비스를 슬랙에서 잘 쓰는 법 — 토큰 절약 + 효율 극대화</div>
+      </div>
+    </div>
+
+    <!-- 핵심 원칙 -->
+    <div class="alert warn" style="margin-bottom: 20px;">
+      <span class="alert-icon">⚠️</span>
+      <span><strong>핵심 규칙</strong>: 한 작업 = 한 스레드. 채널에 바로 대화하면 히스토리가 쌓여 토큰이 폭발합니다. <strong>항상 스레드에서 시작하고 스레드에서 끝내세요.</strong></span>
+    </div>
+
+    <!-- 1. 세션 구조 이해 -->
+    <h3 style="font-size: 15px; color: var(--text); margin-bottom: 12px;">1. 채널 분리 + 스레드 격리 원칙</h3>
+    <div class="info-grid" style="margin-bottom: 20px;">
+      <div class="info-card">
+        <div class="info-card-title">채널 = 업무 카테고리</div>
+        <div class="info-card-text">채널별로 독립 세션이 생성되어 <strong>컨텍스트가 분리</strong>됩니다. 업무 종류별로 채널을 나누면 맥락이 섞이지 않아요.</div>
+      </div>
+      <div class="info-card">
+        <div class="info-card-title">스레드 = 작업 단위</div>
+        <div class="info-card-text">스레드 안의 메시지만 컨텍스트로 들어가므로 <strong>토큰이 절약</strong>됩니다. 새 작업은 반드시 새 스레드로.</div>
+      </div>
+    </div>
+
+    <!-- 2. 채널 구조 -->
+    <h3 style="font-size: 15px; color: var(--text); margin-bottom: 12px;">2. 그로밋팀 채널 구조 (권장)</h3>
+    <table style="margin-bottom: 20px;">
+      <tr><th>채널</th><th>용도</th><th>권장 모델</th></tr>
+      <tr><td><code>#oc-marketing</code></td><td>광고 카피, 바이럴 콘텐츠 (UVID/쿠참/포레몽/메아리셋)</td><td>Sonnet</td></tr>
+      <tr><td><code>#oc-voc</code></td><td>VOC 분석, CS 리뷰 클러스터링</td><td>Sonnet</td></tr>
+      <tr><td><code>#oc-dev</code></td><td>자동화, 스크립트, 개발 작업</td><td>Sonnet / Opus</td></tr>
+      <tr><td><code>#oc-general</code></td><td>빠른 질문, 잡무</td><td>Haiku (비용 절약)</td></tr>
+    </table>
+
+    <!-- 3. 스레드 운영 -->
+    <h3 style="font-size: 15px; color: var(--text); margin-bottom: 12px;">3. 스레드 운영 규칙</h3>
+    <div class="steps" style="margin-bottom: 20px;">
+      <div class="step">
+        <div class="step-head">
+          <div class="step-dot" style="background: #3b82f6;">3-1</div>
+          <div class="step-label">스레드 시작: 브리핑 메시지 작성</div>
+        </div>
+        <div class="step-body">
+          <p>스레드 첫 메시지에 작업 컨텍스트를 명확히 적습니다. 현비스가 맥락을 잡는 핵심이에요.</p>
+          <div class="code-block">
+            <div class="code-label"><span>예시 — 광고 카피 작업</span></div>
+            <pre>UVID 선크림 3월 광고 카피 작업
+타겟: 20~30대 여성, SPF50+/PA++++ 강조
+톤: 가볍고 트렌디하게
+형식: 후킹 문구 + 본문 5세트</pre>
+          </div>
+          <div class="code-block">
+            <div class="code-label"><span>예시 — VOC 분석</span></div>
+            <pre>쿠참 제빙기 2월 리뷰 클러스터링
+파일: 아래 첨부 (xlsx)
+목적: 반복 VOC 패턴 추출 + cx.md 업데이트용</pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-head">
+          <div class="step-dot" style="background: #3b82f6;">3-2</div>
+          <div class="step-label">스레드 길이 관리</div>
+        </div>
+        <div class="step-body">
+          <table>
+            <tr><th>스레드 길이</th><th>조치</th></tr>
+            <tr><td>50개 이하</td><td>✅ 정상 운영</td></tr>
+            <tr><td>50~100개</td><td>"지금까지 대화 3줄로 요약해줘" 요청 후 참고용 보관</td></tr>
+            <tr><td>100개 초과</td><td>새 스레드 시작 + 이전 요약을 첫 메시지에 붙여넣기</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. 설정 -->
+    <h3 style="font-size: 15px; color: var(--text); margin-bottom: 12px;">4. 토큰 절약 설정 (openclaw.json)</h3>
+    <div class="code-block" style="margin-bottom: 8px;">
+      <div class="code-label">
+        <span>requireMention — 멘션 시에만 응답 (불필요한 반응 차단)</span>
+        <button class="copy-btn" onclick="copyCode(this)">복사</button>
+      </div>
+      <pre>{
+  "channels": {
+    "slack": {
+      "channels": {
+        "C채널ID": {
+          "requireMention": true
+        }
+      }
+    }
+  }
+}</pre>
+    </div>
+    <div class="code-block" style="margin-bottom: 20px;">
+      <div class="code-label">
+        <span>historyLimit — 채널별 히스토리 제한 (바쁜 채널일수록 낮게)</span>
+        <button class="copy-btn" onclick="copyCode(this)">복사</button>
+      </div>
+      <pre>{
+  "channels": {
+    "slack": {
+      "historyLimit": 20,
+      "thread": {
+        "historyScope": "thread",
+        "inheritParent": false,
+        "initialHistoryLimit": 20
+      }
+    }
+  }
+}</pre>
+    </div>
+
+    <!-- 5. 슬래시 명령어 -->
+    <h3 style="font-size: 15px; color: var(--text); margin-bottom: 12px;">5. 슬래시 명령어</h3>
+    <table style="margin-bottom: 20px;">
+      <tr><th>명령어</th><th>기능</th></tr>
+      <tr><td><code>/status</code></td><td>모델, 토큰 사용량, 비용 확인</td></tr>
+      <tr><td><code>/model sonnet</code></td><td>Sonnet으로 모델 변경</td></tr>
+      <tr><td><code>/model haiku</code></td><td>비용 절약 모델로 전환</td></tr>
+      <tr><td><code>/help</code></td><td>도움말</td></tr>
+      <tr><td><code>/stop</code></td><td>현재 작업 중단</td></tr>
+    </table>
+    <div class="alert warn" style="margin-bottom: 20px;">
+      <span class="alert-icon">⚠️</span>
+      <span>슬랙에서는 슬래시 명령이 자동 등록되지 않습니다. Slack App 설정 → Slash Commands에서 직접 등록해야 합니다.</span>
+    </div>
+
+    <!-- 6. 파일/이미지 -->
+    <h3 style="font-size: 15px; color: var(--text); margin-bottom: 12px;">6. 파일·이미지 활용</h3>
+    <div class="transplant-grid" style="margin-bottom: 20px;">
+      <div class="file-item">
+        <span class="file-badge">VOC 파일</span>
+        <div class="file-desc">리뷰 xlsx 첨부 → <strong>"클러스터링 해줘"</strong> — 반복 패턴 자동 추출</div>
+      </div>
+      <div class="file-item">
+        <span class="file-badge">광고 소재</span>
+        <div class="file-desc">크리에이티브 이미지 첨부 → <strong>"후킹 포인트 분석해줘"</strong></div>
+      </div>
+      <div class="file-item">
+        <span class="file-badge">경쟁사 상세페이지</span>
+        <div class="file-desc">캡처 이미지 첨부 → <strong>"우리 제품과 비교 분석해줘"</strong></div>
+      </div>
+    </div>
+    <div class="alert info">
+      <span class="alert-icon">💡</span>
+      <span><strong>파일 첨부는 슬랙에서만 가능</strong>합니다. TUI(터미널) 환경에서는 파일 첨부가 안 되므로, 이미지·엑셀 분석 작업은 반드시 슬랙에서 하세요.</span>
+    </div>
+
+    <!-- 7. TUI vs 슬랙 -->
+    <h3 style="font-size: 15px; color: var(--text); margin-top: 20px; margin-bottom: 12px;">7. TUI vs 슬랙 — 언제 뭘 쓸까?</h3>
+    <table style="margin-bottom: 20px;">
+      <tr><th>상황</th><th>추천</th><th>이유</th></tr>
+      <tr><td>혼자 집중 작업 (텍스트)</td><td>TUI</td><td>세션 유지 좋고 빠름</td></tr>
+      <tr><td>파일/이미지 첨부 필요</td><td>슬랙</td><td>TUI는 파일 안 됨</td></tr>
+      <tr><td>팀원과 결과 공유</td><td>슬랙</td><td>스레드로 바로 공유</td></tr>
+      <tr><td>긴 코딩/자동화 작업</td><td>TUI</td><td>안정적 세션 유지</td></tr>
+      <tr><td>외출 중 모바일</td><td>슬랙</td><td>앱에서 바로 접근</td></tr>
+    </table>
+
+    <!-- 8. 보안 -->
+    <h3 style="font-size: 15px; color: var(--text); margin-bottom: 12px;">8. 보안 주의사항</h3>
+    <div class="alert warn">
+      <span class="alert-icon">⚠️</span>
+      <span>
+        <strong>봇 무한 대화 주의</strong> — 다른 봇과 같은 채널에 있을 때 <code>requireMention</code> 없이 <code>allowBots</code>를 켜면 봇끼리 무한 대화합니다. (실제 12초에 47번 응답한 사례 있음)<br><br>
+        <strong>3rd Party 스킬 감사</strong> — ClawHub에서 스킬 설치 시 코드 리뷰 필수.
+      </span>
+    </div>
+
+    <!-- 9. 실전 예시 -->
+    <h3 style="font-size: 15px; color: var(--text); margin-top: 20px; margin-bottom: 12px;">9. 실전 워크플로우 예시</h3>
+    <div class="steps">
+      <div class="step">
+        <div class="step-head">
+          <div class="step-dot" style="background: #7c3aed;">예시</div>
+          <div class="step-label">UVID 광고 카피 작업 (#oc-marketing)</div>
+        </div>
+        <div class="step-body">
+          <ol style="color: var(--text2); font-size: 13.5px; padding-left: 20px; line-height: 2.2;">
+            <li>새 스레드: <em>"UVID 선크림 3월 메타 광고 카피. 타겟: 20-30대 여성, SPF50+ 강조"</em></li>
+            <li>경쟁사 광고 이미지 첨부 → <em>"이 소재 분석해줘"</em></li>
+            <li>@현비스 <em>"후킹 문구 10개, 본문 세트 5개 만들어줘"</em></li>
+            <li>선택 후 → <em>"3번, 7번으로 A/B 변형 만들어줘"</em></li>
+          </ol>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-head">
+          <div class="step-dot" style="background: #7c3aed;">예시</div>
+          <div class="step-label">쿠참 VOC 분석 (#oc-voc)</div>
+        </div>
+        <div class="step-body">
+          <ol style="color: var(--text2); font-size: 13.5px; padding-left: 20px; line-height: 2.2;">
+            <li>새 스레드: <em>"쿠참 제빙기 2월 리뷰 클러스터링"</em></li>
+            <li>리뷰 xlsx 첨부</li>
+            <li>@현비스 <em>"반복 패턴 추출하고 cx.md 업데이트용으로 정리해줘"</em></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 크론잡 (자동화) -->
+  <div id="s10" class="section">
+    <div class="section-header">
+      <div class="section-num" style="background: linear-gradient(135deg, #d97706, #fbbf24);">⏰</div>
+      <div>
+        <div class="section-title">크론잡 (자동화)</div>
+        <div class="section-sub">정해진 시간에 자동으로 작업을 실행하는 예약 시스템</div>
+      </div>
+    </div>
+
+    <p style="color: var(--text2); font-size: 14px; margin-bottom: 16px;">
+      크론잡(Cron Job)은 <strong>정해진 시간에 자동으로 실행되는 예약 작업</strong>입니다. 예를 들어 "매일 아침 9시에 뉴스 요약 보내줘", "2시간마다 Google Drive 동기화해줘" 같은 걸 설정하면 사람이 안 시켜도 알아서 실행됩니다.
+    </p>
+
+    <div class="alert info">
+      <span class="alert-icon">💡</span>
+      <span>현비스는 크론잡 20개 이상을 돌리고 있어요 — 인풋 수집, 데일리 공지, 스프린트 체크, AI 뉴스 브리핑 등. OpenClaw의 핵심 가치가 바로 이 자동화입니다.</span>
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-head">
+          <div class="step-dot">1</div>
+          <div class="step-label">크론잡 목록 확인</div>
+        </div>
+        <div class="step-body">
+          <p>현재 등록된 모든 크론잡을 확인합니다.</p>
+          <div class="code-block">
+            <div class="code-label">
+              <span>Ubuntu 터미널</span>
+              <button class="copy-btn" onclick="copyCode(this)">복사</button>
+            </div>
+            <pre>openclaw cron list</pre>
+          </div>
+          <p>각 항목에 이름, 실행 스케줄, 마지막 실행 상태(<code>ok</code> / <code>error</code>)가 표시됩니다.</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-head">
+          <div class="step-dot">2</div>
+          <div class="step-label">크론잡 추가하기</div>
+        </div>
+        <div class="step-body">
+          <p>새 크론잡을 등록하려면 슬랙 DM에서 어시스턴트에게 자연어로 요청하면 됩니다.</p>
+          <div class="code-block">
+            <div class="code-label">
+              <span>슬랙 DM 예시</span>
+              <button class="copy-btn" onclick="copyCode(this)">복사</button>
+            </div>
+            <pre>매일 아침 9시에 오늘 일정 요약해서 DM으로 보내줘</pre>
+          </div>
+          <p>어시스턴트가 크론잡을 자동으로 생성합니다. 터미널에서 직접 등록하려면:</p>
+          <div class="code-block">
+            <div class="code-label">
+              <span>Ubuntu 터미널</span>
+              <button class="copy-btn" onclick="copyCode(this)">복사</button>
+            </div>
+            <pre># 크론잡 생성 (대화형)
+openclaw cron create
+
+# 이름, 스케줄(cron 표현식), 실행할 프롬프트를 입력</pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-head">
+          <div class="step-dot">3</div>
+          <div class="step-label">cron 표현식 이해하기</div>
+        </div>
+        <div class="step-body">
+          <p>스케줄은 <strong>cron 표현식</strong>으로 설정합니다. 5개의 숫자/기호로 "언제 실행할지"를 정의합니다.</p>
+          <div class="code-block">
+            <div class="code-label">
+              <span>cron 표현식 구조</span>
+              <button class="copy-btn" onclick="copyCode(this)">복사</button>
+            </div>
+            <pre># ┌─── 분 (0-59)
+# │ ┌─── 시 (0-23)
+# │ │ ┌─── 일 (1-31)
+# │ │ │ ┌─── 월 (1-12)
+# │ │ │ │ ┌─── 요일 (0=일, 1=월, ..., 6=토)
+# │ │ │ │ │
+# * * * * *</pre>
+          </div>
+          <table>
+            <thead>
+              <tr><th>표현식</th><th>의미</th><th>예시 용도</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><code>0 9 * * *</code></td><td>매일 오전 9시</td><td>아침 브리핑</td></tr>
+              <tr><td><code>0 9 * * 1</code></td><td>매주 월요일 9시</td><td>주간 리포트</td></tr>
+              <tr><td><code>30 22 * * *</code></td><td>매일 밤 10시 30분</td><td>데일리 공지</td></tr>
+              <tr><td><code>0 */2 * * *</code></td><td>2시간마다 정각</td><td>파일 동기화</td></tr>
+              <tr><td><code>0 9 * * 1-5</code></td><td>평일만 9시</td><td>업무일 전용</td></tr>
+            </tbody>
+          </table>
+          <div class="alert info">
+            <span class="alert-icon">⏰</span>
+            <span>시간대는 OpenClaw 설정의 timezone을 따릅니다. 한국이면 <code>Asia/Seoul</code> (KST).</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-head">
+          <div class="step-dot">4</div>
+          <div class="step-label">크론잡 관리</div>
+        </div>
+        <div class="step-body">
+          <div class="code-block">
+            <div class="code-label">
+              <span>자주 쓰는 명령어</span>
+              <button class="copy-btn" onclick="copyCode(this)">복사</button>
+            </div>
+            <pre># 목록 보기
+openclaw cron list
+
+# 특정 크론잡 비활성화 (삭제 안 함, 잠시 끄기)
+openclaw cron disable &lt;크론잡ID&gt;
+
+# 다시 활성화
+openclaw cron enable &lt;크론잡ID&gt;
+
+# 크론잡 삭제
+openclaw cron delete &lt;크론잡ID&gt;
+
+# 즉시 한 번 실행 (테스트용)
+openclaw cron trigger &lt;크론잡ID&gt;</pre>
+          </div>
+          <div class="alert warn">
+            <span class="alert-icon">⚠️</span>
+            <span><strong>주의</strong>: 같은 시각(같은 시:분)에 여러 크론잡이 실행되면 충돌할 수 있어요. 추가 전에 <code>openclaw cron list</code>로 기존 스케줄을 확인하세요.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-head">
+          <div class="step-dot">5</div>
+          <div class="step-label">현비스 실전 크론잡 예시</div>
+        </div>
+        <div class="step-body">
+          <table>
+            <thead>
+              <tr><th>크론잡</th><th>스케줄</th><th>하는 일</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>인풋 수집</td><td>매일 10,12,14,16,20,22시</td><td>Google Drive에서 팀원 인풋 파일 다운로드</td></tr>
+              <tr><td>인풋 정리</td><td>위 시각 +10분</td><td>다운로드된 파일 분석 → 브랜드별 md에 반영</td></tr>
+              <tr><td>데일리 공지</td><td>매일 22:30</td><td>슬랙에 하루 요약 자동 발송</td></tr>
+              <tr><td>AI 뉴스</td><td>평일 09:00</td><td>커머스/AI 뉴스 수집 → 대시보드 + DM</td></tr>
+              <tr><td>캘린더 브리핑</td><td>매일 08:05</td><td>Google Calendar 일정 요약 DM</td></tr>
+              <tr><td>미팅 리마인더</td><td>매 15분</td><td>30분 전 일정 알림</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Google Drive 연동 -->
+  <div id="s11" class="section">
+    <div class="section-header">
+      <div class="section-num" style="background: linear-gradient(135deg, #15803d, #4ade80);">☁️</div>
+      <div>
+        <div class="section-title">Google Drive 연동 (rclone)</div>
+        <div class="section-sub">팀 파일을 서버와 자동 동기화하는 도구</div>
+      </div>
+    </div>
+
+    <p style="color: var(--text2); font-size: 14px; margin-bottom: 16px;">
+      <strong>rclone</strong>은 Google Drive, Dropbox 등 클라우드 저장소의 파일을 서버에서 자동으로 올리고 내리는 프로그램입니다. OpenClaw 어시스턴트가 Drive에 있는 팀 파일을 직접 읽고 쓸 수 있게 해줍니다.
+    </p>
+
+    <div class="info-grid">
+      <div class="info-card">
+        <div class="info-card-title">왜 필요한가요?</div>
+        <div class="info-card-text">팀원이 Google Drive에 파일을 올리면, 어시스턴트가 자동으로 가져와서 분석·정리합니다. 사람이 "파일 확인해줘" 할 필요 없이 <strong>크론잡과 결합하면 완전 자동화</strong>됩니다.</div>
+      </div>
+      <div class="info-card">
+        <div class="info-card-title">현비스는 어떻게 쓰나요?</div>
+        <div class="info-card-text">팀원 인풋 파일 자동 수집, 브랜드별 데이터 동기화, 대시보드 콘텐츠 업데이트 등 <strong>하루 6회 이상 자동 동기화</strong>를 rclone으로 돌리고 있어요.</div>
+      </div>
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-head">
+          <div class="step-dot">1</div>
+          <div class="step-label">rclone 설치</div>
+        </div>
+        <div class="step-body">
+          <div class="code-block">
+            <div class="code-label">
+              <span>Ubuntu 터미널</span>
+              <button class="copy-btn" onclick="copyCode(this)">복사</button>
+            </div>
+            <pre>curl https://rclone.org/install.sh | sudo bash</pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-head">
+          <div class="step-dot">2</div>
+          <div class="step-label">Google Drive 연결</div>
+        </div>
+        <div class="step-body">
+          <div class="code-block">
+            <div class="code-label">
+              <span>Ubuntu 터미널</span>
+              <button class="copy-btn" onclick="copyCode(this)">복사</button>
+            </div>
+            <pre>rclone config</pre>
+          </div>
+          <p>대화형 설정이 시작됩니다. 주요 단계:</p>
+          <ol style="color: var(--text2); font-size: 13.5px; padding-left: 20px; line-height: 2;">
+            <li><code>n</code> (New remote) 선택</li>
+            <li>이름 입력 — 예: <code>gdrive</code> (개인 Drive) 또는 <code>gteam</code> (Shared Drive)</li>
+            <li>Storage type: <code>drive</code> (Google Drive) 선택</li>
+            <li>Client ID/Secret: 비워두면 기본값 사용 (대부분 OK)</li>
+            <li>Scope: <code>1</code> (Full access) 선택</li>
+            <li>인증: 브라우저가 열리면 Google 계정으로 로그인 + 허용</li>
+            <li>Shared Drive 사용 시: <code>Configure this as a Shared Drive?</code> → <code>y</code></li>
+          </ol>
+          <div class="alert info">
+            <span class="alert-icon">💡</span>
+            <span>WSL2에서는 브라우저가 안 열릴 수 있어요. 그때는 표시되는 URL을 윈도우 브라우저에 직접 복붙해서 인증하면 됩니다.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-head">
+          <div class="step-dot">3</div>
+          <div class="step-label">연결 확인</div>
+        </div>
+        <div class="step-body">
+          <div class="code-block">
+            <div class="code-label">
+              <span>Ubuntu 터미널</span>
+              <button class="copy-btn" onclick="copyCode(this)">복사</button>
+            </div>
+            <pre># Drive 루트 폴더 목록 확인
+rclone ls gdrive: --max-depth 1
+
+# Shared Drive라면
+rclone ls gteam: --max-depth 1</pre>
+          </div>
+          <p>파일 목록이 보이면 연결 성공입니다.</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-head">
+          <div class="step-dot">4</div>
+          <div class="step-label">파일 가져오기 / 올리기</div>
+        </div>
+        <div class="step-body">
+          <div class="code-block">
+            <div class="code-label">
+              <span>자주 쓰는 명령어</span>
+              <button class="copy-btn" onclick="copyCode(this)">복사</button>
+            </div>
+            <pre># Drive → 로컬 (다운로드)
+rclone copy gteam:03_input/ ~/workspace/gdrive-sync/03_input/
+
+# 로컬 → Drive (업로드)
+rclone copy ~/workspace/gdrive-sync/result.md gteam:00_ops/</pre>
+          </div>
+          <div class="alert warn">
+            <span class="alert-icon">🚨</span>
+            <span><strong>절대 주의</strong>: <code>rclone sync</code>는 사용 금지! sync는 대상 폴더에 없는 파일을 <strong>삭제</strong>합니다. 항상 <code>rclone copy</code>만 사용하세요. 실수로 sync 쓰면 Drive 파일이 날아갈 수 있어요.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-head">
+          <div class="step-dot">5</div>
+          <div class="step-label">크론잡과 연결 (자동 동기화)</div>
+        </div>
+        <div class="step-body">
+          <p>크론잡에서 rclone 명령을 실행하면 정기적으로 자동 동기화됩니다. 예를 들어:</p>
+          <div class="code-block">
+            <div class="code-label">
+              <span>크론잡 프롬프트 예시</span>
+              <button class="copy-btn" onclick="copyCode(this)">복사</button>
+            </div>
+            <pre>Google Drive 03_input 폴더에서 새 파일 가져와서
+~/workspace/gdrive-sync/03_input/에 저장해줘.
+이미 있는 파일은 건너뛰고.</pre>
+          </div>
+          <p>어시스턴트가 <code>rclone copy</code> 명령을 실행해서 처리합니다.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 비용 관리 -->
+  <div id="s12" class="section">
+    <div class="section-header">
+      <div class="section-num" style="background: linear-gradient(135deg, #7c3aed, #c084fc);">💰</div>
+      <div>
+        <div class="section-title">비용 관리 실전 가이드</div>
+        <div class="section-sub">AI 모델별 비용 차이와 절약 전략</div>
+      </div>
+    </div>
+
+    <p style="color: var(--text2); font-size: 14px; margin-bottom: 16px;">
+      OpenClaw는 Claude AI 모델을 사용합니다. 모델마다 <strong>성능과 비용이 다르기</strong> 때문에, 작업에 맞는 모델을 선택하면 품질은 유지하면서 비용을 크게 줄일 수 있습니다.
+    </p>
+
+    <!-- 모델 비교 -->
+    <h3 style="font-size: 15px; color: var(--text); margin-bottom: 12px;">1. AI 모델 비교</h3>
+
+    <div class="info-grid" style="grid-template-columns: 1fr 1fr 1fr; margin-bottom: 20px;">
+      <div class="info-card" style="border-color: rgba(251,191,36,0.3);">
+        <div class="info-card-title" style="color: var(--yellow);">⚡ Haiku (경량)</div>
+        <div class="info-card-text">
+          <strong>가장 저렴 · 가장 빠름</strong><br>
+          간단한 질문, 분류, 요약<br>
+          "오늘 날씨?", "이거 번역해줘"<br><br>
+          <span style="color: var(--green);">💲 비용: 낮음</span>
+        </div>
+      </div>
+      <div class="info-card" style="border-color: rgba(108,127,247,0.3);">
+        <div class="info-card-title" style="color: var(--accent);">🎯 Sonnet (균형)</div>
+        <div class="info-card-text">
+          <strong>가성비 최고 · 대부분의 업무</strong><br>
+          콘텐츠 작성, 분석, 코딩<br>
+          "광고 카피 만들어줘", "데이터 분석해줘"<br><br>
+          <span style="color: var(--yellow);">💲💲 비용: 중간</span>
+        </div>
+      </div>
+      <div class="info-card" style="border-color: rgba(167,139,250,0.3);">
+        <div class="info-card-title" style="color: var(--accent2);">🧠 Opus (고성능)</div>
+        <div class="info-card-text">
+          <strong>최고 성능 · 복잡한 판단</strong><br>
+          전략 수립, 복잡한 분석, 의사결정<br>
+          "시장 진입 전략 짜줘", "법률 검토해줘"<br><br>
+          <span style="color: var(--red);">💲💲💲 비용: 높음</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="alert info">
+      <span class="alert-icon">💡</span>
+      <span><strong>현비스 기준</strong>: 메인 세션은 Opus (복잡한 판단 필요), 크론잡/자동화는 Sonnet (충분한 성능에 비용 절약), 단순 작업은 Haiku로 분배하고 있어요.</span>
+    </div>
+
+    <!-- 비용 확인 -->
+    <h3 style="font-size: 15px; color: var(--text); margin: 24px 0 12px;">2. 현재 비용 확인하기</h3>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-head">
+          <div class="step-dot">A</div>
+          <div class="step-label">슬랙에서 확인</div>
+        </div>
+        <div class="step-body">
+          <p>슬랙 DM에서 어시스턴트에게 아래처럼 입력하세요:</p>
+          <div class="code-block">
+            <div class="code-label">
+              <span>슬랙 DM</span>
+              <button class="copy-btn" onclick="copyCode(this)">복사</button>
+            </div>
+            <pre>/status</pre>
+          </div>
+          <p>현재 모델, 토큰 사용량, 캐시 히트율 등이 표시됩니다.</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-head">
+          <div class="step-dot">B</div>
+          <div class="step-label">모델 변경</div>
+        </div>
+        <div class="step-body">
+          <div class="code-block">
+            <div class="code-label">
+              <span>슬랙 DM</span>
+              <button class="copy-btn" onclick="copyCode(this)">복사</button>
+            </div>
+            <pre># Sonnet으로 변경 (가성비 추천)
+/model sonnet
+
+# Haiku로 변경 (비용 최소)
+/model haiku
+
+# Opus로 변경 (최고 성능)
+/model opus</pre>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 절약 팁 -->
+    <h3 style="font-size: 15px; color: var(--text); margin: 24px 0 12px;">3. 비용 절약 실전 팁</h3>
+
+    <table>
+      <thead>
+        <tr><th>전략</th><th>방법</th><th>절약 효과</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>스레드 사용</strong></td>
+          <td>채널에 바로 쓰지 말고 항상 스레드에서 작업</td>
+          <td>컨텍스트 격리로 토큰 <strong>50~70% 절약</strong></td>
+        </tr>
+        <tr>
+          <td><strong>모델 분리</strong></td>
+          <td>간단한 건 Haiku, 복잡한 건 Sonnet/Opus</td>
+          <td>모델별 비용 차이 <strong>5~15배</strong></td>
+        </tr>
+        <tr>
+          <td><strong>새 스레드</strong></td>
+          <td>50개 메시지 넘으면 요약 후 새 스레드 시작</td>
+          <td>긴 히스토리 누적 방지</td>
+        </tr>
+        <tr>
+          <td><strong>명확한 지시</strong></td>
+          <td>"3줄로 요약해줘" 같이 구체적으로 요청</td>
+          <td>불필요한 출력 토큰 절약</td>
+        </tr>
+        <tr>
+          <td><strong>캐시 활용</strong></td>
+          <td>같은 스레드에서 연속 작업 (맥락 캐시 적용)</td>
+          <td>캐시 히트 시 <strong>비용 90% 할인</strong></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- 토큰 개념 -->
+    <h3 style="font-size: 15px; color: var(--text); margin: 24px 0 12px;">4. 토큰이란?</h3>
+
+    <div class="info-grid">
+      <div class="info-card">
+        <div class="info-card-title">토큰 = AI가 읽는 단위</div>
+        <div class="info-card-text">한국어 1글자 ≈ 1~2토큰, 영어 1단어 ≈ 1토큰. <strong>보내는 것(input)</strong>과 <strong>받는 것(output)</strong> 모두 토큰으로 계산됩니다.</div>
+      </div>
+      <div class="info-card">
+        <div class="info-card-title">캐시 히트율</div>
+        <div class="info-card-text"><code>/status</code>에서 <strong>Cache hit</strong>이 높을수록 좋아요. 같은 맥락을 재사용하면 비용이 <strong>1/10</strong>로 줄어듭니다. 스레드 안에서 연속 작업하면 자동으로 캐시가 적용돼요.</div>
+      </div>
+    </div>
+
+    <div class="alert good">
+      <span class="alert-icon">✅</span>
+      <span><strong>셋업토큰(구독제) 사용 시</strong>: 월 정액 내에서 자유롭게 사용 가능합니다. 그래도 모델 분리와 스레드 관리로 응답 속도를 높이고, 컨텍스트 오버플로우를 방지하는 게 좋아요.</span>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 트러블슈팅 -->
+  <div id="s13" class="section">
+    <div class="section-header">
+      <div class="section-num" style="background: linear-gradient(135deg, #b91c1c, #f87171);">🚨</div>
+      <div>
+        <div class="section-title">먹통일 때 복구 가이드</div>
+        <div class="section-sub">현비스(또는 새 어시스턴트)가 응답 없을 때</div>
+      </div>
+    </div>
+
+    <div class="alert info">
+      <span class="alert-icon">💡</span>
+      <span><strong>80%는 이걸로 해결됩니다</strong> — <code>openclaw gateway restart</code> 한 줄. 안 되면 아래 단계를 순서대로 따라하세요.</span>
+    </div>
+
+    <!-- 1. 상태 확인 -->
+    <div class="step" style="margin-bottom: 14px;">
+      <div class="step-head">
+        <div class="step-dot">1</div>
+        <div class="step-label">현재 상태 확인</div>
+      </div>
+      <div class="step-body">
+        <p>먼저 게이트웨이가 살아있는지 확인합니다.</p>
+        <div class="code-block">
+          <div class="code-label">
+            <span>Ubuntu 터미널 (WSL)</span>
+            <button class="copy-btn" onclick="copyCode(this)">복사</button>
+          </div>
+          <pre>openclaw gateway status</pre>
+        </div>
+        <div class="info-grid" style="margin-top: 12px;">
+          <div class="info-card" style="border-color: rgba(52,211,153,0.3);">
+            <div class="info-card-title" style="color: var(--green);">✅ 정상일 때</div>
+            <div class="info-card-text">
+              <code>Runtime: running</code><br>
+              <code>RPC probe: ok</code><br>
+              <code>Listening: 127.0.0.1:18789</code>
+            </div>
+          </div>
+          <div class="info-card" style="border-color: rgba(248,113,113,0.3);">
+            <div class="info-card-title" style="color: var(--red);">❌ 비정상일 때</div>
+            <div class="info-card-text">
+              <code>Runtime: unknown</code><br>
+              <code>RPC probe: failed</code><br>
+              <code>Gateway not reachable</code>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. 기본 복구 -->
+    <div class="step" style="margin-bottom: 14px;">
+      <div class="step-head">
+        <div class="step-dot">2</div>
+        <div class="step-label">기본 복구 (먼저 이것부터)</div>
+      </div>
+      <div class="step-body">
+        <div class="code-block">
+          <div class="code-label">
+            <span>Ubuntu 터미널</span>
+            <button class="copy-btn" onclick="copyCode(this)">복사</button>
+          </div>
+          <pre># 1단계: 재시작
+openclaw gateway restart
+
+# 10초 기다린 후 상태 확인
+openclaw gateway status
+
+# 그래도 안 되면 자동 진단
+openclaw doctor
+
+# 진단 후 다시 재시작
+openclaw gateway restart</pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. 로그 확인 -->
+    <div class="step" style="margin-bottom: 14px;">
+      <div class="step-head">
+        <div class="step-dot">3</div>
+        <div class="step-label">로그 확인</div>
+      </div>
+      <div class="step-body">
+        <p>재시작해도 안 되면 로그에서 원인을 찾아보세요.</p>
+        <div class="code-block">
+          <div class="code-label">
+            <span>Ubuntu 터미널</span>
+            <button class="copy-btn" onclick="copyCode(this)">복사</button>
+          </div>
+          <pre># 실시간 로그 보기
+openclaw logs --follow
+
+# 에러 로그만 보기
+cat ~/.openclaw/logs/gateway.err.log | tail -50</pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. 에러별 해결 -->
+    <div class="step" style="margin-bottom: 14px;">
+      <div class="step-head">
+        <div class="step-dot">4</div>
+        <div class="step-label">자주 나오는 에러 &amp; 해결법</div>
+      </div>
+      <div class="step-body">
+
+        <div style="margin-bottom: 18px;">
+          <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+            <span class="tag no">4-1</span>
+            <strong style="font-size: 14px;"><code>invalid_auth</code> — 슬랙 인증 실패</strong>
+          </div>
+          <p style="margin-bottom: 8px;"><strong>원인:</strong> 슬랙 토큰이 만료되거나 잘못 입력됨</p>
+          <p style="margin-bottom: 8px;"><strong>해결:</strong></p>
+          <ol style="color: var(--text2); font-size: 13.5px; padding-left: 20px; margin-bottom: 10px; line-height: 2;">
+            <li><a href="https://api.slack.com/apps" style="color: var(--accent);">api.slack.com/apps</a> → 앱 선택 → <strong>OAuth &amp; Permissions</strong> → <strong>Reinstall to Workspace</strong></li>
+            <li>새 Bot Token(<code>xoxb-...</code>) 복사</li>
+            <li>Basic Information → App-Level Token(<code>xapp-...</code>) 확인</li>
+          </ol>
+          <div class="code-block">
+            <div class="code-label">
+              <span>Ubuntu 터미널</span>
+              <button class="copy-btn" onclick="copyCode(this)">복사</button>
+            </div>
+            <pre># 토큰 재설정
+openclaw configure --section channels
+
+# 재시작
+openclaw gateway restart</pre>
+          </div>
+        </div>
+
+        <div style="margin-bottom: 18px;">
+          <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+            <span class="tag no">4-2</span>
+            <strong style="font-size: 14px;"><code>missing_scope</code> — 슬랙 권한 부족</strong>
+          </div>
+          <p style="margin-bottom: 8px;"><strong>원인:</strong> 슬랙 앱에 Bot Token Scope가 빠져 있음</p>
+          <p style="margin-bottom: 8px;"><strong>해결:</strong> <a href="https://api.slack.com/apps" style="color: var(--accent);">api.slack.com/apps</a> → 앱 → OAuth &amp; Permissions → Bot Scopes에 아래 항목 모두 확인:</p>
+          <div class="code-block">
+            <div class="code-label"><span>필수 Scopes</span></div>
+            <pre>app_mentions:read  channels:history  channels:read
+chat:write         files:read        files:write
+groups:history     groups:read
+im:history         im:read           im:write
+mpim:history       mpim:read
+reactions:read     reactions:write   users:read</pre>
+          </div>
+          <p>Scope 추가 후 반드시 <strong>Reinstall to Workspace</strong> 클릭!</p>
+        </div>
+
+        <div style="margin-bottom: 18px;">
+          <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+            <span class="tag no">4-3</span>
+            <strong style="font-size: 14px;"><code>Gateway not reachable</code> — 게이트웨이 안 뜸</strong>
+          </div>
+          <p style="margin-bottom: 8px;"><strong>원인:</strong> 프로세스가 죽었거나 포트(18789) 충돌</p>
+          <div class="code-block">
+            <div class="code-label">
+              <span>Ubuntu 터미널</span>
+              <button class="copy-btn" onclick="copyCode(this)">복사</button>
+            </div>
+            <pre># 포그라운드로 직접 실행해서 에러 확인
+openclaw gateway --port 18789
+
+# 포트 충돌 확인
+ss -tlnp | grep 18789
+
+# 기존 프로세스 강제 종료 후 재시작
+kill -9 $(ss -tlnp | grep 18789 | awk '{print $6}' | grep -oP '(?<=pid=)\d+')
+openclaw gateway restart</pre>
+          </div>
+        </div>
+
+        <div style="margin-bottom: 4px;">
+          <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+            <span class="tag warn">4-4</span>
+            <strong style="font-size: 14px;"><code>API overload</code> / <code>rate_limit</code> — Claude 과부하</strong>
+          </div>
+          <p style="margin-bottom: 8px;"><strong>원인:</strong> 요청이 너무 많거나 Anthropic 서버 이슈</p>
+          <p><strong>해결:</strong> 잠시 기다렸다가 재시도. 계속되면 모델을 Sonnet으로 변경:</p>
+          <div class="code-block">
+            <div class="code-label">
+              <span>Ubuntu 터미널</span>
+              <button class="copy-btn" onclick="copyCode(this)">복사</button>
+            </div>
+            <pre>openclaw configure --section model
+# anthropic/claude-sonnet-4-6 선택</pre>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- 5. 완전 초기화 -->
+    <div class="step" style="margin-bottom: 14px;">
+      <div class="step-head">
+        <div class="step-dot">5</div>
+        <div class="step-label">완전 초기화 (최후의 수단)</div>
+      </div>
+      <div class="step-body">
+        <div class="alert warn">
+          <span class="alert-icon">⚠️</span>
+          <span>이 방법은 설정을 처음부터 다시 입력해야 합니다. 반드시 <strong>백업 먼저!</strong></span>
+        </div>
+        <div class="code-block">
+          <div class="code-label">
+            <span>Ubuntu 터미널</span>
+            <button class="copy-btn" onclick="copyCode(this)">복사</button>
+          </div>
+          <pre># 1. 설정 백업
+cp ~/.openclaw/openclaw.json ~/.openclaw/openclaw.json.backup
+
+# 2. 처음부터 다시 설정
+openclaw onboard --install-daemon
+
+# 3. 슬랙 토큰, Claude 셋업토큰 등 다시 입력</pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- 6. 명령어 모음 -->
+    <div style="margin-top: 20px;">
+      <h3 style="font-size: 15px; color: var(--text); margin-bottom: 12px;">⌨️ 빠른 참고 명령어</h3>
+      <table>
+        <tr><th>명령어</th><th>설명</th></tr>
+        <tr><td><code>openclaw gateway status</code></td><td>상태 확인</td></tr>
+        <tr><td><code>openclaw gateway restart</code></td><td>재시작 (먹통 시 1순위)</td></tr>
+        <tr><td><code>openclaw gateway start</code></td><td>시작</td></tr>
+        <tr><td><code>openclaw gateway stop</code></td><td>중지</td></tr>
+        <tr><td><code>openclaw doctor</code></td><td>자동 진단</td></tr>
+        <tr><td><code>openclaw logs --follow</code></td><td>실시간 로그</td></tr>
+        <tr><td><code>openclaw configure --section channels</code></td><td>슬랙 토큰 재설정</td></tr>
+        <tr><td><code>openclaw configure --section model</code></td><td>AI 모델 변경</td></tr>
+        <tr><td><code>npm update -g openclaw</code></td><td>버전 업데이트</td></tr>
+      </table>
+    </div>
+
+  </div>
+
+  <!-- s14: 핵심 개념 -->
+  <div id="s14" class="section">
+    <div class="section-header">
+      <div class="section-num" style="background: linear-gradient(135deg, #7c3aed, #a78bfa);">🧠</div>
+      <div>
+        <div class="section-title">핵심 개념 (비개발자용)</div>
+        <div class="section-sub">자주 나오는 용어를 쉽게 설명합니다</div>
+      </div>
+    </div>
+
+    <div class="concept-grid">
+      <div class="concept-card">
+        <div class="concept-card-head">
+          <span class="concept-card-emoji">💬</span>
+          <span class="concept-card-name">세션 (Session)</span>
+        </div>
+        <div class="concept-card-summary">현비스와의 대화 창</div>
+        <div class="concept-card-detail">슬랙 DM 하나가 1개 세션입니다. 세션이 끝나면(타임아웃 or 리셋) 기억이 초기화됩니다. 그래서 중요한 건 MEMORY.md에 저장해둬야 합니다.</div>
+      </div>
+      <div class="concept-card">
+        <div class="concept-card-head">
+          <span class="concept-card-emoji">⏰</span>
+          <span class="concept-card-name">크론잡 (Cron Job)</span>
+        </div>
+        <div class="concept-card-summary">정해진 시간에 자동 실행되는 예약 작업</div>
+        <div class="concept-card-detail">예: 매시간 드라이브 동기화, 매일 22:30 데일리 공지. "알람 시계"처럼 설정해두면 현비스가 자동으로 실행합니다.</div>
+      </div>
+      <div class="concept-card">
+        <div class="concept-card-head">
+          <span class="concept-card-emoji">🤖</span>
+          <span class="concept-card-name">에이전트 (Agent)</span>
+        </div>
+        <div class="concept-card-summary">개발 작업을 대신 해주는 AI 코더</div>
+        <div class="concept-card-detail">현비스가 지시하면 코드를 작성하고 배포합니다. Claude Code CLI 기반으로 터미널에서 실행되며, 코딩/파일 수정/배포까지 자동으로 처리합니다.</div>
+      </div>
+      <div class="concept-card">
+        <div class="concept-card-head">
+          <span class="concept-card-emoji">🧬</span>
+          <span class="concept-card-name">서브에이전트 (Sub-agent)</span>
+        </div>
+        <div class="concept-card-summary">현비스가 다른 AI를 불러 병렬로 일시키는 것</div>
+        <div class="concept-card-detail">복잡한 작업을 여러 AI가 동시에 처리합니다. 장점: 빠름. 단점: 가끔 먹통이거나 컨텍스트 공유가 안 될 수 있음.</div>
+      </div>
+      <div class="concept-card">
+        <div class="concept-card-head">
+          <span class="concept-card-emoji">🖥️</span>
+          <span class="concept-card-name">tmux 세션</span>
+        </div>
+        <div class="concept-card-summary">터미널 창을 백그라운드에서 유지하는 기술</div>
+        <div class="concept-card-detail">에이전트가 tmux 안에서 작업합니다. 터미널을 닫아도 작업이 계속 돌아가요. 여러 에이전트를 동시에 실행할 때 필수.</div>
+      </div>
+      <div class="concept-card">
+        <div class="concept-card-head">
+          <span class="concept-card-emoji">🚪</span>
+          <span class="concept-card-name">게이트웨이 (Gateway)</span>
+        </div>
+        <div class="concept-card-summary">슬랙과 현비스를 연결하는 다리</div>
+        <div class="concept-card-detail">이게 꺼지면 현비스가 슬랙 메시지를 못 받습니다. <code>openclaw gateway status</code>로 확인. 시스템 서비스로 자동 시작 설정 가능.</div>
+      </div>
+      <div class="concept-card">
+        <div class="concept-card-head">
+          <span class="concept-card-emoji">🧠</span>
+          <span class="concept-card-name">메모리 시스템</span>
+        </div>
+        <div class="concept-card-summary">AI의 기억 관리 체계</div>
+        <div class="concept-card-detail"><code>memory/날짜.md</code> = 오늘 일기, <code>MEMORY.md</code> = 장기 기억, <code>LEARNINGS.md</code> = 실수에서 배운 교훈. 세션이 끝나도 이 파일들은 유지됩니다.</div>
+      </div>
+      <div class="concept-card">
+        <div class="concept-card-head">
+          <span class="concept-card-emoji">🛠️</span>
+          <span class="concept-card-name">스킬 (Skill)</span>
+        </div>
+        <div class="concept-card-summary">현비스의 재사용 가능한 전문 기능</div>
+        <div class="concept-card-detail"><code>input-organizer</code>(인풋 정리), <code>sprint-manager</code>(스프린트 관리) 등. <code>.skills/</code> 폴더에 레시피처럼 저장되어 있습니다.</div>
+      </div>
+      <div class="concept-card">
+        <div class="concept-card-head">
+          <span class="concept-card-emoji">📊</span>
+          <span class="concept-card-name">data.js / generate-data.py</span>
+        </div>
+        <div class="concept-card-summary">워크스페이스 가이드 사이트의 데이터</div>
+        <div class="concept-card-detail">매시간 Google Drive에서 폴더 구조를 읽어서 <code>data.js</code>를 자동 생성합니다. <code>generate-data.py</code>가 이 작업을 수행.</div>
+      </div>
+      <div class="concept-card">
+        <div class="concept-card-head">
+          <span class="concept-card-emoji">🌐</span>
+          <span class="concept-card-name">Vercel</span>
+        </div>
+        <div class="concept-card-summary">웹사이트를 인터넷에 올려주는 서비스</div>
+        <div class="concept-card-detail">대시보드, 워크스페이스 가이드 등이 Vercel에 배포되어 있습니다. GitHub 연동 또는 CLI로 배포합니다.</div>
+      </div>
+      <div class="concept-card">
+        <div class="concept-card-head">
+          <span class="concept-card-emoji">☁️</span>
+          <span class="concept-card-name">rclone</span>
+        </div>
+        <div class="concept-card-summary">Google Drive 파일을 서버에서 자동 동기화</div>
+        <div class="concept-card-detail">파일 올리기/내리기/목록 조회를 CLI로 자동화합니다. 크론잡과 함께 매시간 Drive 데이터를 서버에 동기화할 때 사용.</div>
+      </div>
+      <div class="concept-card">
+        <div class="concept-card-head">
+          <span class="concept-card-emoji">🪙</span>
+          <span class="concept-card-name">토큰 (Token)</span>
+        </div>
+        <div class="concept-card-summary">AI가 읽고 쓰는 글자의 단위</div>
+        <div class="concept-card-detail">한글 1글자 ≈ 2~3 토큰. AI에게 보내는 메시지 + 파일 내용 + AI의 답변 전부 토큰으로 계산됩니다. 토큰을 많이 쓸수록 비용이 올라가요.</div>
+      </div>
+      <div class="concept-card">
+        <div class="concept-card-head">
+          <span class="concept-card-emoji">📦</span>
+          <span class="concept-card-name">컨텍스트 윈도우 (Context Window)</span>
+        </div>
+        <div class="concept-card-summary">AI가 한 번에 기억할 수 있는 범위</div>
+        <div class="concept-card-detail">책상 크기라고 생각하세요. 대화가 길어지면 책상이 꽉 차서 오래된 내용을 치워야 합니다. 이때 "컴팩션"이 일어나요.</div>
+      </div>
+      <div class="concept-card">
+        <div class="concept-card-head">
+          <span class="concept-card-emoji">🗜️</span>
+          <span class="concept-card-name">컴팩션 (Compaction)</span>
+        </div>
+        <div class="concept-card-summary">긴 대화를 요약해서 공간을 확보하는 것</div>
+        <div class="concept-card-detail">컨텍스트 윈도우가 가득 차면 OpenClaw이 이전 대화를 자동 요약합니다. 핵심만 남기고 세부 내용은 사라져요. 중요한 결정은 반드시 MEMORY.md에 저장해야 하는 이유입니다.</div>
+      </div>
+      <div class="concept-card">
+        <div class="concept-card-head">
+          <span class="concept-card-emoji">📥</span>
+          <span class="concept-card-name">자동주입 (Auto-injection)</span>
+        </div>
+        <div class="concept-card-summary">세션 시작 시 파일이 자동으로 AI에게 전달되는 것</div>
+        <div class="concept-card-detail">AGENTS.md, SOUL.md 등 8개 파일이 매 세션마다 자동으로 "책상 위에 올라갑니다". AI가 안 읽을 수가 없어요. 반면 RULES.md 같은 파일은 직접 "서랍에서 꺼내 읽으라"고 지시해야 합니다.</div>
+      </div>
+      <div class="concept-card">
+        <div class="concept-card-head">
+          <span class="concept-card-emoji">💓</span>
+          <span class="concept-card-name">하트비트 (Heartbeat)</span>
+        </div>
+        <div class="concept-card-summary">30분마다 "이상 없나?" 자동 점검</div>
+        <div class="concept-card-detail">HEARTBEAT.md 파일에 점검 항목을 정의해두면 OpenClaw이 30분마다 체크합니다. 이상 없으면 조용히, 문제 있을 때만 DM으로 알려줍니다.</div>
+      </div>
+      <div class="concept-card">
+        <div class="concept-card-head">
+          <span class="concept-card-emoji">🧪</span>
+          <span class="concept-card-name">모델 (Model)</span>
+        </div>
+        <div class="concept-card-summary">AI의 두뇌 종류</div>
+        <div class="concept-card-detail"><strong>Opus</strong> = 선임 직원 (깊은 분석, 복잡한 판단, 비쌈). <strong>Sonnet</strong> = 주니어 (빠르고 저렴, 단순 반복에 적합). 작업 종류에 따라 자동 배분됩니다.</div>
+      </div>
+      <div class="concept-card">
+        <div class="concept-card-head">
+          <span class="concept-card-emoji">📝</span>
+          <span class="concept-card-name">프롬프트 (Prompt)</span>
+        </div>
+        <div class="concept-card-summary">AI에게 보내는 지시문</div>
+        <div class="concept-card-detail">여러분이 슬랙에 쓰는 메시지도 프롬프트입니다. AGENTS.md, SOUL.md 같은 파일도 "시스템 프롬프트"로 매번 AI에게 전달됩니다. 잘 쓸수록 AI 결과가 좋아져요.</div>
+      </div>
+      <div class="concept-card">
+        <div class="concept-card-head">
+          <span class="concept-card-emoji">📂</span>
+          <span class="concept-card-name">워크스페이스 (Workspace)</span>
+        </div>
+        <div class="concept-card-summary">AI 비서의 작업 폴더</div>
+        <div class="concept-card-detail"><code>~/.openclaw/workspace/</code> 안에 모든 설정 파일, 메모리, 스크립트가 들어있습니다. AI 비서의 "사무실"이라고 보면 됩니다.</div>
+      </div>
+      <div class="concept-card">
+        <div class="concept-card-head">
+          <span class="concept-card-emoji">🔌</span>
+          <span class="concept-card-name">API (Application Programming Interface)</span>
+        </div>
+        <div class="concept-card-summary">프로그램끼리 대화하는 창구</div>
+        <div class="concept-card-detail">슬랙 API로 메시지 읽기/보내기, Google Calendar API로 일정 조회, Notion API로 DB 조작. 현비스가 외부 서비스를 "손"처럼 쓸 수 있게 해주는 통로입니다.</div>
+      </div>
+      <div class="concept-card">
+        <div class="concept-card-head">
+          <span class="concept-card-emoji">🔐</span>
+          <span class="concept-card-name">OAuth (인증 프로토콜)</span>
+        </div>
+        <div class="concept-card-summary">비밀번호 없이 안전하게 로그인하는 방식</div>
+        <div class="concept-card-detail">"Google로 로그인" 버튼과 같은 원리. 현비스가 Claude API를 쓸 때도 OAuth 토큰으로 인증합니다. 토큰이 만료되면 재인증이 필요해요.</div>
+      </div>
+      <div class="concept-card">
+        <div class="concept-card-head">
+          <span class="concept-card-emoji">📱</span>
+          <span class="concept-card-name">노드 (Node)</span>
+        </div>
+        <div class="concept-card-summary">OpenClaw에 연결된 기기</div>
+        <div class="concept-card-detail">스마트폰, 다른 PC 등을 OpenClaw에 페어링하면 카메라 촬영, 화면 캡처, 위치 조회 등을 원격으로 할 수 있습니다.</div>
+      </div>
+      <div class="concept-card">
+        <div class="concept-card-head">
+          <span class="concept-card-emoji">🌿</span>
+          <span class="concept-card-name">Git / GitHub</span>
+        </div>
+        <div class="concept-card-summary">코드 변경 이력을 관리하는 시스템</div>
+        <div class="concept-card-detail">파일 수정 내역을 저장하는 "타임머신". GitHub에 올리면(push) Vercel이 자동으로 웹사이트를 업데이트합니다. 대시보드가 업데이트되는 원리예요.</div>
+      </div>
+      <div class="concept-card">
+        <div class="concept-card-head">
+          <span class="concept-card-emoji">🔄</span>
+          <span class="concept-card-name">채널 라우팅 (Channel Routing)</span>
+        </div>
+        <div class="concept-card-summary">여러 메신저를 하나의 AI로 연결하는 것</div>
+        <div class="concept-card-detail">슬랙, 텔레그램, 시그널 등 여러 채널에서 온 메시지를 하나의 AI 비서가 처리합니다. 어디서 말을 걸어도 같은 비서가 응답해요.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- s15: 현비스는 어떻게 움직이나? -->
+  <div id="s15" class="section">
+    <div class="section-header">
+      <div class="section-num" style="background: linear-gradient(135deg, #6c7ff7, #a78bfa);">⚙️</div>
+      <div>
+        <div class="section-title">현비스는 어떻게 움직이나?</div>
+        <div class="section-sub">비개발자를 위한 작동 원리 설명</div>
+      </div>
+    </div>
+
+    <!-- 1. 요청 → 응답 흐름도 -->
+    <div class="subsection-title">요청에서 응답까지</div>
+    <p class="desc-text">그로밋이 슬랙에 메시지를 보내면, 현비스가 답하기까지 이런 과정을 거칩니다.</p>
+
+    <div class="flow-diagram">
+      <div class="flow-node">
+        <div class="flow-node-emoji">👤</div>
+        <div class="flow-node-label">그로밋</div>
+        <div class="flow-node-sub">슬랙 메시지</div>
+      </div>
+      <div class="flow-arrow"></div>
+      <div class="flow-node">
+        <div class="flow-node-emoji">🚪</div>
+        <div class="flow-node-label">게이트웨이</div>
+        <div class="flow-node-sub">메시지 수신</div>
+      </div>
+      <div class="flow-arrow"></div>
+      <div class="flow-node">
+        <div class="flow-node-emoji">🔍</div>
+        <div class="flow-node-label">세션 확인</div>
+        <div class="flow-node-sub">찾기/생성</div>
+      </div>
+      <div class="flow-arrow"></div>
+      <div class="flow-node highlight">
+        <div class="flow-node-emoji">📎</div>
+        <div class="flow-node-label">자동주입</div>
+        <div class="flow-node-sub">8개 파일 로드</div>
+      </div>
+      <div class="flow-arrow"></div>
+      <div class="flow-node highlight">
+        <div class="flow-node-emoji">🧠</div>
+        <div class="flow-node-label">AI 모델</div>
+        <div class="flow-node-sub">응답 생성</div>
+      </div>
+      <div class="flow-arrow"></div>
+      <div class="flow-node">
+        <div class="flow-node-emoji">💬</div>
+        <div class="flow-node-label">슬랙 전송</div>
+        <div class="flow-node-sub">답변 도착</div>
+      </div>
+    </div>
+
+    <div class="alert info">
+      <span class="alert-icon">💡</span>
+      <span>이 과정이 보통 3~15초 안에 일어납니다. 복잡한 작업(코딩, 분석)은 더 오래 걸릴 수 있습니다.</span>
+    </div>
+
+    <!-- 2. 세션 개념 -->
+    <div class="subsection-title">세션이란?</div>
+    <p class="desc-text">세션은 <strong>대화 창 하나</strong>입니다. 카카오톡 채팅방 하나를 떠올리면 됩니다. 세션이 시작되면 현비스가 "부팅"을 합니다.</p>
+
+    <div class="info-grid">
+      <div class="info-card">
+        <div class="info-card-title">세션 시작 시</div>
+        <div class="info-card-text">자동주입 파일 8개를 읽고 → 규칙/성격/기억을 불러옴 → "부팅 시퀀스" 완료 → 대화 준비 완료</div>
+      </div>
+      <div class="info-card">
+        <div class="info-card-title">세션 종료 조건</div>
+        <div class="info-card-text"><strong>타임아웃:</strong> 일정 시간 대화 없으면 자동 종료<br><strong>/reset:</strong> 수동으로 세션 초기화</div>
+      </div>
+      <div class="info-card">
+        <div class="info-card-title">컴팩션</div>
+        <div class="info-card-text">대화가 길어지면 AI가 이전 내용을 <strong>요약</strong>해서 공간을 확보합니다. 책의 앞부분을 요약본으로 바꾸는 것과 같습니다.</div>
+      </div>
+      <div class="info-card">
+        <div class="info-card-title">하트비트</div>
+        <div class="info-card-text">30분마다 "이상 없나?" 전체 시스템을 자동 체크합니다. 문제 발견 시 슬랙으로 알림을 보냅니다.</div>
+      </div>
+    </div>
+
+    <!-- 3. 자동주입 vs 수동읽기 -->
+    <div class="subsection-title">자동주입 vs 수동읽기</div>
+    <p class="desc-text">현비스가 참고하는 문서는 두 종류입니다. 비유하면:</p>
+
+    <div class="info-grid">
+      <div class="info-card" style="border-color: rgba(52,211,153,0.3);">
+        <div class="info-card-title" style="color: var(--green);">📎 자동주입 = 책상 위 서류</div>
+        <div class="info-card-text">세션 시작 시 <strong>무조건</strong> 읽습니다. 항상 눈앞에 있으니 규칙을 잘 지킵니다.</div>
+      </div>
+      <div class="info-card" style="border-color: rgba(251,191,36,0.3);">
+        <div class="info-card-title" style="color: var(--yellow);">✋ 수동읽기 = 서랍 속 서류</div>
+        <div class="info-card-text">필요할 때만 꺼내 봅니다. 까먹고 안 볼 수도 있어서, 중요한 건 자동주입에 넣어야 합니다.</div>
+      </div>
+    </div>
+
+    <p class="desc-text" style="margin-top:14px;"><strong>자동주입 8개 파일:</strong></p>
+    <table>
+      <thead>
+        <tr><th>파일</th><th>역할</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><code>AGENTS.md</code></td><td>운영 매뉴얼 — 부팅 순서, 메모리 정책, 팀 운영 규칙</td></tr>
+        <tr><td><code>SOUL.md</code></td><td>성격과 톤 — 간결하게, 용어 설명 병기, 채널별 톤 조절</td></tr>
+        <tr><td><code>USER.md</code></td><td>사용자 정보 — 그로밋의 브랜드, 팀, 선호 사항</td></tr>
+        <tr><td><code>IDENTITY.md</code></td><td>현비스 정체성 — 이름, 이모지, 아바타 설정</td></tr>
+        <tr><td><code>TOOLS.md</code></td><td>도구 설정 — 카메라, SSH, TTS 등 연동 메모</td></tr>
+        <tr><td><code>HEARTBEAT.md</code></td><td>하트비트 규칙 — 30분 주기 체크 항목 정의</td></tr>
+        <tr><td><code>BOOTSTRAP.md</code></td><td>부팅 순서 — 어떤 파일을 어떤 순서로 읽을지 지시</td></tr>
+        <tr><td><code>MEMORY.md</code></td><td>장기 기억 — 중요 결정, 프로젝트 히스토리</td></tr>
+      </tbody>
+    </table>
+
+    <p class="desc-text" style="margin-top:14px;"><strong>수동읽기 파일:</strong></p>
+    <table>
+      <thead>
+        <tr><th>파일</th><th>역할</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><code>RULES.md</code></td><td>절대 규칙 — 삭제 금지, rclone copy only 등</td></tr>
+        <tr><td><code>gromit-rules.md</code></td><td>채널/팀/라우팅/브랜드 규칙 (SSOT)</td></tr>
+        <tr><td><code>LEARNINGS.md</code></td><td>과거 실수 기록 — 같은 실수 반복 방지</td></tr>
+        <tr><td><code>memory/날짜.md</code></td><td>일일 기록 — 오늘 있었던 일 메모</td></tr>
+      </tbody>
+    </table>
+
+    <div class="alert warn">
+      <span class="alert-icon">⚠️</span>
+      <span>자동주입 파일이 빠지면 현비스가 규칙을 모르는 채로 대화합니다. 마치 신입이 매뉴얼 없이 출근한 것과 같습니다.</span>
+    </div>
+
+    <!-- 4. 모델 개념 -->
+    <div class="subsection-title">AI 모델이란?</div>
+    <p class="desc-text">AI 모델은 <strong>두뇌의 종류</strong>입니다. 회사에 선임과 주니어가 있는 것처럼, AI에도 등급이 있습니다.</p>
+
+    <div class="model-grid">
+      <div class="model-card" style="border-color: rgba(167,139,250,0.3);">
+        <div class="model-card-name">🟣 Opus (선임)</div>
+        <div class="model-card-sub">고성능 · 깊은 사고</div>
+        <div class="model-card-detail">복잡한 코딩, 분석, 의사결정에 사용합니다. 정확하지만 느리고 비용이 높습니다. 현비스의 개발 작업에 사용됩니다.</div>
+      </div>
+      <div class="model-card" style="border-color: rgba(108,127,247,0.3);">
+        <div class="model-card-name">🔵 Sonnet (주니어)</div>
+        <div class="model-card-sub">빠름 · 가성비</div>
+        <div class="model-card-detail">일반 대화, 간단한 질문, 서브에이전트, 크론잡에 사용합니다. 빠르고 저렴하지만 복잡한 추론은 약합니다.</div>
+      </div>
+    </div>
+
+    <table>
+      <thead>
+        <tr><th>상황</th><th>사용 모델</th><th>이유</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>일반 대화</td><td><span class="tag rec">Sonnet</span></td><td>빠른 응답이 중요</td></tr>
+        <tr><td>코딩/개발</td><td><span class="tag warn">Opus</span></td><td>정확성이 중요</td></tr>
+        <tr><td>서브에이전트</td><td><span class="tag rec">Sonnet</span></td><td>병렬 작업, 비용 절약</td></tr>
+        <tr><td>크론잡</td><td><span class="tag rec">Sonnet</span></td><td>반복 작업, 비용 절약</td></tr>
+      </tbody>
+    </table>
+
+    <!-- 5. 크론잡 vs 하트비트 -->
+    <div class="subsection-title">크론잡 vs 하트비트</div>
+    <p class="desc-text">둘 다 자동 실행이지만 목적이 다릅니다.</p>
+
+    <div class="info-grid">
+      <div class="info-card">
+        <div class="info-card-title">⏰ 크론잡</div>
+        <div class="info-card-text"><strong>정해진 시간에 특정 작업</strong>을 실행합니다.<br>예: 매일 22:30 데일리 공지, 매시간 드라이브 동기화, 매일 09:00 인풋 체크<br><br>비유: <strong>알람 시계</strong> — "이 시간에 이것을 해라"</div>
+      </div>
+      <div class="info-card">
+        <div class="info-card-title">💓 하트비트</div>
+        <div class="info-card-text"><strong>30분마다 전체 상태를 점검</strong>합니다.<br>예: 게이트웨이 살아있나? 크론잡 밀린 거 없나? 에러 난 거 없나?<br><br>비유: <strong>순찰 경비</strong> — "30분마다 이상 없나 돌아보기"</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- s16: 워크스페이스 문서 가이드 -->
+  <div id="s16" class="section">
+    <div class="section-header">
+      <div class="section-num" style="background: linear-gradient(135deg, #6c7ff7, #34d399);">📂</div>
+      <div>
+        <div class="section-title">워크스페이스 문서 가이드</div>
+        <div class="section-sub">각 파일이 뭐하는 건지, 비개발자용 설명</div>
+      </div>
+    </div>
+
+    <p class="desc-text">현비스 워크스페이스에는 여러 <code>.md</code> 파일이 있습니다. 각 파일은 현비스에게 특정 역할을 부여합니다. 아래에서 하나씩 알아봅시다.</p>
+
+    <div class="alert info">
+      <span class="alert-icon">📌</span>
+      <span><strong>🔄 자동주입</strong> = 세션 시작 시 자동으로 읽히는 파일&nbsp;&nbsp;|&nbsp;&nbsp;<strong>✋ 수동읽기</strong> = 필요할 때만 읽는 파일</span>
+    </div>
+
+    <div class="file-guide-grid">
+      <!-- AGENTS.md -->
+      <div class="file-guide-card">
+        <div class="file-guide-head">
+          <span style="font-size:20px;">🤖</span>
+          <span class="file-guide-name">AGENTS.md</span>
+          <span class="file-guide-badge auto">🔄 자동주입</span>
+        </div>
+        <div class="file-guide-summary">운영 매뉴얼</div>
+        <div class="file-guide-detail">현비스의 부팅 순서, 메모리 정책, 팀 운영 방법이 적혀있습니다. 회사의 "사원 핸드북"과 같습니다.</div>
+        <div class="file-guide-impact">⛔ 이 파일이 없으면? 현비스가 부팅 순서를 모르고, 팀 운영 규칙을 어길 수 있습니다.</div>
+      </div>
+
+      <!-- SOUL.md -->
+      <div class="file-guide-card">
+        <div class="file-guide-head">
+          <span style="font-size:20px;">💜</span>
+          <span class="file-guide-name">SOUL.md</span>
+          <span class="file-guide-badge auto">🔄 자동주입</span>
+        </div>
+        <div class="file-guide-summary">성격과 말투</div>
+        <div class="file-guide-detail">간결하게 말하기, 전문 용어에 쉬운 설명 병기, 채널별 톤 조절 등 현비스의 "성격"을 정의합니다.</div>
+        <div class="file-guide-impact">⛔ 이 파일이 없으면? 현비스가 딱딱하거나 장황하게 말할 수 있습니다.</div>
+      </div>
+
+      <!-- USER.md -->
+      <div class="file-guide-card">
+        <div class="file-guide-head">
+          <span style="font-size:20px;">👤</span>
+          <span class="file-guide-name">USER.md</span>
+          <span class="file-guide-badge auto">🔄 자동주입</span>
+        </div>
+        <div class="file-guide-summary">사용자(그로밋) 정보</div>
+        <div class="file-guide-detail">그로밋의 브랜드 목록, 팀 구성, 선호 사항 등 사용자 맥락을 담고 있습니다. "고객 카드"와 같습니다.</div>
+        <div class="file-guide-impact">⛔ 이 파일이 없으면? 현비스가 그로밋의 브랜드나 팀 구조를 모르고 엉뚱한 답을 할 수 있습니다.</div>
+      </div>
+
+      <!-- IDENTITY.md -->
+      <div class="file-guide-card">
+        <div class="file-guide-head">
+          <span style="font-size:20px;">🪪</span>
+          <span class="file-guide-name">IDENTITY.md</span>
+          <span class="file-guide-badge auto">🔄 자동주입</span>
+        </div>
+        <div class="file-guide-summary">현비스 정체성</div>
+        <div class="file-guide-detail">현비스의 이름, 이모지(🐾), 아바타 설정 등 "나는 누구인가"를 정의합니다.</div>
+        <div class="file-guide-impact">⛔ 이 파일이 없으면? 현비스가 자기 이름이나 이모지를 모르고, 다른 AI처럼 행동할 수 있습니다.</div>
+      </div>
+
+      <!-- TOOLS.md -->
+      <div class="file-guide-card">
+        <div class="file-guide-head">
+          <span style="font-size:20px;">🛠️</span>
+          <span class="file-guide-name">TOOLS.md</span>
+          <span class="file-guide-badge auto">🔄 자동주입</span>
+        </div>
+        <div class="file-guide-summary">도구 사용 메모</div>
+        <div class="file-guide-detail">카메라, SSH, TTS 등 연동된 도구의 사용법과 설정을 기록합니다. "장비 매뉴얼"과 같습니다.</div>
+        <div class="file-guide-impact">⛔ 이 파일이 없으면? 도구 연동 시 설정을 매번 물어보거나 잘못된 설정으로 실행할 수 있습니다.</div>
+      </div>
+
+      <!-- HEARTBEAT.md -->
+      <div class="file-guide-card">
+        <div class="file-guide-head">
+          <span style="font-size:20px;">💓</span>
+          <span class="file-guide-name">HEARTBEAT.md</span>
+          <span class="file-guide-badge auto">🔄 자동주입</span>
+        </div>
+        <div class="file-guide-summary">30분 주기 체크 규칙</div>
+        <div class="file-guide-detail">하트비트 때 무엇을 체크할지, 이상 발견 시 어떻게 알릴지를 정의합니다. "순찰 체크리스트"입니다.</div>
+        <div class="file-guide-impact">⛔ 이 파일이 없으면? 시스템 이상을 감지하지 못하고, 장애가 방치될 수 있습니다.</div>
+      </div>
+
+      <!-- BOOTSTRAP.md -->
+      <div class="file-guide-card">
+        <div class="file-guide-head">
+          <span style="font-size:20px;">🚀</span>
+          <span class="file-guide-name">BOOTSTRAP.md</span>
+          <span class="file-guide-badge auto">🔄 자동주입</span>
+        </div>
+        <div class="file-guide-summary">부팅 순서 정의</div>
+        <div class="file-guide-detail">세션 시작 시 어떤 파일을 어떤 순서로 읽을지 지시합니다. 컴퓨터의 "BIOS 설정"과 같습니다.</div>
+        <div class="file-guide-impact">⛔ 이 파일이 없으면? 부팅 순서가 엉키면 중요한 규칙을 빠뜨릴 수 있습니다.</div>
+      </div>
+
+      <!-- MEMORY.md -->
+      <div class="file-guide-card">
+        <div class="file-guide-head">
+          <span style="font-size:20px;">🧠</span>
+          <span class="file-guide-name">MEMORY.md</span>
+          <span class="file-guide-badge auto">🔄 자동주입</span>
+        </div>
+        <div class="file-guide-summary">장기 기억</div>
+        <div class="file-guide-detail">중요한 결정, 프로젝트 히스토리, 핵심 맥락을 저장합니다. 세션이 바뀌어도 유지되는 "업무 일지"입니다.</div>
+        <div class="file-guide-impact">⛔ 이 파일이 없으면? 과거 결정이나 프로젝트 맥락을 매번 새로 설명해야 합니다.</div>
+      </div>
+
+      <div class="divider" style="margin: 8px 0;"></div>
+
+      <!-- RULES.md -->
+      <div class="file-guide-card">
+        <div class="file-guide-head">
+          <span style="font-size:20px;">🚫</span>
+          <span class="file-guide-name">RULES.md</span>
+          <span class="file-guide-badge manual">✋ 수동읽기</span>
+        </div>
+        <div class="file-guide-summary">절대 규칙</div>
+        <div class="file-guide-detail">삭제 금지, rclone copy only, 특정 파일 건드리지 말 것 등 "절대로 어기면 안 되는 규칙"입니다.</div>
+        <div class="file-guide-impact">⛔ 이 파일을 안 읽으면? 금지된 행동(파일 삭제, 위험한 명령)을 실행할 위험이 있습니다.</div>
+      </div>
+
+      <!-- gromit-rules.md -->
+      <div class="file-guide-card">
+        <div class="file-guide-head">
+          <span style="font-size:20px;">📏</span>
+          <span class="file-guide-name">gromit-rules.md</span>
+          <span class="file-guide-badge manual">✋ 수동읽기</span>
+        </div>
+        <div class="file-guide-summary">채널/팀/브랜드 규칙 (SSOT)</div>
+        <div class="file-guide-detail">채널 라우팅, 팀 구조, 브랜드별 규칙의 단일 진실 소스(SSOT)입니다. 변경 시 이 파일만 수정하면 됩니다.</div>
+        <div class="file-guide-impact">⛔ 이 파일을 안 읽으면? 채널 라우팅을 틀리거나, 브랜드 규칙을 혼동할 수 있습니다.</div>
+      </div>
+
+      <!-- LEARNINGS.md -->
+      <div class="file-guide-card">
+        <div class="file-guide-head">
+          <span style="font-size:20px;">📝</span>
+          <span class="file-guide-name">LEARNINGS.md</span>
+          <span class="file-guide-badge manual">✋ 수동읽기</span>
+        </div>
+        <div class="file-guide-summary">과거 실수 기록</div>
+        <div class="file-guide-detail">과거에 했던 실수와 그로부터 배운 교훈을 기록합니다. 같은 실수를 반복하지 않기 위한 "오답 노트"입니다.</div>
+        <div class="file-guide-impact">⛔ 이 파일을 안 읽으면? 같은 실수를 또 할 수 있습니다 (예: 잘못된 명령어 재사용).</div>
+      </div>
+
+      <!-- memory/날짜.md -->
+      <div class="file-guide-card">
+        <div class="file-guide-head">
+          <span style="font-size:20px;">📅</span>
+          <span class="file-guide-name">memory/날짜.md</span>
+          <span class="file-guide-badge manual">✋ 수동읽기</span>
+        </div>
+        <div class="file-guide-summary">일일 기록</div>
+        <div class="file-guide-detail">오늘 있었던 일, 처리한 작업, 발견한 이슈를 기록합니다. 매일 새 파일이 생기는 "업무 일기"입니다.</div>
+        <div class="file-guide-impact">⛔ 이 파일을 안 읽으면? 오늘 있었던 일의 맥락을 모른 채 대화하게 됩니다.</div>
+      </div>
+    </div>
+
+    <div class="alert good">
+      <span class="alert-icon">✅</span>
+      <span>자동주입 파일 8개는 세션마다 자동으로 읽히니 신경 쓸 필요 없습니다. 수동읽기 파일은 현비스가 필요할 때 스스로 읽지만, 중요한 규칙 변경 시에는 "RULES.md 다시 읽어봐"라고 말해주면 확실합니다.</span>
+    </div>
+  </div>
+
+</div><!-- /container -->
+
+<!-- Glossary FAB -->
+<button class="glossary-fab" id="glossary-fab" onclick="toggleGlossary()" aria-label="용어 사전 열기">📖</button>
+
+<!-- Glossary overlay -->
+<div class="glossary-overlay" id="glossary-overlay" onclick="toggleGlossary()"></div>
+
+<!-- Glossary panel -->
+<div class="glossary-panel" id="glossary-panel">
+  <div class="glossary-panel-header">
+    <span class="glossary-panel-title">📖 용어 사전</span>
+    <button class="glossary-close" onclick="toggleGlossary()">&times;</button>
+  </div>
+  <div class="glossary-search">
+    <input type="text" id="glossary-search-input" placeholder="용어 검색..." oninput="filterGlossary(this.value)">
+  </div>
+  <div class="glossary-cats" id="glossary-cats"></div>
+  <div class="glossary-list" id="glossary-list"></div>
+</div>
+
+<footer class="footer">
+  <p>그로밋팀 내부용 가이드 · OpenClaw v2026.3.2 기준 · 현비스 작성</p>
+  <p style="margin-top: 6px;">문의: 슬랙 또는 현비스 DM</p>
+</footer>
+
+<script>
+function copyCode(btn) {
+  const pre = btn.closest('.code-block').querySelector('pre');
+  navigator.clipboard.writeText(pre.textContent.trim()).then(() => {
+    btn.textContent = '복사됨 ✓';
+    btn.classList.add('copied');
+    setTimeout(() => {
+      btn.textContent = '복사';
+      btn.classList.remove('copied');
+    }, 2000);
+  });
+}
+
+// Glossary — 6 categories, 42 terms
+const GLOSSARY = [
+  // AI/에이전트
+  { cat: '🤖 AI/에이전트', term: 'Session (세션)', def: '현비스와 나누는 대화 1회. 타임아웃되거나 리셋되면 메모리가 초기화됨' },
+  { cat: '🤖 AI/에이전트', term: 'Agent (에이전트)', def: 'AI 코더. 지시받아 코드 작성·배포를 혼자 처리하는 AI 프로세스' },
+  { cat: '🤖 AI/에이전트', term: 'Sub-agent (서브에이전트)', def: '메인 AI가 복잡한 작업을 분업하기 위해 불러오는 보조 AI' },
+  { cat: '🤖 AI/에이전트', term: 'Spawn (스폰)', def: '서브에이전트를 생성·실행하는 것. 게임에서 캐릭터 소환하듯이' },
+  { cat: '🤖 AI/에이전트', term: 'Prompt (프롬프트)', def: 'AI에게 보내는 지시문 또는 질문. 슬랙 메시지도 프롬프트임' },
+  { cat: '🤖 AI/에이전트', term: 'Context (컨텍스트)', def: 'AI가 현재 알고 있는 대화 맥락. 가득 차면 앞 내용이 사라짐 (컴팩션 발생)' },
+  { cat: '🤖 AI/에이전트', term: 'Model (모델)', def: 'AI 두뇌 종류. Opus=선임(고성능/비쌈), Sonnet=주니어(빠름/저렴). 작업에 따라 배분' },
+  { cat: '🤖 AI/에이전트', term: 'Compaction (컴팩션)', def: '컨텍스트가 가득 차면 AI가 이전 대화를 요약해 공간을 확보하는 것' },
+
+  // 메모리/기억
+  { cat: '🧠 메모리/기억', term: 'Memory (메모리)', def: '세션 종료 후에도 유지되는 장기 기억. MEMORY.md에 파일로 저장됨' },
+  { cat: '🧠 메모리/기억', term: 'SSOT (Single Source of Truth)', def: '딱 한 곳만 공식 기준으로 쓰는 것. 수정 시 이 파일만 변경하면 모든 곳에 반영' },
+  { cat: '🧠 메모리/기억', term: 'Bootstrap / 자동주입', def: '세션 시작 시 OpenClaw이 AI에게 자동으로 넣어주는 파일 8개. 매번 강제 로드됨' },
+  { cat: '🧠 메모리/기억', term: 'Workspace (워크스페이스)', def: 'AI 비서의 작업 폴더 (~/.openclaw/workspace/). 모든 설정·메모리·스크립트가 여기에 있음' },
+  { cat: '🧠 메모리/기억', term: 'Skill (스킬)', def: 'AI 전문 기능 모듈. input-organizer, sprint-manager 등 재사용 레시피. .skills/ 폴더에 저장' },
+  { cat: '🧠 메모리/기억', term: 'Description (디스크립션)', def: '한 줄 설명. 약어 옆에 "이게 뭔지" 짧게 붙이는 것' },
+
+  // 자동화
+  { cat: '⏰ 자동화', term: 'Cron / Cron Job (크론)', def: '정해진 시간에 자동 실행되는 예약 작업. 예: 매일 22:30 데일리 공지' },
+  { cat: '⏰ 자동화', term: 'Heartbeat (하트비트)', def: '30분마다 시스템 상태를 자동 체크하는 기능. 이상 있을 때만 DM 알림' },
+  { cat: '⏰ 자동화', term: 'Trigger (트리거)', def: '자동 실행 조건. "파일 올라오면 실행", "특정 시간에 실행" 같은 것' },
+  { cat: '⏰ 자동화', term: 'Timeout (타임아웃)', def: '작업이 너무 오래 걸려서 강제 종료되는 것. 크론잡이 timeout되면 다음 실행까지 대기' },
+  { cat: '⏰ 자동화', term: 'Dry Run (드라이런)', def: '실제 실행 전 테스트 모드. 아무것도 변경되지 않음. 크론잡 등록 전 검증용' },
+  { cat: '⏰ 자동화', term: 'Hook (훅)', def: '특정 이벤트 발생 시 자동으로 실행되는 코드. 예: Git push 시 자동 배포 시작' },
+
+  // 시스템/개발
+  { cat: '🔧 시스템/개발', term: 'API (에이피아이)', def: '프로그램끼리 대화하는 창구. 슬랙·Google·Notion 등과 현비스가 연결되는 방식' },
+  { cat: '🔧 시스템/개발', term: 'Token (토큰)', def: '① AI 처리 단위 (한글 1자 ≈ 2~3토큰) ② 인증키 (API 접근 비밀번호)' },
+  { cat: '🔧 시스템/개발', term: 'Deploy (배포)', def: '만든 코드·앱을 인터넷에 올리는 것. GitHub push → Vercel 자동 배포가 우리 방식' },
+  { cat: '🔧 시스템/개발', term: 'Gateway (게이트웨이)', def: '메신저(슬랙)와 AI를 연결하는 다리. 꺼지면 현비스가 메시지를 못 받음' },
+  { cat: '🔧 시스템/개발', term: 'Log (로그)', def: '실행 기록. 뭔가 잘못됐을 때 원인을 찾는 용도. ~/.openclaw/logs/에 저장' },
+  { cat: '🔧 시스템/개발', term: 'Fallback (폴백)', def: '주요 방법이 실패했을 때 쓰는 대안. 예: API 실패 시 파일 직접 읽기' },
+  { cat: '🔧 시스템/개발', term: 'Push / Pull', def: '코드 올리기(push) / 내려받기(pull). GitHub 저장소와 로컬 간 동기화' },
+  { cat: '🔧 시스템/개발', term: 'tmux', def: '터미널 세션 유지 도구. 터미널을 닫아도 작업이 백그라운드에서 계속 실행됨' },
+  { cat: '🔧 시스템/개발', term: 'Webhook', def: '이벤트 발생 시 자동으로 알림을 전송하는 기능. 일방향 자동 알림' },
+  { cat: '🔧 시스템/개발', term: 'OAuth (인증)', def: '"Google로 로그인"과 같은 원리. 비밀번호 없이 안전하게 인증하는 방식' },
+  { cat: '🔧 시스템/개발', term: 'Vercel', def: '웹사이트 배포 플랫폼. 대시보드, 가이드 사이트 등을 인터넷에 올리는 서비스' },
+  { cat: '🔧 시스템/개발', term: 'WSL2', def: 'Windows에서 Linux를 실행하는 환경. OpenClaw는 WSL2 안에 설치' },
+
+  // 파일/Drive
+  { cat: '📁 파일/Drive', term: 'rclone (알클론)', def: 'Google Drive ↔ 서버 파일을 자동 동기화하는 프로그램. copy만 사용 (sync 금지!)' },
+  { cat: '📁 파일/Drive', term: 'gteam', def: '그로밋팀 Google Shared Drive의 rclone 리모트 이름. 서버에서 gteam: 으로 접근' },
+  { cat: '📁 파일/Drive', term: '_inbox.md', def: '팀원 인풋 처리 완료 로그. 처리된 파일은 여기에 기록됨. 인풋 중복 방지 SSOT' },
+  { cat: '📁 파일/Drive', term: 'Archive (아카이브)', def: '오래된 파일을 _archive/ 폴더로 이동해 보관하는 것. 삭제 아님, 정리의 개념' },
+  { cat: '📁 파일/Drive', term: '_guides/', def: '브랜드 폴더 내 원본 파일 보관 폴더. 분석 완료된 원본 xlsx, pptx 등이 여기로 이동' },
+
+  // 문서/기획
+  { cat: '📋 문서/기획', term: 'PRD (Product Requirements Document)', def: '기능 개발 전 "뭘 만들지" 정의하는 문서. 에이전트팀에 전달하는 작업 지시서' },
+  { cat: '📋 문서/기획', term: 'KPI (Key Performance Indicator)', def: '핵심 성과 지표. 목표 달성 여부를 측정하는 숫자' },
+  { cat: '📋 문서/기획', term: 'Sprint (스프린트)', def: '2주 단위 집중 실행 사이클. KICKOFF → 데일리 체크 → REVIEW 순서로 진행' },
+  { cat: '📋 문서/기획', term: 'DM (Direct Message)', def: '1:1 비공개 메시지. 현비스가 그로밋에게 보내는 알림은 기본적으로 DM' },
+  { cat: '📋 문서/기획', term: 'Thread (스레드)', def: '메시지에 달리는 답글 묶음. 한 작업 = 한 스레드 원칙으로 컨텍스트 분리 + 토큰 절약' },
+  { cat: '📋 문서/기획', term: 'Channel Routing (채널 라우팅)', def: '슬랙·텔레그램 등 여러 채널에서 온 메시지를 하나의 AI로 연결하는 것' },
+];
+
+const CATS = ['전체', ...new Set(GLOSSARY.map(g => g.cat))];
+let activeCat = '전체';
+
+function renderCatTabs() {
+  const tabs = document.getElementById('glossary-cats');
+  tabs.innerHTML = CATS.map(c =>
+    '<button class="gcat-btn' + (c === activeCat ? ' active' : '') + '" onclick="setCat(\'' + c.replace(/'/g, "\\'") + '\')">' + c + '</button>'
+  ).join('');
+}
+
+function setCat(cat) {
+  activeCat = cat;
+  renderCatTabs();
+  applyFilter();
+}
+
+function applyFilter() {
+  const q = (document.getElementById('glossary-search-input').value || '').toLowerCase().trim();
+  let items = activeCat === '전체' ? GLOSSARY : GLOSSARY.filter(g => g.cat === activeCat);
+  if (q) items = items.filter(g => g.term.toLowerCase().includes(q) || g.def.toLowerCase().includes(q));
+  renderGlossary(items);
+}
+
+function renderGlossary(items) {
+  const list = document.getElementById('glossary-list');
+  if (items.length === 0) {
+    list.innerHTML = '<div class="glossary-empty">검색 결과가 없습니다</div>';
+    return;
+  }
+  list.innerHTML = items.map(g =>
+    '<div class="glossary-item"><div class="glossary-term">' + g.term + '</div><div class="glossary-def">' + g.def + '</div></div>'
+  ).join('');
+}
+
+function filterGlossary(q) { applyFilter(); }
+
+function toggleGlossary() {
+  const panel = document.getElementById('glossary-panel');
+  const overlay = document.getElementById('glossary-overlay');
+  const isOpen = panel.classList.contains('active');
+  if (isOpen) {
+    panel.classList.remove('active');
+    overlay.classList.remove('active');
+  } else {
+    panel.classList.add('active');
+    overlay.classList.add('active');
+    document.getElementById('glossary-search-input').value = '';
+    activeCat = '전체';
+    renderCatTabs();
+    applyFilter();
+    setTimeout(() => document.getElementById('glossary-search-input').focus(), 300);
+  }
+}
+
+// Swipe to close (right swipe)
+(function() {
+  const panel = document.getElementById('glossary-panel');
+  let startX = 0, startY = 0;
+  panel.addEventListener('touchstart', function(e) {
+    startX = e.touches[0].clientX;
+    startY = e.touches[0].clientY;
+  }, { passive: true });
+  panel.addEventListener('touchend', function(e) {
+    const dx = e.changedTouches[0].clientX - startX;
+    const dy = Math.abs(e.changedTouches[0].clientY - startY);
+    if (dx > 60 && dy < 80) toggleGlossary();
+  }, { passive: true });
+})();
+
+// Init
+renderCatTabs();
+applyFilter();
+</script>
+
+</body>
+</html>
