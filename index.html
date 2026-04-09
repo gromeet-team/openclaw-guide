@@ -754,7 +754,7 @@
   <a href="#s0">📋 개요</a>
   <a href="#s1">1. WSL2 설치</a>
   <a href="#s2">2. OpenClaw 설치</a>
-  <a href="#s3">3. 인증(셋업토큰)</a>
+  <a href="#s3">3. 인증(GPT OAuth)</a>
   <a href="#s4">4. 슬랙 연동</a>
   <a href="#s5">5. 워크스페이스 설정</a>
   <a href="#s6">6. 게이트웨이 서비스</a>
@@ -782,8 +782,14 @@
     </div>
 
     <div class="version-row">
-      <span class="vbadge latest"><span class="vbadge-dot"></span> 최신 버전 2026.3.2</span>
-      <span class="vbadge current"><span class="vbadge-dot"></span> 현비스 기준 버전 2026.2.23</span>
+      <span class="vbadge latest"><span class="vbadge-dot"></span> 최신 버전 2026.3.8</span>
+      <span class="vbadge current"><span class="vbadge-dot"></span> 현비스 기준 버전 2026.3.8</span>
+    </div>
+
+    <div class="alert warn" style="margin-bottom: 16px;">
+      <span class="alert-icon">📝</span>
+      <span><strong>왜 Claude 기준에서 GPT 기준으로 바꿨나?</strong><br>
+      2026-04-05에 Anthropic <code>billing/usage reject</code>와 <code>Credit balance is too low</code> 이슈가 실제 운영 크론 실패로 이어졌고, 같은 날 코어 운영은 이미 <code>openai-codex/gpt-5.4</code>로 안정 운용 가능하다고 확인됐습니다. 그래서 현재 문서는 <strong>GPT-first</strong>를 기본으로 정리하고, Claude는 필요 시 fallback/선택 옵션으로만 다룹니다.</span>
     </div>
 
     <div class="info-grid">
@@ -797,11 +803,11 @@
       </div>
       <div class="info-card">
         <div class="info-card-title">OpenClaw란?</div>
-        <div class="info-card-text">AI 어시스턴트(Claude)를 슬랙·텔레그램 등 채널에 연결하고, 크론잡·자동화를 돌릴 수 있게 해주는 <strong>런타임 프레임워크</strong>.</div>
+        <div class="info-card-text">AI 어시스턴트(GPT 중심)를 슬랙·텔레그램 등 채널에 연결하고, 크론잡·자동화를 돌릴 수 있게 해주는 <strong>런타임 프레임워크</strong>.</div>
       </div>
       <div class="info-card">
-        <div class="info-card-title">셋업토큰이란?</div>
-        <div class="info-card-text">Claude 구독(Max/Pro)을 이미 가지고 있을 때 사용하는 <strong>인증 방식</strong>. API 키 구매 없이 구독을 그대로 활용.</div>
+        <div class="info-card-title">GPT OAuth란?</div>
+        <div class="info-card-text">ChatGPT/OpenAI 계정으로 로그인해서 OpenClaw에서 <strong>GPT를 쓰는 인증 방식</strong>. API 키 없이 구독 계정 기반으로 연결합니다.</div>
       </div>
     </div>
 
@@ -963,70 +969,29 @@ EOF</pre>
     <div class="section-header">
       <div class="section-num">3</div>
       <div>
-        <div class="section-title">인증 설정 — 셋업토큰 방식</div>
-        <div class="section-sub">Claude 구독(Max/Pro)을 가지고 있다면 이 방식</div>
+        <div class="section-title">인증 설정 — GPT OAuth 방식</div>
+        <div class="section-sub">현재 그로밋팀 기본 운영 경로</div>
       </div>
     </div>
 
+    <div class="alert info">
+      <span class="alert-icon">🔐</span>
+      <span><strong>현재 표준은 OpenAI Codex OAuth</strong>입니다. 즉, ChatGPT/OpenAI 계정으로 로그인해서 <code>openai-codex/gpt-5.4</code>를 쓰는 방식입니다. API 키와 다르고, 기존 Claude setup-token은 이제 기본 경로가 아닙니다.</span>
+    </div>
+
     <div class="alert warn">
-      <span class="alert-icon">⚠️</span>
-      <span><strong>API 키 방식과 다릅니다.</strong> API 키는 별도 결제(사용량 기반)이고, 셋업토큰은 기존 Claude 구독을 그대로 사용하는 방식이에요. 현비스는 셋업토큰 방식으로 운영 중.</span>
+      <span class="alert-icon">📌</span>
+      <span><strong>운영 정책 요약</strong><br>① 메인 운영 기준은 GPT-first, ② 결제/좌석은 회사 기준으로 정리, ③ Claude는 필요할 때만 fallback 또는 비교 실험용으로 사용합니다.</span>
     </div>
 
     <div class="steps">
       <div class="step">
         <div class="step-head">
           <div class="step-dot">A</div>
-          <div class="step-label">Claude Code CLI 설치 (셋업토큰 발급용)</div>
-        </div>
-        <div class="step-body">
-          <p>셋업토큰은 Claude Code CLI가 발급해줍니다. 먼저 설치:</p>
-          <div class="code-block">
-            <div class="code-label">
-              <span>Ubuntu 터미널</span>
-              <button class="copy-btn" onclick="copyCode(this)">복사</button>
-            </div>
-            <pre>npm install -g @anthropic-ai/claude-code</pre>
-          </div>
-        </div>
-      </div>
-
-      <div class="step">
-        <div class="step-head">
-          <div class="step-dot">B</div>
-          <div class="step-label">Claude 로그인 + 셋업토큰 발급</div>
-        </div>
-        <div class="step-body">
-          <p>아래 명령어 실행 → 브라우저가 열리면 Claude 계정으로 로그인:</p>
-          <div class="code-block">
-            <div class="code-label">
-              <span>Ubuntu 터미널</span>
-              <button class="copy-btn" onclick="copyCode(this)">복사</button>
-            </div>
-            <pre>claude login</pre>
-          </div>
-          <p>로그인 완료 후, 셋업토큰 발급:</p>
-          <div class="code-block">
-            <div class="code-label">
-              <span>Ubuntu 터미널</span>
-              <button class="copy-btn" onclick="copyCode(this)">복사</button>
-            </div>
-            <pre>claude setup-token</pre>
-          </div>
-          <div class="alert info">
-            <span class="alert-icon">💡</span>
-            <span>터미널에 긴 토큰 문자열이 출력됩니다. 이걸 OpenClaw 설정에 붙여넣습니다. <strong>다른 곳에 공유하지 마세요.</strong></span>
-          </div>
-        </div>
-      </div>
-
-      <div class="step">
-        <div class="step-head">
-          <div class="step-dot">C</div>
           <div class="step-label">OpenClaw 온보딩 마법사 실행</div>
         </div>
         <div class="step-body">
-          <p>이제 OpenClaw 설정을 시작합니다. 아래 명령어로 마법사(설정 안내)를 실행:</p>
+          <p>아래 명령어로 온보딩(설정 마법사)을 시작합니다.</p>
           <div class="code-block">
             <div class="code-label">
               <span>Ubuntu 터미널</span>
@@ -1034,13 +999,36 @@ EOF</pre>
             </div>
             <pre>openclaw onboard --install-daemon</pre>
           </div>
-          <p>마법사에서 물어보는 항목 답변 가이드:</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-head">
+          <div class="step-dot">B</div>
+          <div class="step-label">인증 방식에서 OpenAI Codex OAuth 선택</div>
+        </div>
+        <div class="step-body">
+          <p>마법사에서 인증 방식이 나오면 <code>OpenAI Codex OAuth</code> (또는 <code>openai-codex</code>)를 선택합니다.</p>
+          <p>브라우저가 열리면 <strong>ChatGPT/OpenAI 계정</strong>으로 로그인하고 권한 연결을 완료하세요.</p>
+          <div class="alert good">
+            <span class="alert-icon">✅</span>
+            <span>OpenClaw 공식 문서 기준으로 Codex OAuth는 정식 지원되며, 적절할 경우 기본 모델이 <code>openai-codex/gpt-5.4</code>로 설정됩니다.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-head">
+          <div class="step-dot">C</div>
+          <div class="step-label">권장 입력값</div>
+        </div>
+        <div class="step-body">
+          <p>마법사에서 물어보는 항목은 아래처럼 맞추면 됩니다.</p>
           <table>
             <tr><th>항목</th><th>선택/입력</th><th>비고</th></tr>
             <tr><td>Setup mode</td><td><code>QuickStart</code></td><td>기본값 선택</td></tr>
-            <tr><td>Auth method</td><td><code>Anthropic token (paste setup-token)</code></td><td>⚠️ API key 아님</td></tr>
-            <tr><td>Setup token</td><td>B단계에서 발급한 토큰 붙여넣기</td><td></td></tr>
-            <tr><td>Default model</td><td><code>anthropic/claude-sonnet-4-6</code></td><td>현비스 기준</td></tr>
+            <tr><td>Auth method</td><td><code>OpenAI Codex OAuth</code></td><td>브라우저 로그인 방식</td></tr>
+            <tr><td>Default model</td><td><code>openai-codex/gpt-5.4</code></td><td>현비스 기준 기본값</td></tr>
             <tr><td>Gateway port</td><td><code>18789</code></td><td>기본값 유지</td></tr>
             <tr><td>Install daemon</td><td><code>Yes</code></td><td>자동 시작 설정</td></tr>
             <tr><td>Channel 연결</td><td>이 단계는 Skip</td><td>다음 섹션에서 따로</td></tr>
@@ -1063,7 +1051,7 @@ EOF</pre>
           </div>
           <div class="alert good">
             <span class="alert-icon">✅</span>
-            <span>Gateway 상태가 <code>running</code>으로 나오면 성공.</span>
+            <span>Gateway 상태가 <code>running</code>이고 모델이 <code>openai-codex/gpt-5.4</code>로 보이면 성공입니다.</span>
           </div>
         </div>
       </div>
@@ -1327,7 +1315,7 @@ openclaw status</pre>
       <tr><td>성격/규칙 (SOUL, RULES)</td><td><span class="tag rec">완전 이식</span></td><td>파일 그대로 복사</td></tr>
       <tr><td>메모리 (MEMORY.md)</td><td><span class="tag rec">선택 이식</span></td><td>공유할 범위만 복사</td></tr>
       <tr><td>슬랙 연동</td><td><span class="tag warn">별도 봇 필요</span></td><td>새 슬랙 앱 생성 or 같은 앱 공유 가능</td></tr>
-      <tr><td>Claude 인증</td><td><span class="tag warn">재발급 필요</span></td><td>새 컴퓨터에서 <code>claude login</code> + <code>claude setup-token</code></td></tr>
+      <tr><td>OpenAI Codex OAuth</td><td><span class="tag warn">재인증 필요</span></td><td>새 컴퓨터에서 <code>openclaw onboard --install-daemon</code> 실행 후 브라우저로 OpenAI 로그인</td></tr>
       <tr><td>Google Drive 연동</td><td><span class="tag warn">재인증 필요</span></td><td>새 컴퓨터에서 rclone 설치 후 OAuth 재인증</td></tr>
       <tr><td>크론잡</td><td><span class="tag no">재등록 필요</span></td><td>새 컴퓨터의 crontab에 재등록</td></tr>
       <tr><td>Notion 연동</td><td><span class="tag rec">토큰 복사</span></td><td>같은 토큰 그대로 사용 가능</td></tr>
@@ -1397,10 +1385,10 @@ openclaw status</pre>
     <h3 style="font-size: 15px; color: var(--text); margin-bottom: 12px;">2. 그로밋팀 채널 구조 (권장)</h3>
     <table style="margin-bottom: 20px;">
       <tr><th>채널</th><th>용도</th><th>권장 모델</th></tr>
-      <tr><td><code>#oc-marketing</code></td><td>광고 카피, 바이럴 콘텐츠 (UVID/쿠참/포레몽/메아리셋)</td><td>Sonnet</td></tr>
-      <tr><td><code>#oc-voc</code></td><td>VOC 분석, CS 리뷰 클러스터링</td><td>Sonnet</td></tr>
-      <tr><td><code>#oc-dev</code></td><td>자동화, 스크립트, 개발 작업</td><td>Sonnet / Opus</td></tr>
-      <tr><td><code>#oc-general</code></td><td>빠른 질문, 잡무</td><td>Haiku (비용 절약)</td></tr>
+      <tr><td><code>#oc-marketing</code></td><td>광고 카피, 바이럴 콘텐츠 (UVID/쿠참/포레몽/메아리셋)</td><td><code>gpt-5.2</code></td></tr>
+      <tr><td><code>#oc-voc</code></td><td>VOC 분석, CS 리뷰 클러스터링</td><td><code>gpt-5.2</code></td></tr>
+      <tr><td><code>#oc-dev</code></td><td>자동화, 스크립트, 개발 작업</td><td><code>openai-codex/gpt-5.4</code></td></tr>
+      <tr><td><code>#oc-general</code></td><td>빠른 질문, 잡무</td><td><code>gpt-5.2</code></td></tr>
     </table>
 
     <!-- 3. 스레드 운영 -->
@@ -1488,8 +1476,8 @@ openclaw status</pre>
     <table style="margin-bottom: 20px;">
       <tr><th>명령어</th><th>기능</th></tr>
       <tr><td><code>/status</code></td><td>모델, 토큰 사용량, 비용 확인</td></tr>
-      <tr><td><code>/model sonnet</code></td><td>Sonnet으로 모델 변경</td></tr>
-      <tr><td><code>/model haiku</code></td><td>비용 절약 모델로 전환</td></tr>
+      <tr><td><code>/model openai-codex/gpt-5.4</code></td><td>개발/정확도 중심 GPT로 변경</td></tr>
+      <tr><td><code>/model gpt-5.2</code></td><td>일반 업무용 GPT로 변경</td></tr>
       <tr><td><code>/help</code></td><td>도움말</td></tr>
       <tr><td><code>/stop</code></td><td>현재 작업 중단</td></tr>
     </table>
@@ -1892,7 +1880,7 @@ rclone copy ~/workspace/gdrive-sync/result.md gteam:00_ops/</pre>
     </div>
 
     <p style="color: var(--text2); font-size: 14px; margin-bottom: 16px;">
-      OpenClaw는 Claude AI 모델을 사용합니다. 모델마다 <strong>성능과 비용이 다르기</strong> 때문에, 작업에 맞는 모델을 선택하면 품질은 유지하면서 비용을 크게 줄일 수 있습니다.
+      OpenClaw는 여러 모델을 지원하지만, 현재 그로밋팀 <strong>기본 운영 경로는 GPT</strong>입니다. 작업에 맞게 모델을 나누면 응답 속도와 운영 안정성을 함께 챙길 수 있습니다.
     </p>
 
     <!-- 모델 비교 -->
@@ -1900,37 +1888,37 @@ rclone copy ~/workspace/gdrive-sync/result.md gteam:00_ops/</pre>
 
     <div class="info-grid" style="grid-template-columns: 1fr 1fr 1fr; margin-bottom: 20px;">
       <div class="info-card" style="border-color: rgba(251,191,36,0.3);">
-        <div class="info-card-title" style="color: var(--yellow);">⚡ Haiku (경량)</div>
+        <div class="info-card-title" style="color: var(--yellow);">⚡ GPT-5.2 (일반 업무)</div>
         <div class="info-card-text">
-          <strong>가장 저렴 · 가장 빠름</strong><br>
-          간단한 질문, 분류, 요약<br>
-          "오늘 날씨?", "이거 번역해줘"<br><br>
-          <span style="color: var(--green);">💲 비용: 낮음</span>
+          <strong>빠름 · 가벼움</strong><br>
+          일반 대화, 요약, 초안 작성<br>
+          "오늘 일정 요약해줘", "이거 3줄로 정리해줘"<br><br>
+          <span style="color: var(--green);">기본 잡무용</span>
         </div>
       </div>
       <div class="info-card" style="border-color: rgba(108,127,247,0.3);">
-        <div class="info-card-title" style="color: var(--accent);">🎯 Sonnet (균형)</div>
+        <div class="info-card-title" style="color: var(--accent);">🎯 GPT-5.4 (주력)</div>
         <div class="info-card-text">
-          <strong>가성비 최고 · 대부분의 업무</strong><br>
-          콘텐츠 작성, 분석, 코딩<br>
-          "광고 카피 만들어줘", "데이터 분석해줘"<br><br>
-          <span style="color: var(--yellow);">💲💲 비용: 중간</span>
+          <strong>정확도 중심 · 현재 기본</strong><br>
+          코딩, 구조화, 운영 판단<br>
+          "가이드 고쳐줘", "자동화 점검해줘"<br><br>
+          <span style="color: var(--yellow);">메인 운영 표준</span>
         </div>
       </div>
       <div class="info-card" style="border-color: rgba(167,139,250,0.3);">
-        <div class="info-card-title" style="color: var(--accent2);">🧠 Opus (고성능)</div>
+        <div class="info-card-title" style="color: var(--accent2);">🧠 Opus 4.6 (선택 fallback)</div>
         <div class="info-card-text">
-          <strong>최고 성능 · 복잡한 판단</strong><br>
-          전략 수립, 복잡한 분석, 의사결정<br>
-          "시장 진입 전략 짜줘", "법률 검토해줘"<br><br>
-          <span style="color: var(--red);">💲💲💲 비용: 높음</span>
+          <strong>특수 상황용</strong><br>
+          Anthropic 경로가 꼭 필요할 때만 사용<br>
+          "깊은 전략 검토", "비교 실험"<br><br>
+          <span style="color: var(--red);">선택적 사용</span>
         </div>
       </div>
     </div>
 
     <div class="alert info">
       <span class="alert-icon">💡</span>
-      <span><strong>현비스 기준</strong>: 메인 세션은 Opus (복잡한 판단 필요), 크론잡/자동화는 Sonnet (충분한 성능에 비용 절약), 단순 작업은 Haiku로 분배하고 있어요.</span>
+      <span><strong>현비스 기준</strong>: 기본 운영은 <code>openai-codex/gpt-5.4</code>, 일반 잡무/짧은 대화는 <code>gpt-5.2</code>, Claude 계열은 필요 시 fallback 또는 비교 실험용으로만 씁니다.</span>
     </div>
 
     <!-- 비용 확인 -->
@@ -1966,14 +1954,14 @@ rclone copy ~/workspace/gdrive-sync/result.md gteam:00_ops/</pre>
               <span>슬랙 DM</span>
               <button class="copy-btn" onclick="copyCode(this)">복사</button>
             </div>
-            <pre># Sonnet으로 변경 (가성비 추천)
-/model sonnet
+            <pre># 기본 개발/정확도 중심
+/model openai-codex/gpt-5.4
 
-# Haiku로 변경 (비용 최소)
-/model haiku
+# 일반 업무/빠른 응답
+/model gpt-5.2
 
-# Opus로 변경 (최고 성능)
-/model opus</pre>
+# Claude fallback이 필요할 때만
+/model anthropic/claude-opus-4-6</pre>
           </div>
         </div>
       </div>
@@ -1994,8 +1982,8 @@ rclone copy ~/workspace/gdrive-sync/result.md gteam:00_ops/</pre>
         </tr>
         <tr>
           <td><strong>모델 분리</strong></td>
-          <td>간단한 건 Haiku, 복잡한 건 Sonnet/Opus</td>
-          <td>모델별 비용 차이 <strong>5~15배</strong></td>
+          <td>일반 업무는 <code>gpt-5.2</code>, 작업/개발은 <code>gpt-5.4</code>, Claude는 예외 fallback</td>
+          <td>과한 모델 사용을 줄여 세션 안정성 확보</td>
         </tr>
         <tr>
           <td><strong>새 스레드</strong></td>
@@ -2031,7 +2019,7 @@ rclone copy ~/workspace/gdrive-sync/result.md gteam:00_ops/</pre>
 
     <div class="alert good">
       <span class="alert-icon">✅</span>
-      <span><strong>셋업토큰(구독제) 사용 시</strong>: 월 정액 내에서 자유롭게 사용 가능합니다. 그래도 모델 분리와 스레드 관리로 응답 속도를 높이고, 컨텍스트 오버플로우를 방지하는 게 좋아요.</span>
+      <span><strong>GPT OAuth(구독제) 사용 시</strong>: API 키 없이 계정 기반으로 운영할 수 있습니다. 그래도 모델 분리와 스레드 관리는 여전히 중요합니다.</span>
     </div>
   </div>
 
@@ -2257,17 +2245,17 @@ openclaw gateway restart</pre>
         <div style="margin-bottom: 4px;">
           <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
             <span class="tag warn">4-6</span>
-            <strong style="font-size: 14px;"><code>API overload</code> / <code>rate_limit</code> — Claude 과부하</strong>
+            <strong style="font-size: 14px;"><code>API overload</code> / <code>rate_limit</code> — 모델 제공사 과부하</strong>
           </div>
-          <p style="margin-bottom: 8px;"><strong>원인:</strong> 요청이 너무 많거나 Anthropic 서버 이슈</p>
-          <p><strong>해결:</strong> 잠시 기다렸다가 재시도. 계속되면 모델을 Sonnet으로 변경:</p>
+          <p style="margin-bottom: 8px;"><strong>원인:</strong> 요청이 너무 많거나 OpenAI/Anthropic 제공사 쪽 일시 이슈</p>
+          <p><strong>해결:</strong> 잠시 기다렸다가 재시도. 계속되면 기본 모델을 GPT로 다시 맞춥니다:</p>
           <div class="code-block">
             <div class="code-label">
               <span>Ubuntu 터미널</span>
               <button class="copy-btn" onclick="copyCode(this)">복사</button>
             </div>
             <pre>openclaw configure --section model
-# anthropic/claude-sonnet-4-6 선택</pre>
+# openai-codex/gpt-5.4 선택</pre>
           </div>
         </div>
 
@@ -2296,7 +2284,7 @@ cp ~/.openclaw/openclaw.json ~/.openclaw/openclaw.json.backup
 # 2. 처음부터 다시 설정
 openclaw onboard --install-daemon
 
-# 3. 슬랙 토큰, Claude 셋업토큰 등 다시 입력</pre>
+# 3. 슬랙 토큰, OpenAI OAuth 등 다시 입력</pre>
         </div>
       </div>
     </div>
@@ -2353,7 +2341,7 @@ openclaw onboard --install-daemon
           <span class="concept-card-name">에이전트 (Agent)</span>
         </div>
         <div class="concept-card-summary">개발 작업을 대신 해주는 AI 코더</div>
-        <div class="concept-card-detail">현비스가 지시하면 코드를 작성하고 배포합니다. Claude Code CLI 기반으로 터미널에서 실행되며, 코딩/파일 수정/배포까지 자동으로 처리합니다.</div>
+        <div class="concept-card-detail">현비스가 지시하면 코드를 작성하고 배포합니다. 현재는 OpenAI Codex OAuth 기반 경로를 우선 사용하며, 코딩/파일 수정/배포까지 자동으로 처리합니다.</div>
       </div>
       <div class="concept-card">
         <div class="concept-card-head">
@@ -2465,7 +2453,7 @@ openclaw onboard --install-daemon
           <span class="concept-card-name">모델 (Model)</span>
         </div>
         <div class="concept-card-summary">AI의 두뇌 종류</div>
-        <div class="concept-card-detail"><strong>Opus</strong> = 선임 직원 (깊은 분석, 복잡한 판단, 비쌈). <strong>Sonnet</strong> = 주니어 (빠르고 저렴, 단순 반복에 적합). 작업 종류에 따라 자동 배분됩니다.</div>
+        <div class="concept-card-detail"><strong>GPT-5.4</strong> = 주력 엔진 (코딩, 구조화, 정확도). <strong>GPT-5.2</strong> = 일반 업무용 (빠른 응답, 가벼운 잡무). <strong>Opus 4.6</strong>은 필요할 때만 쓰는 선택 fallback입니다.</div>
       </div>
       <div class="concept-card">
         <div class="concept-card-head">
@@ -2497,7 +2485,7 @@ openclaw onboard --install-daemon
           <span class="concept-card-name">OAuth (인증 프로토콜)</span>
         </div>
         <div class="concept-card-summary">비밀번호 없이 안전하게 로그인하는 방식</div>
-        <div class="concept-card-detail">"Google로 로그인" 버튼과 같은 원리. 현비스가 Claude API를 쓸 때도 OAuth 토큰으로 인증합니다. 토큰이 만료되면 재인증이 필요해요.</div>
+        <div class="concept-card-detail">"Google로 로그인" 버튼과 같은 원리. 현재는 OpenAI Codex OAuth로 GPT를 연결하는 데 주로 사용합니다. 토큰이 만료되면 재인증이 필요해요.</div>
       </div>
       <div class="concept-card">
         <div class="concept-card-head">
@@ -2658,18 +2646,18 @@ openclaw onboard --install-daemon
 
     <!-- 4. 모델 개념 -->
     <div class="subsection-title">AI 모델이란?</div>
-    <p class="desc-text">AI 모델은 <strong>두뇌의 종류</strong>입니다. 회사에 선임과 주니어가 있는 것처럼, AI에도 등급이 있습니다.</p>
+    <p class="desc-text">AI 모델은 <strong>두뇌의 종류</strong>입니다. 현재 그로밋팀 기준은 <strong>GPT-first</strong>이고, 필요할 때만 다른 모델을 보조로 붙입니다.</p>
 
     <div class="model-grid">
       <div class="model-card" style="border-color: rgba(167,139,250,0.3);">
-        <div class="model-card-name">🟣 Opus (선임)</div>
-        <div class="model-card-sub">고성능 · 깊은 사고</div>
-        <div class="model-card-detail">복잡한 코딩, 분석, 의사결정에 사용합니다. 정확하지만 느리고 비용이 높습니다. 현비스의 개발 작업에 사용됩니다.</div>
+        <div class="model-card-name">🟣 GPT-5.4 (주력)</div>
+        <div class="model-card-sub">정확도 · 개발 · 운영</div>
+        <div class="model-card-detail">복잡한 코딩, 분석, 의사결정에 사용하는 기본 모델입니다. 현재 현비스의 핵심 운영 경로입니다.</div>
       </div>
       <div class="model-card" style="border-color: rgba(108,127,247,0.3);">
-        <div class="model-card-name">🔵 Sonnet (주니어)</div>
-        <div class="model-card-sub">빠름 · 가성비</div>
-        <div class="model-card-detail">일반 대화, 간단한 질문, 서브에이전트, 크론잡에 사용합니다. 빠르고 저렴하지만 복잡한 추론은 약합니다.</div>
+        <div class="model-card-name">🔵 GPT-5.2 (일반 업무)</div>
+        <div class="model-card-sub">빠름 · 가벼움</div>
+        <div class="model-card-detail">짧은 질문, 일반 대화, 빠른 정리에 적합합니다. 너무 무거운 작업까지 맡기지 않는 것이 좋습니다.</div>
       </div>
     </div>
 
@@ -2678,12 +2666,17 @@ openclaw onboard --install-daemon
         <tr><th>상황</th><th>사용 모델</th><th>이유</th></tr>
       </thead>
       <tbody>
-        <tr><td>일반 대화</td><td><span class="tag rec">Sonnet</span></td><td>빠른 응답이 중요</td></tr>
-        <tr><td>코딩/개발</td><td><span class="tag warn">Opus</span></td><td>정확성이 중요</td></tr>
-        <tr><td>서브에이전트</td><td><span class="tag rec">Sonnet</span></td><td>병렬 작업, 비용 절약</td></tr>
-        <tr><td>크론잡</td><td><span class="tag rec">Sonnet</span></td><td>반복 작업, 비용 절약</td></tr>
+        <tr><td>일반 대화</td><td><span class="tag rec">GPT-5.2</span></td><td>빠른 응답이 중요</td></tr>
+        <tr><td>코딩/개발</td><td><span class="tag warn">GPT-5.4</span></td><td>정확성과 일관성이 중요</td></tr>
+        <tr><td>서브에이전트</td><td><span class="tag rec">GPT-5.4</span></td><td>메인과 같은 기준 유지</td></tr>
+        <tr><td>크론잡</td><td><span class="tag rec">GPT-5.4</span></td><td>운영 안정성 우선</td></tr>
       </tbody>
     </table>
+
+    <div class="alert info" style="margin-top: 16px;">
+      <span class="alert-icon">💡</span>
+      <span>Claude/Opus는 완전히 버린 게 아니라 <strong>선택 fallback</strong>입니다. 다만 운영 표준 문서와 기본 세팅은 GPT 기준으로 맞추는 게 현재 팀 정책입니다.</span>
+    </div>
 
     <!-- 5. 크론잡 vs 하트비트 -->
     <div class="subsection-title">크론잡 vs 하트비트</div>
@@ -2894,7 +2887,7 @@ openclaw onboard --install-daemon
 </div>
 
 <footer class="footer">
-  <p>그로밋팀 내부용 가이드 · OpenClaw v2026.3.2 기준 · 현비스 작성</p>
+  <p>그로밋팀 내부용 가이드 · OpenClaw v2026.3.8 기준 · 현비스 작성</p>
   <p style="margin-top: 6px;">문의: 슬랙 또는 현비스 DM</p>
 </footer>
 
@@ -2920,7 +2913,7 @@ const GLOSSARY = [
   { cat: '🤖 AI/에이전트', term: 'Spawn (스폰)', def: '서브에이전트를 생성·실행하는 것. 게임에서 캐릭터 소환하듯이' },
   { cat: '🤖 AI/에이전트', term: 'Prompt (프롬프트)', def: 'AI에게 보내는 지시문 또는 질문. 슬랙 메시지도 프롬프트임' },
   { cat: '🤖 AI/에이전트', term: 'Context (컨텍스트)', def: 'AI가 현재 알고 있는 대화 맥락. 가득 차면 앞 내용이 사라짐 (컴팩션 발생)' },
-  { cat: '🤖 AI/에이전트', term: 'Model (모델)', def: 'AI 두뇌 종류. Opus=선임(고성능/비쌈), Sonnet=주니어(빠름/저렴). 작업에 따라 배분' },
+  { cat: '🤖 AI/에이전트', term: 'Model (모델)', def: 'AI 두뇌 종류. GPT-5.4=주력(코딩/정확), GPT-5.2=일반업무(빠름), Opus 4.6=선택 fallback' },
   { cat: '🤖 AI/에이전트', term: 'Compaction (컴팩션)', def: '컨텍스트가 가득 차면 AI가 이전 대화를 요약해 공간을 확보하는 것' },
 
   // 메모리/기억
