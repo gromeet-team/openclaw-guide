@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>OpenClaw 가이드 — 그로밋팀</title>
+  <title>OpenClaw 설치·운영 가이드</title>
   <style>
     :root {
       --bg: #0f1117;
@@ -745,9 +745,9 @@
 <body>
 
 <header class="site-header">
-  <div class="badge">🔷 내부용 가이드 — 그로밋팀</div>
+  <div class="badge">🔷 OpenClaw 설치·운영 가이드</div>
   <h1>OpenClaw 가이드</h1>
-  <p>설치부터 운영까지 — 그로밋팀 AI 비서 완전 가이드</p>
+  <p>설치부터 운영까지 — OpenClaw AI 비서 완전 가이드</p>
 </header>
 
 <nav class="toc">
@@ -758,7 +758,7 @@
   <a href="#s4">4. 슬랙 연동</a>
   <a href="#s5">5. 워크스페이스 설정</a>
   <a href="#s6">6. 게이트웨이 서비스</a>
-  <a href="#s7">현비스 이식</a>
+  <a href="#s7">AI 비서 이식</a>
   <a href="#s8">💬 슬랙 운영</a>
   <a href="#s10">⏰ 크론잡 (자동화)</a>
   <a href="#s11">☁️ Google Drive 연동</a>
@@ -783,7 +783,7 @@
 
     <div class="version-row">
       <span class="vbadge latest"><span class="vbadge-dot"></span> 최신 버전 2026.3.8</span>
-      <span class="vbadge current"><span class="vbadge-dot"></span> 현비스 기준 버전 2026.3.8</span>
+      <span class="vbadge current"><span class="vbadge-dot"></span> AI 비서 기준 버전 2026.3.8</span>
     </div>
 
     <div class="alert warn" style="margin-bottom: 16px;">
@@ -866,7 +866,7 @@
         </div>
         <div class="step-body">
           <p>재부팅 후 Ubuntu 터미널이 열리면 <strong>사용자명</strong>과 <strong>비밀번호</strong>를 설정하라고 나옵니다.</p>
-          <p>✅ 사용자명: 영문 소문자로 (예: <code>gromit</code>)<br>
+          <p>✅ 사용자명: 영문 소문자로 (예: <code>myteam</code>)<br>
           ✅ 비밀번호: 입력해도 화면에 아무것도 안 표시됩니다 — 정상이에요</p>
         </div>
       </div>
@@ -970,7 +970,7 @@ EOF</pre>
       <div class="section-num">3</div>
       <div>
         <div class="section-title">인증 설정 — GPT OAuth 방식</div>
-        <div class="section-sub">현재 그로밋팀 기본 운영 경로</div>
+        <div class="section-sub">기본 운영 경로 예시</div>
       </div>
     </div>
 
@@ -1028,7 +1028,7 @@ EOF</pre>
             <tr><th>항목</th><th>선택/입력</th><th>비고</th></tr>
             <tr><td>Setup mode</td><td><code>QuickStart</code></td><td>기본값 선택</td></tr>
             <tr><td>Auth method</td><td><code>OpenAI Codex OAuth</code></td><td>브라우저 로그인 방식</td></tr>
-            <tr><td>Default model</td><td><code>openai-codex/gpt-5.4</code></td><td>현비스 기준 기본값</td></tr>
+            <tr><td>Default model</td><td><code>openai-codex/gpt-5.4</code></td><td>AI 비서 기준 기본값</td></tr>
             <tr><td>Gateway port</td><td><code>18789</code></td><td>기본값 유지</td></tr>
             <tr><td>Install daemon</td><td><code>Yes</code></td><td>자동 시작 설정</td></tr>
             <tr><td>Channel 연결</td><td>이 단계는 Skip</td><td>다음 섹션에서 따로</td></tr>
@@ -1070,7 +1070,7 @@ EOF</pre>
 
     <div class="alert info">
       <span class="alert-icon">💡</span>
-      <span>슬랙 연동은 <strong>슬랙 워크스페이스 관리자</strong>가 해야 합니다. 팀원이 개인용으로 설치하는 경우, 그로밋에게 별도 슬랙 앱 생성을 요청하거나 다른 채널(텔레그램 등)을 사용하세요.</span>
+      <span>슬랙 연동은 <strong>슬랙 워크스페이스 관리자</strong>가 해야 합니다. 팀원이 개인용으로 설치하는 경우, 사용자에게 별도 슬랙 앱 생성을 요청하거나 다른 채널(텔레그램 등)을 사용하세요.</span>
     </div>
 
     <div class="steps">
@@ -1081,7 +1081,7 @@ EOF</pre>
         </div>
         <div class="step-body">
           <p><a href="https://api.slack.com/apps" style="color: var(--accent);">api.slack.com/apps</a>에서 <strong>"Create New App"</strong> → <strong>"From scratch"</strong></p>
-          <p>앱 이름 입력 (예: <code>현비스2</code>) → 워크스페이스 선택 → Create</p>
+          <p>앱 이름 입력 (예: <code>AI 비서2</code>) → 워크스페이스 선택 → Create</p>
         </div>
       </div>
 
@@ -1204,7 +1204,7 @@ users:read</pre>
       </div>
       <div class="file-item">
         <span class="file-badge">IDENTITY.md</span>
-        <div class="file-desc"><strong>어시스턴트 정체성</strong> — 이름, 이모지, 캐릭터 설정. (예: HYUNVIS, 🔷)</div>
+        <div class="file-desc"><strong>어시스턴트 정체성</strong> — 이름, 이모지, 캐릭터 설정. (예: 원하는 어시스턴트 이름, 🔷)</div>
       </div>
       <div class="file-item">
         <span class="file-badge">AGENTS.md</span>
@@ -1276,13 +1276,13 @@ openclaw status</pre>
 
   <div class="divider"></div>
 
-  <!-- 현비스 이식 -->
+  <!-- AI 비서 이식 -->
   <div id="s7" class="section">
     <div class="section-header">
       <div class="section-num" style="background: linear-gradient(135deg, #7c3aed, #a78bfa);">🔷</div>
       <div>
-        <div class="section-title">현비스 이식하기</div>
-        <div class="section-sub">기존 현비스 설정을 새 컴퓨터에 그대로 복사</div>
+        <div class="section-title">AI 비서 이식하기</div>
+        <div class="section-sub">기존 AI 비서 설정을 새 컴퓨터에 그대로 복사</div>
       </div>
     </div>
 
@@ -1292,7 +1292,7 @@ openclaw status</pre>
     </div>
 
     <div style="margin: 20px 0;">
-      <h3 style="font-size: 15px; color: var(--text); margin-bottom: 14px;">복사할 파일 목록 (현비스 서버 → 새 컴퓨터)</h3>
+      <h3 style="font-size: 15px; color: var(--text); margin-bottom: 14px;">복사할 파일 목록 (AI 비서 서버 → 새 컴퓨터)</h3>
       <div class="transplant-grid">
         <div class="file-item">
           <span class="file-badge">워크스페이스 전체</span>
@@ -1323,7 +1323,7 @@ openclaw status</pre>
 
     <div class="alert warn" style="margin-top: 16px;">
       <span class="alert-icon">⚠️</span>
-      <span>현비스(bbory 서버)와 <strong>같은 슬랙 채널</strong>에 새 어시스턴트를 연결하면 봇이 2개가 되어 혼란이 생길 수 있습니다. 별도 채널을 사용하거나, 용도를 명확히 분리하세요.</span>
+      <span>AI 비서(bbory 서버)와 <strong>같은 슬랙 채널</strong>에 새 어시스턴트를 연결하면 봇이 2개가 되어 혼란이 생길 수 있습니다. 별도 채널을 사용하거나, 용도를 명확히 분리하세요.</span>
     </div>
   </div>
 
@@ -1358,7 +1358,7 @@ openclaw status</pre>
       <div class="section-num" style="background: linear-gradient(135deg, #1d4ed8, #3b82f6);">💬</div>
       <div>
         <div class="section-title">슬랙 운영 가이드</div>
-        <div class="section-sub">현비스를 슬랙에서 잘 쓰는 법 — 토큰 절약 + 효율 극대화</div>
+        <div class="section-sub">AI 비서를 슬랙에서 잘 쓰는 법 — 토큰 절약 + 효율 극대화</div>
       </div>
     </div>
 
@@ -1382,10 +1382,10 @@ openclaw status</pre>
     </div>
 
     <!-- 2. 채널 구조 -->
-    <h3 style="font-size: 15px; color: var(--text); margin-bottom: 12px;">2. 그로밋팀 채널 구조 (권장)</h3>
+    <h3 style="font-size: 15px; color: var(--text); margin-bottom: 12px;">2. 슬랙 채널 구조 (권장)</h3>
     <table style="margin-bottom: 20px;">
       <tr><th>채널</th><th>용도</th><th>권장 모델</th></tr>
-      <tr><td><code>#oc-marketing</code></td><td>광고 카피, 바이럴 콘텐츠 (UVID/쿠참/포레몽/메아리셋)</td><td><code>gpt-5.2</code></td></tr>
+      <tr><td><code>#oc-marketing</code></td><td>광고 카피, 바이럴 콘텐츠 (브랜드별 작업)</td><td><code>gpt-5.2</code></td></tr>
       <tr><td><code>#oc-voc</code></td><td>VOC 분석, CS 리뷰 클러스터링</td><td><code>gpt-5.2</code></td></tr>
       <tr><td><code>#oc-dev</code></td><td>자동화, 스크립트, 개발 작업</td><td><code>openai-codex/gpt-5.4</code></td></tr>
       <tr><td><code>#oc-general</code></td><td>빠른 질문, 잡무</td><td><code>gpt-5.2</code></td></tr>
@@ -1400,17 +1400,17 @@ openclaw status</pre>
           <div class="step-label">스레드 시작: 브리핑 메시지 작성</div>
         </div>
         <div class="step-body">
-          <p>스레드 첫 메시지에 작업 컨텍스트를 명확히 적습니다. 현비스가 맥락을 잡는 핵심이에요.</p>
+          <p>스레드 첫 메시지에 작업 컨텍스트를 명확히 적습니다. AI 비서가 맥락을 잡는 핵심이에요.</p>
           <div class="code-block">
             <div class="code-label"><span>예시 — 광고 카피 작업</span></div>
-            <pre>UVID 선크림 3월 광고 카피 작업
+            <pre>A 브랜드 신제품 3월 광고 카피 작업
 타겟: 20~30대 여성, SPF50+/PA++++ 강조
 톤: 가볍고 트렌디하게
 형식: 후킹 문구 + 본문 5세트</pre>
           </div>
           <div class="code-block">
             <div class="code-label"><span>예시 — VOC 분석</span></div>
-            <pre>쿠참 제빙기 2월 리뷰 클러스터링
+            <pre>B 브랜드 제품 리뷰 클러스터링
 파일: 아래 첨부 (xlsx)
 목적: 반복 VOC 패턴 추출 + cx.md 업데이트용</pre>
           </div>
@@ -1534,13 +1534,13 @@ openclaw status</pre>
       <div class="step">
         <div class="step-head">
           <div class="step-dot" style="background: #7c3aed;">예시</div>
-          <div class="step-label">UVID 광고 카피 작업 (#oc-marketing)</div>
+          <div class="step-label">광고 카피 작업 (#oc-marketing)</div>
         </div>
         <div class="step-body">
           <ol style="color: var(--text2); font-size: 13.5px; padding-left: 20px; line-height: 2.2;">
-            <li>새 스레드: <em>"UVID 선크림 3월 메타 광고 카피. 타겟: 20-30대 여성, SPF50+ 강조"</em></li>
+            <li>새 스레드: <em>"A 브랜드 신제품 3월 메타 광고 카피. 타겟: 20-30대 여성, 핵심 강점 강조"</em></li>
             <li>경쟁사 광고 이미지 첨부 → <em>"이 소재 분석해줘"</em></li>
-            <li>@현비스 <em>"후킹 문구 10개, 본문 세트 5개 만들어줘"</em></li>
+            <li>@AI 비서 <em>"후킹 문구 10개, 본문 세트 5개 만들어줘"</em></li>
             <li>선택 후 → <em>"3번, 7번으로 A/B 변형 만들어줘"</em></li>
           </ol>
         </div>
@@ -1548,13 +1548,13 @@ openclaw status</pre>
       <div class="step">
         <div class="step-head">
           <div class="step-dot" style="background: #7c3aed;">예시</div>
-          <div class="step-label">쿠참 VOC 분석 (#oc-voc)</div>
+          <div class="step-label">VOC 분석 (#oc-voc)</div>
         </div>
         <div class="step-body">
           <ol style="color: var(--text2); font-size: 13.5px; padding-left: 20px; line-height: 2.2;">
-            <li>새 스레드: <em>"쿠참 제빙기 2월 리뷰 클러스터링"</em></li>
+            <li>새 스레드: <em>"B 브랜드 제품 리뷰 클러스터링"</em></li>
             <li>리뷰 xlsx 첨부</li>
-            <li>@현비스 <em>"반복 패턴 추출하고 cx.md 업데이트용으로 정리해줘"</em></li>
+            <li>@AI 비서 <em>"반복 패턴 추출하고 cx.md 업데이트용으로 정리해줘"</em></li>
           </ol>
         </div>
       </div>
@@ -1580,7 +1580,7 @@ openclaw status</pre>
 
     <div class="alert info">
       <span class="alert-icon">💡</span>
-      <span>현비스는 크론잡 20개 이상을 돌리고 있어요 — 인풋 수집, 데일리 공지, 스프린트 체크, AI 뉴스 브리핑 등. OpenClaw의 핵심 가치가 바로 이 자동화입니다.</span>
+      <span>AI 비서는 크론잡 20개 이상을 돌리고 있어요 — 인풋 수집, 데일리 공지, 스프린트 체크, AI 뉴스 브리핑 등. OpenClaw의 핵심 가치가 바로 이 자동화입니다.</span>
     </div>
 
     <div class="steps">
@@ -1705,7 +1705,7 @@ openclaw cron trigger &lt;크론잡ID&gt;</pre>
       <div class="step">
         <div class="step-head">
           <div class="step-dot">5</div>
-          <div class="step-label">현비스 실전 크론잡 예시</div>
+          <div class="step-label">AI 비서 실전 크론잡 예시</div>
         </div>
         <div class="step-body">
           <table>
@@ -1748,7 +1748,7 @@ openclaw cron trigger &lt;크론잡ID&gt;</pre>
         <div class="info-card-text">팀원이 Google Drive에 파일을 올리면, 어시스턴트가 자동으로 가져와서 분석·정리합니다. 사람이 "파일 확인해줘" 할 필요 없이 <strong>크론잡과 결합하면 완전 자동화</strong>됩니다.</div>
       </div>
       <div class="info-card">
-        <div class="info-card-title">현비스는 어떻게 쓰나요?</div>
+        <div class="info-card-title">AI 비서는 어떻게 쓰나요?</div>
         <div class="info-card-text">팀원 인풋 파일 자동 수집, 브랜드별 데이터 동기화, 대시보드 콘텐츠 업데이트 등 <strong>하루 6회 이상 자동 동기화</strong>를 rclone으로 돌리고 있어요.</div>
       </div>
     </div>
@@ -1880,7 +1880,7 @@ rclone copy ~/workspace/gdrive-sync/result.md gteam:00_ops/</pre>
     </div>
 
     <p style="color: var(--text2); font-size: 14px; margin-bottom: 16px;">
-      OpenClaw는 여러 모델을 지원하지만, 현재 그로밋팀 <strong>기본 운영 경로는 GPT</strong>입니다. 작업에 맞게 모델을 나누면 응답 속도와 운영 안정성을 함께 챙길 수 있습니다.
+      OpenClaw는 여러 모델을 지원하지만, 현재 우리 팀 <strong>기본 운영 경로는 GPT</strong>입니다. 작업에 맞게 모델을 나누면 응답 속도와 운영 안정성을 함께 챙길 수 있습니다.
     </p>
 
     <!-- 모델 비교 -->
@@ -1918,7 +1918,7 @@ rclone copy ~/workspace/gdrive-sync/result.md gteam:00_ops/</pre>
 
     <div class="alert info">
       <span class="alert-icon">💡</span>
-      <span><strong>현비스 기준</strong>: 기본 운영은 <code>openai-codex/gpt-5.4</code>, 일반 잡무/짧은 대화는 <code>gpt-5.2</code>, Claude 계열은 필요 시 fallback 또는 비교 실험용으로만 씁니다.</span>
+      <span><strong>AI 비서 기준</strong>: 기본 운영은 <code>openai-codex/gpt-5.4</code>, 일반 잡무/짧은 대화는 <code>gpt-5.2</code>, Claude 계열은 필요 시 fallback 또는 비교 실험용으로만 씁니다.</span>
     </div>
 
     <!-- 비용 확인 -->
@@ -2031,7 +2031,7 @@ rclone copy ~/workspace/gdrive-sync/result.md gteam:00_ops/</pre>
       <div class="section-num" style="background: linear-gradient(135deg, #b91c1c, #f87171);">🚨</div>
       <div>
         <div class="section-title">먹통일 때 복구 가이드</div>
-        <div class="section-sub">현비스(또는 새 어시스턴트)가 응답 없을 때</div>
+        <div class="section-sub">AI 비서(또는 새 어시스턴트)가 응답 없을 때</div>
       </div>
     </div>
 
@@ -2210,12 +2210,12 @@ openclaw gateway restart</pre>
           <p style="margin-bottom: 8px;"><strong>해결:</strong></p>
           <ol style="color: var(--text2); font-size: 13.5px; padding-left: 20px; margin-bottom: 10px; line-height: 2;">
             <li>Vercel 대시보드 → 우측 상단 프로필 → <strong>Account Settings</strong> → <strong>Connected Accounts</strong></li>
-            <li>GitHub 항목에서 <strong>계정 연결</strong> (gromeetceo-6165 → gromeet / gromeetmk-9923 → gromeetmk-pixel)</li>
+            <li>GitHub 항목에서 <strong>계정 연결</strong> (각 GitHub 계정을 해당 Vercel 팀에 연결)</li>
             <li>연결 완료 후 빈 커밋 push로 테스트</li>
           </ol>
           <div class="alert info" style="margin-bottom: 8px;">
             <span class="alert-icon">ℹ️</span>
-            <span><strong>레포 transfer 주의</strong>: GitHub에서 레포를 org(gromeet-team)로 이전했다면 Vercel의 Git 연결도 재설정 필요. Settings → Git → Disconnect → <code>gromeet-team/{레포명}</code>으로 reconnect.</span>
+            <span><strong>레포 transfer 주의</strong>: GitHub에서 레포를 org(회사 GitHub org)로 이전했다면 Vercel의 Git 연결도 재설정 필요. Settings → Git → Disconnect → <code>{회사-org}/{레포명}</code>으로 reconnect.</span>
           </div>
           <p style="font-size: 12px; color: var(--text3);">📌 2026-03-14 발생 사례: Vercel Pro 업그레이드 + 레포 transfer 이중 이슈로 모든 배포 차단됨. GitHub 계정 연결 후 즉시 해결.</p>
         </div>
@@ -2223,22 +2223,22 @@ openclaw gateway restart</pre>
         <div style="margin-bottom: 18px;">
           <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
             <span class="tag warn">4-5</span>
-            <strong style="font-size: 14px;">벤비스 GitHub 계정 세팅 (신규 AI 어시스턴트 배포 권한 등록)</strong>
+            <strong style="font-size: 14px;">추가 AI 어시스턴트 GitHub 계정 세팅 (신규 배포 권한 등록)</strong>
           </div>
-          <p style="margin-bottom: 8px;"><strong>배경:</strong> 벤비스(<code>ben@gromeet.com</code>)는 GitHub 계정이 없어서 직접 push 시 Vercel 배포 차단 가능. 미리 등록해두어야 함.</p>
+          <p style="margin-bottom: 8px;"><strong>배경:</strong> 추가 어시스턴트 계정(<code>assistant@yourteam.com</code>)은 GitHub 계정이 없어서 직접 push 시 Vercel 배포 차단 가능. 미리 등록해두어야 함.</p>
           <p style="margin-bottom: 8px;"><strong>설정 순서 (벤이 직접 진행):</strong></p>
           <ol style="color: var(--text2); font-size: 13.5px; padding-left: 20px; margin-bottom: 10px; line-height: 2;">
-            <li><a href="https://github.com/signup" style="color: var(--accent);">github.com/signup</a> → 이메일 <code>ben@gromeet.com</code>으로 계정 생성<br>
-              <span style="color: var(--text3); font-size: 12px;">추천 username: <code>gromeet-benvis</code> 또는 <code>benvis-bot</code></span>
+            <li><a href="https://github.com/signup" style="color: var(--accent);">github.com/signup</a> → 이메일 <code>assistant@yourteam.com</code>으로 계정 생성<br>
+              <span style="color: var(--text3); font-size: 12px;">추천 username: <code>yourteam-assistant</code> 또는 <code>assistant-bot</code></span>
             </li>
-            <li>계정 생성 후 username을 현비스에게 알려주면 Vercel Team 초대 자동 처리</li>
-            <li>초대 메일 수락 (ben@gromeet.com 받은편지함)</li>
+            <li>계정 생성 후 username을 AI 비서에게 알려주면 Vercel Team 초대 자동 처리</li>
+            <li>초대 메일 수락 (해당 이메일 받은편지함)</li>
             <li>Vercel 로그인 → Account Settings → Connected Accounts → GitHub 연결</li>
-            <li>gromeet-team org에 멤버로 추가 요청 (현비스가 GitHub API로 처리)</li>
+            <li>회사 GitHub org에 멤버로 추가 (GitHub API 또는 수동)</li>
           </ol>
           <div class="alert info">
             <span class="alert-icon">💡</span>
-            <span>완료 후 벤비스가 어느 레포에서 push해도 Vercel 배포 정상 작동. 현비스(gromeet), 코워크(gromeetmk-pixel), 벤비스(신규) 3계정 모두 커버됨.</span>
+            <span>완료 후 어느 계정이 push해도 Vercel 배포가 정상 작동합니다. 여러 어시스턴트 계정을 모두 커버할 수 있습니다.</span>
           </div>
         </div>
 
@@ -2324,7 +2324,7 @@ openclaw onboard --install-daemon
           <span class="concept-card-emoji">💬</span>
           <span class="concept-card-name">세션 (Session)</span>
         </div>
-        <div class="concept-card-summary">현비스와의 대화 창</div>
+        <div class="concept-card-summary">AI 비서와의 대화 창</div>
         <div class="concept-card-detail">슬랙 DM 하나가 1개 세션입니다. 세션이 끝나면(타임아웃 or 리셋) 기억이 초기화됩니다. 그래서 중요한 건 MEMORY.md에 저장해둬야 합니다.</div>
       </div>
       <div class="concept-card">
@@ -2333,7 +2333,7 @@ openclaw onboard --install-daemon
           <span class="concept-card-name">크론잡 (Cron Job)</span>
         </div>
         <div class="concept-card-summary">정해진 시간에 자동 실행되는 예약 작업</div>
-        <div class="concept-card-detail">예: 매시간 드라이브 동기화, 매일 22:30 데일리 공지. "알람 시계"처럼 설정해두면 현비스가 자동으로 실행합니다.</div>
+        <div class="concept-card-detail">예: 매시간 드라이브 동기화, 매일 22:30 데일리 공지. "알람 시계"처럼 설정해두면 AI 비서가 자동으로 실행합니다.</div>
       </div>
       <div class="concept-card">
         <div class="concept-card-head">
@@ -2341,14 +2341,14 @@ openclaw onboard --install-daemon
           <span class="concept-card-name">에이전트 (Agent)</span>
         </div>
         <div class="concept-card-summary">개발 작업을 대신 해주는 AI 코더</div>
-        <div class="concept-card-detail">현비스가 지시하면 코드를 작성하고 배포합니다. 현재는 OpenAI Codex OAuth 기반 경로를 우선 사용하며, 코딩/파일 수정/배포까지 자동으로 처리합니다.</div>
+        <div class="concept-card-detail">AI 비서가 지시하면 코드를 작성하고 배포합니다. 현재는 OpenAI Codex OAuth 기반 경로를 우선 사용하며, 코딩/파일 수정/배포까지 자동으로 처리합니다.</div>
       </div>
       <div class="concept-card">
         <div class="concept-card-head">
           <span class="concept-card-emoji">🧬</span>
           <span class="concept-card-name">서브에이전트 (Sub-agent)</span>
         </div>
-        <div class="concept-card-summary">현비스가 다른 AI를 불러 병렬로 일시키는 것</div>
+        <div class="concept-card-summary">AI 비서가 다른 AI를 불러 병렬로 일시키는 것</div>
         <div class="concept-card-detail">복잡한 작업을 여러 AI가 동시에 처리합니다. 장점: 빠름. 단점: 가끔 먹통이거나 컨텍스트 공유가 안 될 수 있음.</div>
       </div>
       <div class="concept-card">
@@ -2364,8 +2364,8 @@ openclaw onboard --install-daemon
           <span class="concept-card-emoji">🚪</span>
           <span class="concept-card-name">게이트웨이 (Gateway)</span>
         </div>
-        <div class="concept-card-summary">슬랙과 현비스를 연결하는 다리</div>
-        <div class="concept-card-detail">이게 꺼지면 현비스가 슬랙 메시지를 못 받습니다. <code>openclaw gateway status</code>로 확인. 시스템 서비스로 자동 시작 설정 가능.</div>
+        <div class="concept-card-summary">슬랙과 AI 비서를 연결하는 다리</div>
+        <div class="concept-card-detail">이게 꺼지면 AI 비서가 슬랙 메시지를 못 받습니다. <code>openclaw gateway status</code>로 확인. 시스템 서비스로 자동 시작 설정 가능.</div>
       </div>
       <div class="concept-card">
         <div class="concept-card-head">
@@ -2380,7 +2380,7 @@ openclaw onboard --install-daemon
           <span class="concept-card-emoji">🛠️</span>
           <span class="concept-card-name">스킬 (Skill)</span>
         </div>
-        <div class="concept-card-summary">현비스의 재사용 가능한 전문 기능</div>
+        <div class="concept-card-summary">AI 비서의 재사용 가능한 전문 기능</div>
         <div class="concept-card-detail"><code>input-organizer</code>(인풋 정리), <code>sprint-manager</code>(스프린트 관리) 등. <code>.skills/</code> 폴더에 레시피처럼 저장되어 있습니다.</div>
       </div>
       <div class="concept-card">
@@ -2477,7 +2477,7 @@ openclaw onboard --install-daemon
           <span class="concept-card-name">API (Application Programming Interface)</span>
         </div>
         <div class="concept-card-summary">프로그램끼리 대화하는 창구</div>
-        <div class="concept-card-detail">슬랙 API로 메시지 읽기/보내기, Google Calendar API로 일정 조회, Notion API로 DB 조작. 현비스가 외부 서비스를 "손"처럼 쓸 수 있게 해주는 통로입니다.</div>
+        <div class="concept-card-detail">슬랙 API로 메시지 읽기/보내기, Google Calendar API로 일정 조회, Notion API로 DB 조작. AI 비서가 외부 서비스를 "손"처럼 쓸 수 있게 해주는 통로입니다.</div>
       </div>
       <div class="concept-card">
         <div class="concept-card-head">
@@ -2514,24 +2514,24 @@ openclaw onboard --install-daemon
     </div>
   </div>
 
-  <!-- s15: 현비스는 어떻게 움직이나? -->
+  <!-- s15: AI 비서는 어떻게 움직이나? -->
   <div id="s15" class="section">
     <div class="section-header">
       <div class="section-num" style="background: linear-gradient(135deg, #6c7ff7, #a78bfa);">⚙️</div>
       <div>
-        <div class="section-title">현비스는 어떻게 움직이나?</div>
+        <div class="section-title">AI 비서는 어떻게 움직이나?</div>
         <div class="section-sub">비개발자를 위한 작동 원리 설명</div>
       </div>
     </div>
 
     <!-- 1. 요청 → 응답 흐름도 -->
     <div class="subsection-title">요청에서 응답까지</div>
-    <p class="desc-text">그로밋이 슬랙에 메시지를 보내면, 현비스가 답하기까지 이런 과정을 거칩니다.</p>
+    <p class="desc-text">사용자가 슬랙에 메시지를 보내면, AI 비서가 답하기까지 이런 과정을 거칩니다.</p>
 
     <div class="flow-diagram">
       <div class="flow-node">
         <div class="flow-node-emoji">👤</div>
-        <div class="flow-node-label">그로밋</div>
+        <div class="flow-node-label">사용자</div>
         <div class="flow-node-sub">슬랙 메시지</div>
       </div>
       <div class="flow-arrow"></div>
@@ -2573,7 +2573,7 @@ openclaw onboard --install-daemon
 
     <!-- 2. 세션 개념 -->
     <div class="subsection-title">세션이란?</div>
-    <p class="desc-text">세션은 <strong>대화 창 하나</strong>입니다. 카카오톡 채팅방 하나를 떠올리면 됩니다. 세션이 시작되면 현비스가 "부팅"을 합니다.</p>
+    <p class="desc-text">세션은 <strong>대화 창 하나</strong>입니다. 카카오톡 채팅방 하나를 떠올리면 됩니다. 세션이 시작되면 AI 비서가 "부팅"을 합니다.</p>
 
     <div class="info-grid">
       <div class="info-card">
@@ -2596,7 +2596,7 @@ openclaw onboard --install-daemon
 
     <!-- 3. 자동주입 vs 수동읽기 -->
     <div class="subsection-title">자동주입 vs 수동읽기</div>
-    <p class="desc-text">현비스가 참고하는 문서는 두 종류입니다. 비유하면:</p>
+    <p class="desc-text">AI 비서가 참고하는 문서는 두 종류입니다. 비유하면:</p>
 
     <div class="info-grid">
       <div class="info-card" style="border-color: rgba(52,211,153,0.3);">
@@ -2617,8 +2617,8 @@ openclaw onboard --install-daemon
       <tbody>
         <tr><td><code>AGENTS.md</code></td><td>운영 매뉴얼 — 부팅 순서, 메모리 정책, 팀 운영 규칙</td></tr>
         <tr><td><code>SOUL.md</code></td><td>성격과 톤 — 간결하게, 용어 설명 병기, 채널별 톤 조절</td></tr>
-        <tr><td><code>USER.md</code></td><td>사용자 정보 — 그로밋의 브랜드, 팀, 선호 사항</td></tr>
-        <tr><td><code>IDENTITY.md</code></td><td>현비스 정체성 — 이름, 이모지, 아바타 설정</td></tr>
+        <tr><td><code>USER.md</code></td><td>사용자 정보 — 사용자의 브랜드, 팀, 선호 사항</td></tr>
+        <tr><td><code>IDENTITY.md</code></td><td>AI 비서 정체성 — 이름, 이모지, 아바타 설정</td></tr>
         <tr><td><code>TOOLS.md</code></td><td>도구 설정 — 카메라, SSH, TTS 등 연동 메모</td></tr>
         <tr><td><code>HEARTBEAT.md</code></td><td>하트비트 규칙 — 30분 주기 체크 항목 정의</td></tr>
         <tr><td><code>BOOTSTRAP.md</code></td><td>부팅 순서 — 어떤 파일을 어떤 순서로 읽을지 지시</td></tr>
@@ -2633,7 +2633,7 @@ openclaw onboard --install-daemon
       </thead>
       <tbody>
         <tr><td><code>RULES.md</code></td><td>절대 규칙 — 삭제 금지, rclone copy only 등</td></tr>
-        <tr><td><code>gromit-rules.md</code></td><td>채널/팀/라우팅/브랜드 규칙 (SSOT)</td></tr>
+        <tr><td><code>team-rules.md</code></td><td>채널/팀/라우팅/브랜드 규칙 (SSOT)</td></tr>
         <tr><td><code>LEARNINGS.md</code></td><td>과거 실수 기록 — 같은 실수 반복 방지</td></tr>
         <tr><td><code>memory/날짜.md</code></td><td>일일 기록 — 오늘 있었던 일 메모</td></tr>
       </tbody>
@@ -2641,18 +2641,18 @@ openclaw onboard --install-daemon
 
     <div class="alert warn">
       <span class="alert-icon">⚠️</span>
-      <span>자동주입 파일이 빠지면 현비스가 규칙을 모르는 채로 대화합니다. 마치 신입이 매뉴얼 없이 출근한 것과 같습니다.</span>
+      <span>자동주입 파일이 빠지면 AI 비서가 규칙을 모르는 채로 대화합니다. 마치 신입이 매뉴얼 없이 출근한 것과 같습니다.</span>
     </div>
 
     <!-- 4. 모델 개념 -->
     <div class="subsection-title">AI 모델이란?</div>
-    <p class="desc-text">AI 모델은 <strong>두뇌의 종류</strong>입니다. 현재 그로밋팀 기준은 <strong>GPT-first</strong>이고, 필요할 때만 다른 모델을 보조로 붙입니다.</p>
+    <p class="desc-text">AI 모델은 <strong>두뇌의 종류</strong>입니다. 현재 우리 팀 기준은 <strong>GPT-first</strong>이고, 필요할 때만 다른 모델을 보조로 붙입니다.</p>
 
     <div class="model-grid">
       <div class="model-card" style="border-color: rgba(167,139,250,0.3);">
         <div class="model-card-name">🟣 GPT-5.4 (주력)</div>
         <div class="model-card-sub">정확도 · 개발 · 운영</div>
-        <div class="model-card-detail">복잡한 코딩, 분석, 의사결정에 사용하는 기본 모델입니다. 현재 현비스의 핵심 운영 경로입니다.</div>
+        <div class="model-card-detail">복잡한 코딩, 분석, 의사결정에 사용하는 기본 모델입니다. 현재 AI 비서의 핵심 운영 경로입니다.</div>
       </div>
       <div class="model-card" style="border-color: rgba(108,127,247,0.3);">
         <div class="model-card-name">🔵 GPT-5.2 (일반 업무)</div>
@@ -2704,7 +2704,7 @@ openclaw onboard --install-daemon
       </div>
     </div>
 
-    <p class="desc-text">현비스 워크스페이스에는 여러 <code>.md</code> 파일이 있습니다. 각 파일은 현비스에게 특정 역할을 부여합니다. 아래에서 하나씩 알아봅시다.</p>
+    <p class="desc-text">AI 비서 워크스페이스에는 여러 <code>.md</code> 파일이 있습니다. 각 파일은 AI 비서에게 특정 역할을 부여합니다. 아래에서 하나씩 알아봅시다.</p>
 
     <div class="alert info">
       <span class="alert-icon">📌</span>
@@ -2720,8 +2720,8 @@ openclaw onboard --install-daemon
           <span class="file-guide-badge auto">🔄 자동주입</span>
         </div>
         <div class="file-guide-summary">운영 매뉴얼</div>
-        <div class="file-guide-detail">현비스의 부팅 순서, 메모리 정책, 팀 운영 방법이 적혀있습니다. 회사의 "사원 핸드북"과 같습니다.</div>
-        <div class="file-guide-impact">⛔ 이 파일이 없으면? 현비스가 부팅 순서를 모르고, 팀 운영 규칙을 어길 수 있습니다.</div>
+        <div class="file-guide-detail">AI 비서의 부팅 순서, 메모리 정책, 팀 운영 방법이 적혀있습니다. 회사의 "사원 핸드북"과 같습니다.</div>
+        <div class="file-guide-impact">⛔ 이 파일이 없으면? AI 비서가 부팅 순서를 모르고, 팀 운영 규칙을 어길 수 있습니다.</div>
       </div>
 
       <!-- SOUL.md -->
@@ -2732,8 +2732,8 @@ openclaw onboard --install-daemon
           <span class="file-guide-badge auto">🔄 자동주입</span>
         </div>
         <div class="file-guide-summary">성격과 말투</div>
-        <div class="file-guide-detail">간결하게 말하기, 전문 용어에 쉬운 설명 병기, 채널별 톤 조절 등 현비스의 "성격"을 정의합니다.</div>
-        <div class="file-guide-impact">⛔ 이 파일이 없으면? 현비스가 딱딱하거나 장황하게 말할 수 있습니다.</div>
+        <div class="file-guide-detail">간결하게 말하기, 전문 용어에 쉬운 설명 병기, 채널별 톤 조절 등 AI 비서의 "성격"을 정의합니다.</div>
+        <div class="file-guide-impact">⛔ 이 파일이 없으면? AI 비서가 딱딱하거나 장황하게 말할 수 있습니다.</div>
       </div>
 
       <!-- USER.md -->
@@ -2743,9 +2743,9 @@ openclaw onboard --install-daemon
           <span class="file-guide-name">USER.md</span>
           <span class="file-guide-badge auto">🔄 자동주입</span>
         </div>
-        <div class="file-guide-summary">사용자(그로밋) 정보</div>
-        <div class="file-guide-detail">그로밋의 브랜드 목록, 팀 구성, 선호 사항 등 사용자 맥락을 담고 있습니다. "고객 카드"와 같습니다.</div>
-        <div class="file-guide-impact">⛔ 이 파일이 없으면? 현비스가 그로밋의 브랜드나 팀 구조를 모르고 엉뚱한 답을 할 수 있습니다.</div>
+        <div class="file-guide-summary">사용자(사용자) 정보</div>
+        <div class="file-guide-detail">사용자의 브랜드 목록, 팀 구성, 선호 사항 등 사용자 맥락을 담고 있습니다. "고객 카드"와 같습니다.</div>
+        <div class="file-guide-impact">⛔ 이 파일이 없으면? AI 비서가 사용자의 브랜드나 팀 구조를 모르고 엉뚱한 답을 할 수 있습니다.</div>
       </div>
 
       <!-- IDENTITY.md -->
@@ -2755,9 +2755,9 @@ openclaw onboard --install-daemon
           <span class="file-guide-name">IDENTITY.md</span>
           <span class="file-guide-badge auto">🔄 자동주입</span>
         </div>
-        <div class="file-guide-summary">현비스 정체성</div>
-        <div class="file-guide-detail">현비스의 이름, 이모지(🐾), 아바타 설정 등 "나는 누구인가"를 정의합니다.</div>
-        <div class="file-guide-impact">⛔ 이 파일이 없으면? 현비스가 자기 이름이나 이모지를 모르고, 다른 AI처럼 행동할 수 있습니다.</div>
+        <div class="file-guide-summary">AI 비서 정체성</div>
+        <div class="file-guide-detail">AI 비서의 이름, 이모지(🐾), 아바타 설정 등 "나는 누구인가"를 정의합니다.</div>
+        <div class="file-guide-impact">⛔ 이 파일이 없으면? AI 비서가 자기 이름이나 이모지를 모르고, 다른 AI처럼 행동할 수 있습니다.</div>
       </div>
 
       <!-- TOOLS.md -->
@@ -2822,11 +2822,11 @@ openclaw onboard --install-daemon
         <div class="file-guide-impact">⛔ 이 파일을 안 읽으면? 금지된 행동(파일 삭제, 위험한 명령)을 실행할 위험이 있습니다.</div>
       </div>
 
-      <!-- gromit-rules.md -->
+      <!-- team-rules.md -->
       <div class="file-guide-card">
         <div class="file-guide-head">
           <span style="font-size:20px;">📏</span>
-          <span class="file-guide-name">gromit-rules.md</span>
+          <span class="file-guide-name">team-rules.md</span>
           <span class="file-guide-badge manual">✋ 수동읽기</span>
         </div>
         <div class="file-guide-summary">채널/팀/브랜드 규칙 (SSOT)</div>
@@ -2861,7 +2861,7 @@ openclaw onboard --install-daemon
 
     <div class="alert good">
       <span class="alert-icon">✅</span>
-      <span>자동주입 파일 8개는 세션마다 자동으로 읽히니 신경 쓸 필요 없습니다. 수동읽기 파일은 현비스가 필요할 때 스스로 읽지만, 중요한 규칙 변경 시에는 "RULES.md 다시 읽어봐"라고 말해주면 확실합니다.</span>
+      <span>자동주입 파일 8개는 세션마다 자동으로 읽히니 신경 쓸 필요 없습니다. 수동읽기 파일은 AI 비서가 필요할 때 스스로 읽지만, 중요한 규칙 변경 시에는 "RULES.md 다시 읽어봐"라고 말해주면 확실합니다.</span>
     </div>
   </div>
 
@@ -2887,8 +2887,8 @@ openclaw onboard --install-daemon
 </div>
 
 <footer class="footer">
-  <p>그로밋팀 내부용 가이드 · OpenClaw v2026.3.8 기준 · 현비스 작성</p>
-  <p style="margin-top: 6px;">문의: 슬랙 또는 현비스 DM</p>
+  <p>OpenClaw 설치·운영 가이드 · v2026.3.8 기준</p>
+  <p style="margin-top: 6px;">OpenClaw 기반 AI 비서 구축 가이드</p>
 </footer>
 
 <script>
@@ -2907,7 +2907,7 @@ function copyCode(btn) {
 // Glossary — 6 categories, 42 terms
 const GLOSSARY = [
   // AI/에이전트
-  { cat: '🤖 AI/에이전트', term: 'Session (세션)', def: '현비스와 나누는 대화 1회. 타임아웃되거나 리셋되면 메모리가 초기화됨' },
+  { cat: '🤖 AI/에이전트', term: 'Session (세션)', def: 'AI 비서와 나누는 대화 1회. 타임아웃되거나 리셋되면 메모리가 초기화됨' },
   { cat: '🤖 AI/에이전트', term: 'Agent (에이전트)', def: 'AI 코더. 지시받아 코드 작성·배포를 혼자 처리하는 AI 프로세스' },
   { cat: '🤖 AI/에이전트', term: 'Sub-agent (서브에이전트)', def: '메인 AI가 복잡한 작업을 분업하기 위해 불러오는 보조 AI' },
   { cat: '🤖 AI/에이전트', term: 'Spawn (스폰)', def: '서브에이전트를 생성·실행하는 것. 게임에서 캐릭터 소환하듯이' },
@@ -2933,10 +2933,10 @@ const GLOSSARY = [
   { cat: '⏰ 자동화', term: 'Hook (훅)', def: '특정 이벤트 발생 시 자동으로 실행되는 코드. 예: Git push 시 자동 배포 시작' },
 
   // 시스템/개발
-  { cat: '🔧 시스템/개발', term: 'API (에이피아이)', def: '프로그램끼리 대화하는 창구. 슬랙·Google·Notion 등과 현비스가 연결되는 방식' },
+  { cat: '🔧 시스템/개발', term: 'API (에이피아이)', def: '프로그램끼리 대화하는 창구. 슬랙·Google·Notion 등과 AI 비서가 연결되는 방식' },
   { cat: '🔧 시스템/개발', term: 'Token (토큰)', def: '① AI 처리 단위 (한글 1자 ≈ 2~3토큰) ② 인증키 (API 접근 비밀번호)' },
   { cat: '🔧 시스템/개발', term: 'Deploy (배포)', def: '만든 코드·앱을 인터넷에 올리는 것. GitHub push → Vercel 자동 배포가 우리 방식' },
-  { cat: '🔧 시스템/개발', term: 'Gateway (게이트웨이)', def: '메신저(슬랙)와 AI를 연결하는 다리. 꺼지면 현비스가 메시지를 못 받음' },
+  { cat: '🔧 시스템/개발', term: 'Gateway (게이트웨이)', def: '메신저(슬랙)와 AI를 연결하는 다리. 꺼지면 AI 비서가 메시지를 못 받음' },
   { cat: '🔧 시스템/개발', term: 'Log (로그)', def: '실행 기록. 뭔가 잘못됐을 때 원인을 찾는 용도. ~/.openclaw/logs/에 저장' },
   { cat: '🔧 시스템/개발', term: 'Fallback (폴백)', def: '주요 방법이 실패했을 때 쓰는 대안. 예: API 실패 시 파일 직접 읽기' },
   { cat: '🔧 시스템/개발', term: 'Push / Pull', def: '코드 올리기(push) / 내려받기(pull). GitHub 저장소와 로컬 간 동기화' },
@@ -2948,7 +2948,7 @@ const GLOSSARY = [
 
   // 파일/Drive
   { cat: '📁 파일/Drive', term: 'rclone (알클론)', def: 'Google Drive ↔ 서버 파일을 자동 동기화하는 프로그램. copy만 사용 (sync 금지!)' },
-  { cat: '📁 파일/Drive', term: 'gteam', def: '그로밋팀 Google Shared Drive의 rclone 리모트 이름. 서버에서 gteam: 으로 접근' },
+  { cat: '📁 파일/Drive', term: 'gteam', def: '팀 Google Shared Drive의 rclone 리모트 이름(예시). 서버에서 <리모트명>: 으로 접근' },
   { cat: '📁 파일/Drive', term: '_inbox.md', def: '팀원 인풋 처리 완료 로그. 처리된 파일은 여기에 기록됨. 인풋 중복 방지 SSOT' },
   { cat: '📁 파일/Drive', term: 'Archive (아카이브)', def: '오래된 파일을 _archive/ 폴더로 이동해 보관하는 것. 삭제 아님, 정리의 개념' },
   { cat: '📁 파일/Drive', term: '_guides/', def: '브랜드 폴더 내 원본 파일 보관 폴더. 분석 완료된 원본 xlsx, pptx 등이 여기로 이동' },
@@ -2957,7 +2957,7 @@ const GLOSSARY = [
   { cat: '📋 문서/기획', term: 'PRD (Product Requirements Document)', def: '기능 개발 전 "뭘 만들지" 정의하는 문서. 에이전트팀에 전달하는 작업 지시서' },
   { cat: '📋 문서/기획', term: 'KPI (Key Performance Indicator)', def: '핵심 성과 지표. 목표 달성 여부를 측정하는 숫자' },
   { cat: '📋 문서/기획', term: 'Sprint (스프린트)', def: '2주 단위 집중 실행 사이클. KICKOFF → 데일리 체크 → REVIEW 순서로 진행' },
-  { cat: '📋 문서/기획', term: 'DM (Direct Message)', def: '1:1 비공개 메시지. 현비스가 그로밋에게 보내는 알림은 기본적으로 DM' },
+  { cat: '📋 문서/기획', term: 'DM (Direct Message)', def: '1:1 비공개 메시지. AI 비서가 사용자에게 보내는 알림은 기본적으로 DM' },
   { cat: '📋 문서/기획', term: 'Thread (스레드)', def: '메시지에 달리는 답글 묶음. 한 작업 = 한 스레드 원칙으로 컨텍스트 분리 + 토큰 절약' },
   { cat: '📋 문서/기획', term: 'Channel Routing (채널 라우팅)', def: '슬랙·텔레그램 등 여러 채널에서 온 메시지를 하나의 AI로 연결하는 것' },
 ];
