@@ -782,14 +782,14 @@
     </div>
 
     <div class="version-row">
-      <span class="vbadge latest"><span class="vbadge-dot"></span> 최신 버전 2026.3.8</span>
-      <span class="vbadge current"><span class="vbadge-dot"></span> AI 비서 기준 버전 2026.3.8</span>
+      <span class="vbadge latest"><span class="vbadge-dot"></span> 최신 버전 2026.8.2</span>
+      <span class="vbadge current"><span class="vbadge-dot"></span> 이 가이드 기준 버전 2026.8.2</span>
     </div>
 
     <div class="alert warn" style="margin-bottom: 16px;">
       <span class="alert-icon">📝</span>
-      <span><strong>왜 Claude 기준에서 GPT 기준으로 바꿨나?</strong><br>
-      2026-04-05에 Anthropic <code>billing/usage reject</code>와 <code>Credit balance is too low</code> 이슈가 실제 운영 크론 실패로 이어졌고, 같은 날 코어 운영은 이미 <code>openai-codex/gpt-5.4</code>로 안정 운용 가능하다고 확인됐습니다. 그래서 현재 문서는 <strong>GPT-first</strong>를 기본으로 정리하고, Claude는 필요 시 fallback/선택 옵션으로만 다룹니다.</span>
+      <span><strong>모델은 자유롭게 선택하세요.</strong><br>
+      OpenClaw는 Claude·GPT 등 여러 모델을 지원합니다. 이 가이드의 예시는 이해를 돕기 위해 특정 모델(예: <code>gpt-5.x</code>, <code>claude-opus</code>)을 들지만, 정답은 없습니다. 팀 상황(비용·가용성·응답 속도·안정성)에 맞게 메인 모델을 고르고, 다른 모델을 필요 시 fallback/선택 옵션으로 두는 방식을 권장합니다.</span>
     </div>
 
     <div class="info-grid">
@@ -981,7 +981,7 @@ EOF</pre>
 
     <div class="alert warn">
       <span class="alert-icon">📌</span>
-      <span><strong>운영 정책 요약</strong><br>① 메인 운영 기준은 GPT-first, ② 결제/좌석은 회사 기준으로 정리, ③ Claude는 필요할 때만 fallback 또는 비교 실험용으로 사용합니다.</span>
+      <span><strong>운영 정책 요약</strong><br>① 메인 운영 모델을 하나 정하고(예: GPT 계열 또는 Claude 계열), ② 결제/좌석은 회사 기준으로 정리, ③ 나머지 모델은 필요할 때만 fallback 또는 비교 실험용으로 사용합니다.</span>
     </div>
 
     <div class="steps">
@@ -2646,7 +2646,7 @@ openclaw onboard --install-daemon
 
     <!-- 4. 모델 개념 -->
     <div class="subsection-title">AI 모델이란?</div>
-    <p class="desc-text">AI 모델은 <strong>두뇌의 종류</strong>입니다. 현재 우리 팀 기준은 <strong>GPT-first</strong>이고, 필요할 때만 다른 모델을 보조로 붙입니다.</p>
+    <p class="desc-text">AI 모델은 <strong>두뇌의 종류</strong>입니다. 메인 모델을 하나 정하고(이 가이드 예시는 GPT 계열), 필요할 때만 다른 모델을 보조로 붙입니다.</p>
 
     <div class="model-grid">
       <div class="model-card" style="border-color: rgba(167,139,250,0.3);">
@@ -2887,7 +2887,7 @@ openclaw onboard --install-daemon
 </div>
 
 <footer class="footer">
-  <p>OpenClaw 설치·운영 가이드 · v2026.3.8 기준</p>
+  <p>OpenClaw 설치·운영 가이드 · v2026.8.2 기준</p>
   <p style="margin-top: 6px;">OpenClaw 기반 AI 비서 구축 가이드</p>
 </footer>
 
